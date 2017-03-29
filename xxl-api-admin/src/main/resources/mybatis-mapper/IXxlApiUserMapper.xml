@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IXxlApiUserMapper">
+	
+	<resultMap id="XxlApiUser" type="com.xxl.api.admin.core.model.XxlApiUser" >
+		<result column="id" property="id" />
+		<result column="username" property="userName" />
+	    <result column="password" property="password" />
+	    <result column="type" property="type" />
+	    <result column="realname" property="realName" />
+	    <result column="sex" property="sex" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.username,
+		t.password,
+		t.type,
+		t.realname,
+		t.sex
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiUser" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_user (
+			userName,
+			password,
+			`type`,
+			realname,
+			sex
+		) VALUES (
+			#{userName},
+			#{password},
+			#{type},
+			#{realName},
+			#{sex}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiUser" >
+		UPDATE xxl_api_user
+		SET
+			password = #{password},
+			realname = #{realName},
+			sex = #{sex}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_user
+		WHERE id = #{id}
+	</delete>
+
+	<select id="findByUserName" parameterType="java.lang.String" resultMap="XxlApiUser">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user AS t
+		WHERE t.userName = #{userName}
+	</select>
+
+	<select id="findById" parameterType="java.lang.Integer" resultMap="XxlApiUser">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="loadAll" parameterType="java.lang.Integer" resultMap="XxlApiUser">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user AS t
+		ORDER BY id DESC
+	</select>
+
+</mapper>

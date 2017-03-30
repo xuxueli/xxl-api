@@ -54,7 +54,7 @@ public class PropertiesUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(getString("xxl.api.login.username"));
+		System.out.println(getString("xxl.api.db.driverClass"));
 	}
 
 }

@@ -41,6 +41,7 @@
 		UPDATE xxl_api_user
 		SET
 			password = #{password},
+			`type` = #{type},
 			realname = #{realName},
 			sex = #{sex}
 		WHERE id = #{id}

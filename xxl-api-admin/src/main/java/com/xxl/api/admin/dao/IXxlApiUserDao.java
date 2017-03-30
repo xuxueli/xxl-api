@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by xuxueli on 17/3/29.
  */
-public interface IXxlApiUser {
+public interface IXxlApiUserDao {
 
     public int add(XxlApiUser xxlApiUser);
 
@@ -15,9 +15,9 @@ public interface IXxlApiUser {
 
     public int delete(int id);
 
-    public int findByUserName(String userName);
+    public XxlApiUser findByUserName(String userName);
 
-    public int findById(int id);
+    public XxlApiUser findById(int id);
 
     public List<XxlApiUser> loadAll();
 

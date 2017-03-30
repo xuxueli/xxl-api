@@ -18,11 +18,27 @@ import java.math.BigInteger;
 @Service
 public class XxlApiUserServiceImpl implements IXxlApiUserService {
 
-    private static final String LOGIN_IDENTITY_KEY = "XXL_API_LOGIN_IDENTITY";
-    private static String makeToken (String userName, String password) {
-        String temp = userName + "_" + password;
-        String token = new BigInteger(1, temp.getBytes()).toString(16);
+    public static final String LOGIN_IDENTITY_KEY = "XXL_API_LOGIN_IDENTITY";
+    private static String makeToken (XxlApiUser xxlApiUser) {
+        String tokenStr = xxlApiUser.getUserName() + "_" + xxlApiUser.getPassword() + "_" + xxlApiUser.getType();
+        String token = new BigInteger(1, tokenStr.getBytes()).toString(16);
         return token;
+    }
+    private static XxlApiUser parseToken(HttpServletRequest request){
+        String token = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
+        if (token != null) {
+            String tokenStr = new String(new BigInteger(token, 16).toByteArray());
+            String[] tokenArr = tokenStr.split("_");
+            if (tokenArr!=null && tokenArr.length==3) {
+                XxlApiUser xxlApiUser = new XxlApiUser();
+                xxlApiUser.setUserName(tokenArr[0]);
+                xxlApiUser.setPassword(tokenArr[1]);
+                xxlApiUser.setType(Integer.valueOf(tokenArr[2]));
+                return xxlApiUser;
+            }
+        }
+
+        return null;
     }
 
     @Resource
@@ -31,8 +47,8 @@ public class XxlApiUserServiceImpl implements IXxlApiUserService {
     @Override
     public ReturnT<String> login(HttpServletRequest request, HttpServletResponse response, boolean ifRemember, String userName, String password) {
 
-        boolean ifLoginResult = ifLogin(request);
-        if (ifLoginResult) {
+        XxlApiUser loginUser = ifLogin(request);
+        if (loginUser != null) {
             return ReturnT.SUCCESS;
         }
 
@@ -44,17 +60,16 @@ public class XxlApiUserServiceImpl implements IXxlApiUserService {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "登录密码错误");
         }
 
-        String token = makeToken(userName, password);
+        String token = makeToken(xxlApiUser);
         CookieUtil.set(response, LOGIN_IDENTITY_KEY, token, ifRemember);
-
         return ReturnT.SUCCESS;
     }
 
     @Override
     public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response) {
 
-        boolean ifLoginResult = ifLogin(request);
-        if (!ifLoginResult) {
+        XxlApiUser loginUser = ifLogin(request);
+        if (loginUser == null) {
             return ReturnT.SUCCESS;
 
         }
@@ -64,13 +79,8 @@ public class XxlApiUserServiceImpl implements IXxlApiUserService {
     }
 
     @Override
-    public boolean ifLogin(HttpServletRequest request) {
-
-        String indentityInfo = CookieUtil.getValue(request, LOGIN_IDENTITY_KEY);
-        if (indentityInfo==null || indentityInfo.trim().length()==0) {
-            return false;
-        }
-
-        return true;
+    public XxlApiUser ifLogin(HttpServletRequest request) {
+        XxlApiUser loginUser = parseToken(request);
+        return loginUser;
     }
 }

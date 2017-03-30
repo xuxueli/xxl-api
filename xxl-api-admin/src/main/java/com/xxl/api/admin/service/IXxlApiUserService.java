@@ -1,6 +1,7 @@
 package com.xxl.api.admin.service;
 
 import com.xxl.api.admin.core.model.ReturnT;
+import com.xxl.api.admin.core.model.XxlApiUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,6 @@ public interface IXxlApiUserService {
 
     public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response);
 
-    public boolean ifLogin(HttpServletRequest request);
+    public XxlApiUser ifLogin(HttpServletRequest request);
 
 }

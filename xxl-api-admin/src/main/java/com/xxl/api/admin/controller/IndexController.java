@@ -2,6 +2,7 @@ package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
+import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.service.IXxlApiUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,8 @@ public class IndexController {
 	@RequestMapping("/")
 	@PermessionLimit(limit=false)
 	public String index(Model model, HttpServletRequest request) {
-		boolean ifLoginResult = xxlApiUserService.ifLogin(request);
-		if (!ifLoginResult) {
+		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+		if (loginUser == null) {
 			return "redirect:/toLogin";
 		}
 		return "redirect:/user";
@@ -37,8 +38,8 @@ public class IndexController {
 	@RequestMapping("/toLogin")
 	@PermessionLimit(limit=false)
 	public String toLogin(Model model, HttpServletRequest request) {
-		boolean ifLoginResult = xxlApiUserService.ifLogin(request);
-		if (ifLoginResult) {
+		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+		if (loginUser != null) {
 			return "redirect:/";
 		}
 		return "login";

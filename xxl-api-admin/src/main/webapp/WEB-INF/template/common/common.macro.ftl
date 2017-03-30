@@ -82,7 +82,9 @@
 			<ul class="sidebar-menu">
 				<li class="header">常用模块</li>
 				<li class="nav-click <#if pageName == "projectList">active</#if>" ><a href="${request.contextPath}/user"><i class="fa fa-circle-o text-red"></i> <span>项目管理</span></a></li>
-                <li class="nav-click <#if pageName == "userList">active</#if>" ><a href="${request.contextPath}/user"><i class="fa fa-circle-o text-red"></i> <span>用户管理</span></a></li>
+				<#if XXL_API_LOGIN_IDENTITY.type == 1>
+                    <li class="nav-click <#if pageName == "userList">active</#if>" ><a href="${request.contextPath}/user"><i class="fa fa-circle-o text-red"></i> <span>用户管理</span></a></li>
+				</#if>
 				<li class="nav-click <#if pageName == "help">active</#if>" ><a href="${request.contextPath}/help"><i class="fa fa-circle-o text-red"></i><span>使用教程</span></a></li>
 			</ul>
 		</section>

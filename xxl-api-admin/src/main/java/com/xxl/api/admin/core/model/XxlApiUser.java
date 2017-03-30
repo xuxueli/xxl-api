@@ -10,7 +10,6 @@ public class XxlApiUser {
     private String password;    // 密码
     private int type;           // 用户类型：0-普通用户、1-超级管理员
     private String realName;    // 真实姓名
-    private int sex;            // 性别：0-男、1-女
 
     public int getId() {
         return id;
@@ -50,14 +49,6 @@ public class XxlApiUser {
 
     public void setRealName(String realName) {
         this.realName = realName;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
     }
 
 }

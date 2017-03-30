@@ -24,21 +24,6 @@ $(function() {
 			},
 			{ "data": 'realName', "visible" : true, "bSortable": false},
 			{
-				"data": 'sex',
-				"visible" : true,
-				"bSortable": false,
-				"render": function ( data, type, row ) {
-					// 性别：0-男、1-女
-					var htm = '';
-					if (data == 0) {
-						htm = '男';
-					} else {
-						htm = '女';
-					}
-					return htm;
-				}
-			},
-			{
 				"data": '操作' ,
 				"width":'15%',
 				"bSortable": false,
@@ -51,7 +36,6 @@ $(function() {
 							' password="'+ row.password +'" '+
 							' type="'+ row.type +'" '+
 							' realName="'+ (row.realName?row.realName:'') +'" '+
-							' sex="'+ row.sex +'" '+
 							'>'+
 							'<button class="btn btn-warning btn-xs update" >编辑</button>  '+
 							'<button class="btn btn-danger btn-xs delete" >删除</button>  '+
@@ -130,25 +114,25 @@ $(function() {
         rules : {
 			userName : {
 				required : true,
-				minlength: 4,
+				minlength: 5,
 				maxlength: 20,
 				userNameValid: true
 			},
 			password : {
             	required : true,
-				minlength: 4,
+				minlength: 5,
 				maxlength: 20
             }
         }, 
         messages : {
 			userName : {
             	required :"请输入“登录账号”",
-				minlength: "长度不可少于4",
+				minlength: "长度不可少于5",
 				maxlength: "长度不可多余20"
             },
 			password : {
             	required :"请输入“登录密码”",
-				minlength: "长度不可少于4",
+				minlength: "长度不可少于5",
 				maxlength: "长度不可多余20"
             }
         },
@@ -193,7 +177,6 @@ $(function() {
         $("#updateModal .form input[name='password']").val("");
 		$("#updateModal .form input[name='type']").eq($(this).parent('p').attr("type")).click();
 		$("#updateModal .form input[name='realName']").val($(this).parent('p').attr("realName"));
-		$("#updateModal .form input[name='sex']").eq($(this).parent('p').attr("sex")).click();
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');
@@ -202,22 +185,6 @@ $(function() {
 		errorElement : 'span',  
         errorClass : 'help-block',
         focusInvalid : true,
-		rules : {
-			userName : {
-				required : true,
-				minlength: 4,
-				maxlength: 20,
-				userNameValid: true
-			}
-
-		},
-		messages : {
-			userName : {
-				required :"请输入“登录账号”",
-				minlength: "长度不可少于4",
-				maxlength: "长度不可多余20"
-			}
-		},
 		highlight : function(element) {
             $(element).closest('.form-group').addClass('has-error');  
         },

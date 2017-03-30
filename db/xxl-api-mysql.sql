@@ -57,7 +57,6 @@ CREATE TABLE `xxl_api_user` (
   `password` varchar(50) NOT NULL COMMENT '密码',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
   `realname` varchar(50) DEFAULT NULL COMMENT '真实姓名',
-  `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别：0-男、1-女',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

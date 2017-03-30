@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.xxl.api.admin.service.impl.XxlApiUserServiceImpl.LOGIN_IDENTITY_KEY;
 
 /**
  * index controller
@@ -27,7 +30,13 @@ public class XxlApiUserController {
 	private IXxlApiUserDao xxlApiUserDao;
 
 	@RequestMapping
-	public String index(Model model) {
+	public String index(Model model, HttpServletRequest request) {
+
+		// permission
+		XxlApiUser loginUser = (request.getAttribute(LOGIN_IDENTITY_KEY)!=null)? (XxlApiUser) request.getAttribute(LOGIN_IDENTITY_KEY) :null;
+		if (loginUser.getType()!=1) {
+			throw new RuntimeException("权限拦截.");
+		}
 
 		List<XxlApiUser> userList = xxlApiUserDao.loadAll();
 		if (CollectionUtils.isEmpty(userList)) {
@@ -79,7 +88,6 @@ public class XxlApiUserController {
 		}
 		existUser.setType(xxlApiUser.getType());
 		existUser.setRealName(xxlApiUser.getRealName());
-		existUser.setSex(xxlApiUser.getSex());
 
 		int ret = xxlApiUserDao.update(existUser);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;

@@ -53,7 +53,7 @@
                                 <#if groupList?exists && groupList?size gt 0>
                                     <#list groupList as group>
                                         <li <#if groupId == group.id >class="active"</#if> groupId="${group.id}" >
-                                            <a href="/group?productId=${productId}&groupId=${group.id}" >
+                                            <a href="${request.contextPath}/group?productId=${productId}&groupId=${group.id}" >
                                                 <i class="fa fa-inbox"></i>${group.name}
                                                 <#--<span class="label label-primary pull-right">12</span>-->
                                             </a>
@@ -83,9 +83,11 @@
 
                             <#if groupInfo?exists>
                                 &nbsp;&nbsp;
-                                <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑</button>
-                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除</button>
+                                <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑分组</button>
+                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除分组</button>
+                                |
                             </#if>
+                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?productId=${productId}')" >+新增接口</button>
 
                             &nbsp;&nbsp;
                             共<#if documentList?exists>${documentList?size}<#else>0</#if>个接口
@@ -123,7 +125,7 @@
                                                             </#if>
                                                         </a>
                                                     </td>
-                                                    <td class="mailbox-name"><a href="${request.contextPath}/document?documentId=${document.id}">${document.name}</a></td>
+                                                    <td class="mailbox-name"><a href="${request.contextPath}/document/detailPage?id=${document.id}" target="_blank" >${document.name}</a></td>
                                                     <td class="mailbox-attachment"><span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;${document.requestUrl}</td>
                                                     <td class="mailbox-date">
                                                         <#if groupList?exists && groupList?size gt 0>
@@ -134,7 +136,7 @@
                                                     </td>
                                                     <td class="mailbox-date">${document.updateTime?datetime}</td>
                                                     <td class="mailbox-date" >
-                                                        <a href="javascript:;"  style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-wrench"></i>修改</a>
+                                                        <a href="${request.contextPath}/document/updatePage?id=${document.id}" target="_blank"  style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-wrench"></i>修改</a>
                                                         &nbsp;&nbsp;
                                                         <a href="javascript:;" class="deleteDocument" _id="${document.id}" _name="${document.name}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                                     </td>

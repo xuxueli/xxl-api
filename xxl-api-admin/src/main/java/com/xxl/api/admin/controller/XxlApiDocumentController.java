@@ -47,4 +47,82 @@ public class XxlApiDocumentController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	/**
+	 * 新增，API，待完善
+	 *
+	 * @param productId
+	 * @return
+	 */
+	@RequestMapping("/addPage")
+	public String addPage(int productId) {
+		return "document/document.add";
+	}
+	@RequestMapping("/add")
+	@ResponseBody
+	public ReturnT<String> add(XxlApiDocument xxlApiDocument) {
+		int ret = xxlApiDocumentDao.add(xxlApiDocument);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	/**
+	 * 更新，API，待完善
+	 * @return
+	 */
+	@RequestMapping("/updatePage")
+	public String updatePage() {
+		return "document/document.update";
+	}
+	@RequestMapping("/update")
+	@ResponseBody
+	public ReturnT<String> update(XxlApiDocument xxlApiDocument) {
+		int ret = xxlApiDocumentDao.update(xxlApiDocument);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	/**
+	 * 保存Mock数据
+	 * @param xxlApiDocument
+	 * @return
+	 */
+	@RequestMapping("/saveMock")
+	@ResponseBody
+	public ReturnT<String> saveMock(XxlApiDocument xxlApiDocument) {
+		int ret = xxlApiDocumentDao.update(xxlApiDocument);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	/**
+	 * 详情页，API，待完善
+	 * @return
+	 */
+	@RequestMapping("/detailPage")
+	public String detailPage() {
+		return "document/document.detail";
+	}
+
+	/**
+	 * 接口测试，待完善
+	 * @return
+	 */
+	@RequestMapping("/testPage")
+	public String testPage() {
+		return "document/document.test";
+	}
+	@RequestMapping("/test")
+	@ResponseBody
+	public ReturnT<String> test() {
+		return ReturnT.SUCCESS;
+	}
+
+	/**
+	 * 接口测试记录，保存接口
+	 * @return
+	 */
+	@RequestMapping("/testSave")
+	@ResponseBody
+	public ReturnT<String> testSave() {
+		return ReturnT.SUCCESS;
+	}
+
+
 }

@@ -22,6 +22,6 @@ public @interface PermessionLimit {
 	/**
 	 * 用户类型：0-普通用户、1-超级管理员 (默认普通用户)
 	 */
-	int type() default 0;
+	boolean superUser() default false;
 
 }

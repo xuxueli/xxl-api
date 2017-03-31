@@ -34,7 +34,7 @@ public class XxlApiUserController {
 	private IXxlApiUserService xxlApiUserService;
 
 	@RequestMapping
-	@PermessionLimit(type = 1)
+    @PermessionLimit(superUser = true)
 	public String index(Model model, HttpServletRequest request) {
 
 		// permission
@@ -58,7 +58,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-	@PermessionLimit(type = 1)
+    @PermessionLimit(superUser = true)
 	public ReturnT<String> add(XxlApiUser xxlApiUser) {
 		// valid
 		if (StringUtils.isBlank(xxlApiUser.getUserName())) {
@@ -80,7 +80,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	@PermessionLimit(type = 1)
+    @PermessionLimit(superUser = true)
 	public ReturnT<String> update(XxlApiUser xxlApiUser) {
 
 		// exist
@@ -102,7 +102,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	@PermessionLimit(type = 1)
+	@PermessionLimit(superUser = true)
 	public ReturnT<String> delete(HttpServletRequest request, int id) {
 
 		// valid user

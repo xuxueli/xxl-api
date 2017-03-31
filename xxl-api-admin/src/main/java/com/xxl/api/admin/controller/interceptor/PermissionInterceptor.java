@@ -32,7 +32,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		HandlerMethod method = (HandlerMethod)handler;
 		PermessionLimit permission = method.getMethodAnnotation(PermessionLimit.class);
 		boolean limit = (permission != null)?permission.limit():true;
-		int type = (permission != null)?permission.type():0;
+		boolean superUser = (permission != null)?permission.superUser():false;
 
 		// login user
 		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
@@ -44,16 +44,15 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			if (loginUser == null) {
 				ifPass = false;
 			} else {
-				if (type == 0) {
-					// 普通用户
-					ifPass = true;
-				} else if (type == 1) {
+				if (superUser) {
+					// 0-普通用户、1-超级管理员
 					if (loginUser.getType() == 1) {
-						// 超级管理员
 						ifPass = true;
 					} else {
 						ifPass = false;
 					}
+				} else {
+					ifPass = true;
 				}
 			}
 		} else {

@@ -10,8 +10,7 @@ $(function() {
 			type:"post",
 			data : function ( d ) {
 				var obj = {};
-				obj.jobGroup = $('#jobGroup').val();
-				obj.executorHandler = $('#executorHandler').val();
+				obj.name = $('#name').val();
 				obj.start = d.start;
 				obj.length = d.length;
 				return obj;
@@ -22,25 +21,39 @@ $(function() {
 		//"scrollX": true,	// X轴滚动条，取消自适应
 		"columns": [
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'name', "bSortable": false},
-			{ "data": 'desc', "visible" : true},
-			{ "data": 'permission', "visible" : true},
+			{ "data": 'name', "bSortable": false, "width":'20%'},
+			{ "data": 'desc', "visible" : true, "width":'20%'},
 			{
-				"data": 'baseUrlProduct',
-				"width":'20%',
+				"data": 'permission',
 				"visible" : true,
+				"width":'10%',
 				"render": function ( data, type, row ) {
+					// 0-公开、1-私有
 					var htm = '';
-					htm += '线上环境：' + row.baseUrlProduct + '<br>';
-					htm += '预发布环境：' + row.baseUrlPpe + '<br>';
-					htm += '测试环境：' + row.baseUrlQa + '<br>';
+					if (data == 0) {
+						htm += '公开';
+					} else {
+						htm += '私有';
+					}
 					return htm;
 				}
 			},
-			{ "data": 'version', "visible" : true,"width":'20%'},
+			{
+				"data": 'baseUrlProduct',
+				"width":'30%',
+				"visible" : true,
+				"render": function ( data, type, row ) {
+					var htm = '';
+					htm += '线上：' + row.baseUrlProduct + '<br>';
+					htm += '预发：' + row.baseUrlPpe + '<br>';
+					htm += '测试：' + row.baseUrlQa + '<br>';
+					return htm;
+				}
+			},
+			{ "data": 'version', "visible" : true,"width":'10%'},
 			{
 				"data": '操作' ,
-				"width":'15%',
+				"width":'10%',
 				"render": function ( data, type, row ) {
 					return function(){
 
@@ -89,8 +102,12 @@ $(function() {
 		}
 	});
 
+	$("#search").click(function(){
+		projectTable.fnDraw();
+	});
+
 	// job operate
-	$("#user_list").on('click', '.delete',function() {
+	$("#project_list").on('click', '.delete',function() {
 		var id = $(this).parent('p').attr("id");
 		ComConfirm.show("确认删除该项目?", function(){
 			$.ajax({
@@ -113,13 +130,6 @@ $(function() {
 		});
 	});
 
-	// jquery.validate 自定义校验 “英文字母开头，只含有英文字母、数字和下划线”
-	jQuery.validator.addMethod("userNameValid", function(value, element) {
-		var length = value.length;
-		var valid = /^[a-zA-Z][a-zA-Z0-9_]*$/;
-		return this.optional(element) || valid.test(value);
-	}, "只支持英文字母开头，只含有英文字母、数字和下划线");
-
 	// 新增
 	$("#add").click(function(){
 		$('#addModal').modal({backdrop: false, keyboard: false}).modal('show');
@@ -129,28 +139,27 @@ $(function() {
         errorClass : 'help-block',
         focusInvalid : true,  
         rules : {
-			userName : {
+			name : {
 				required : true,
 				minlength: 5,
-				maxlength: 20,
-				userNameValid: true
+				maxlength: 50
 			},
-			password : {
+			baseUrlProduct : {
             	required : true,
 				minlength: 5,
-				maxlength: 20
+				maxlength: 200
             }
         }, 
         messages : {
-			userName : {
-            	required :"请输入“登录账号”",
+			name : {
+            	required :"请输入“项目名称”",
 				minlength: "长度不可少于5",
-				maxlength: "长度不可多余20"
+				minlength: "长度不可多余50"
             },
-			password : {
-            	required :"请输入“登录密码”",
+			baseUrlProduct : {
+            	required :"请输入“跟地址：线上环境”",
 				minlength: "长度不可少于5",
-				maxlength: "长度不可多余20"
+				maxlength: "长度不可多余200"
             }
         },
 		highlight : function(element) {  
@@ -164,7 +173,7 @@ $(function() {
             element.parent('div').append(error);  
         },
         submitHandler : function(form) {
-        	$.post(base_url + "/user/add",  $("#addModal .form").serialize(), function(data, status) {
+        	$.post(base_url + "/project/add",  $("#addModal .form").serialize(), function(data, status) {
     			if (data.code == "200") {
 					$('#addModal').modal('hide');
 					setTimeout(function () {

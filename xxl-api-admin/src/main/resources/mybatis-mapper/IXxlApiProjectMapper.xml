@@ -26,7 +26,7 @@
 	</sql>
 
 	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiProject" useGeneratedKeys="true" keyProperty="id" >
-		INSERT INTO xxl_api_user (
+		INSERT INTO xxl_api_project (
 			`name`,
 			`desc`,
 			permission,

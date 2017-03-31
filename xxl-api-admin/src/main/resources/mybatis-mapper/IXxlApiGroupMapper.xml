@@ -53,7 +53,7 @@
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_group AS t
 		WHERE t.project_id = #{productId}
-		ORDER BY order ASC
+		ORDER BY t.order ASC
 	</select>
 
 </mapper>

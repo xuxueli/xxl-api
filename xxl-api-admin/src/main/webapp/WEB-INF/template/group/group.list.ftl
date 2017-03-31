@@ -83,7 +83,7 @@
                             <#if groupInfo?exists>
                                 &nbsp;&nbsp;
                                 <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑</button>
-                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" >删除</button>
+                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除</button>
                             </#if>
 
 

@@ -136,6 +136,35 @@ $(function() {
 		$(".remote_panel").show();	// remote
 	});
 
+	/**
+	 * 删除分组
+	 */
+	$("#deleteGroup").click(function(){
+		var id = $(this).attr("_id");
+		var productId = $(this).attr("_productId");
+
+		ComConfirm.show("确认删除该接口分组，将会删除该分组下所有接口?", function(){
+			$.ajax({
+				type : 'POST',
+				url : base_url + "/group/delete",
+				data : {
+					"id" : id
+				},
+				dataType : "json",
+				success : function(data){
+					if (data.code == 200) {
+						ComAlert.show(1, "删除成功", function(){
+							window.location.href = base_url + '/group?productId=' + productId;
+						});
+					} else {
+						ComAlert.show(2, (data.msg || "删除失败") );
+					}
+				},
+			});
+		});
+
+	});
+
 	// init date tables
 	var projectTable = $("#project_list").dataTable({
 		"deferRender": true,

@@ -96,7 +96,7 @@ public class XxlApiGroupController {
 
 		// 分组下是否存在接口
 
-		int ret = xxlApiProjectDao.delete(id);
+		int ret = xxlApiGroupDao.delete(id);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 

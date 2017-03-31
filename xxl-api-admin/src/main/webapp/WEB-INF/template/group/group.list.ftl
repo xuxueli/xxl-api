@@ -71,6 +71,7 @@
                 <#--接口列表-->
                 <div class="col-md-9">
                     <div class="box box-primary">
+                        <#--标题栏-->
                         <div class="box-header with-border">
                             <h3 class="box-title">
                                 <#if groupId==-1>全部
@@ -86,206 +87,57 @@
                                 <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除</button>
                             </#if>
 
-
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                    <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                                    <input type="text" class="form-control input-sm" id="searchName" placeholder="接口搜索">
                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                 </div>
                             </div>
-                            <!-- /.box-tools -->
                         </div>
-                        <!-- /.box-header -->
+
                         <div class="box-body no-padding">
-                            <div class="mailbox-controls">
-                                <!-- Check all button -->
-                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                                </div>
-                                <!-- /.btn-group -->
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                                <div class="pull-right">
-                                    1-50/200
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                                    </div>
-                                    <!-- /.btn-group -->
-                                </div>
-                                <!-- /.pull-right -->
-                            </div>
+                            <#--接口列表-->
                             <div class="table-responsive mailbox-messages">
-                                <table class="table table-hover table-striped">
+                                <table class="table table-hover table-striped" id="documentList" >
+                                    <thead>
+                                        <tr>
+                                            <th width="5%" ><i class="fa fa-star text-yellow"></i></th>
+                                            <th width="25%" >接口名称</th>
+                                            <th width="30%" >接口URL</th>
+                                            <th width="10%" >分组</th>
+                                            <th width="15%" >更新日期</th>
+                                            <th width="15%" >操作</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">5 mins ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">28 mins ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">11 hours ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">15 hours ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">Yesterday</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">2 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">2 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">2 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">2 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">2 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">4 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">12 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star-o text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">12 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">14 days ago</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                        <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                        </td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">15 days ago</td>
-                                    </tr>
+                                        <#if documentList?exists && documentList?size gt 0>
+                                            <#list documentList as document>
+                                                <tr name="${document.name}" >
+                                                    <td class="mailbox-star"><a href="#"><#if document.starLevel == 1><i class="fa fa-star text-yellow"></i><#else><i class="fa fa-star-o text-yellow"></i></#if></a></td>
+                                                    <td class="mailbox-name"><a href="${request.contextPath}/document?documentId=${document.id}">${document.name}</a></td>
+                                                    <td class="mailbox-attachment"><span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;${document.requestUrl}</td>
+                                                    <td class="mailbox-date">
+                                                        <#if groupList?exists && groupList?size gt 0>
+                                                            <#list groupList as group>
+                                                                <#if group.id == document.groupId >${group.name}</#if>
+                                                            </#list>
+                                                        </#if>
+                                                    </td>
+                                                    <td class="mailbox-date">${document.updateTime?datetime}</td>
+                                                    <td class="mailbox-date" >
+                                                        <a href="javascript:;" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-wrench"></i>删除</a>
+                                                        &nbsp;&nbsp;
+                                                        <a href="javascript:;" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-trash-o"></i>删除</a>
+                                                    </td>
+                                                </tr>
+                                            </#list>
+                                        </#if>
                                     </tbody>
                                 </table>
                                 <!-- /.table -->
                             </div>
-                            <!-- /.mail-box-messages -->
                         </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer no-padding">
-                            <div class="mailbox-controls">
-                                <!-- Check all button -->
-                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                                </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                                </div>
-                                <!-- /.btn-group -->
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                                <div class="pull-right">
-                                    1-50/200
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                                    </div>
-                                    <!-- /.btn-group -->
-                                </div>
-                                <!-- /.pull-right -->
-                            </div>
-                        </div>
+
                     </div>
                     <!-- /. box -->
                 </div>
@@ -367,11 +219,8 @@
 
 <@netCommon.commonScript />
 <!-- DataTables -->
-<script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
-<script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 <script src="${request.contextPath}/static/js/group.list.1.js"></script>
 </body>
 </html>

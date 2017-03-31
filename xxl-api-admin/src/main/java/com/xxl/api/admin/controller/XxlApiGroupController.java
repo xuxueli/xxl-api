@@ -1,8 +1,10 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.core.model.ReturnT;
+import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiGroup;
 import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import org.apache.commons.collections.CollectionUtils;
@@ -27,6 +29,8 @@ public class XxlApiGroupController {
 	private IXxlApiProjectDao xxlApiProjectDao;
 	@Resource
 	private IXxlApiGroupDao xxlApiGroupDao;
+	@Resource
+	private IXxlApiDocumentDao xxlApiDocumentDao;
 
 	@RequestMapping
 	public String index(Model model, int productId, @RequestParam(required = false, defaultValue = "-1")  int groupId) {
@@ -52,10 +56,15 @@ public class XxlApiGroupController {
 				}
 			}
 		}
+		if (groupInfo == null && !(groupId==-1 || groupId==0)) {
+			groupId = -1;	// 合法性校验：全部(-1) | 默认分组(0) | 指定分组(匹配到数据)
+		}
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("groupInfo", groupInfo);
 
 		// 分组下的，接口列表
+		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadAll(productId, groupId);
+		model.addAttribute("documentList", documentList);
 
 		return "group/group.list";
 	}
@@ -95,6 +104,10 @@ public class XxlApiGroupController {
 	public ReturnT<String> delete(int id) {
 
 		// 分组下是否存在接口
+		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadByGroupId(id);
+		if (CollectionUtils.isNotEmpty(documentList)) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，分组下存在接口，不允许强制删除");
+		}
 
 		int ret = xxlApiGroupDao.delete(id);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;

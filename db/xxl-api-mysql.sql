@@ -1,6 +1,8 @@
 
 CREATE TABLE `xxl_api_document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL COMMENT '项目ID',
+  `group_id` int(11) NOT NULL COMMENT '分组ID',
   `name` varchar(50) NOT NULL COMMENT '接口名称',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态：0-启用、1-维护、2-废弃',
   `star_level` tinyint(4) NOT NULL COMMENT '星标等级：0-普通接口、1-一星接口',

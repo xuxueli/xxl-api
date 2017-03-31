@@ -165,140 +165,26 @@ $(function() {
 
 	});
 
-	// init date tables
-	var projectTable = $("#project_list").dataTable({
-		"deferRender": true,
-		"processing" : true,
-		"serverSide": true,
-		"ajax": {
-			url: base_url + "/project/pageList",
-			type:"post",
-			data : function ( d ) {
-				var obj = {};
-				obj.name = $('#name').val();
-				obj.start = d.start;
-				obj.length = d.length;
-				return obj;
-			}
-		},
-		"searching": false,
-		"ordering": false,
-		//"scrollX": true,	// X轴滚动条，取消自适应
-		"columns": [
-			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'name', "bSortable": false, "width":'20%'},
-			{ "data": 'desc', "visible" : true, "width":'20%'},
-			{
-				"data": 'permission',
-				"visible" : true,
-				"width":'10%',
-				"render": function ( data, type, row ) {
-					// 0-公开、1-私有
-					var htm = '';
-					if (data == 0) {
-						htm += '公开';
-					} else {
-						htm += '私有';
-					}
-					return htm;
+	/**
+	 * 关键字搜索
+	 */
+	$("#searchName").bind('input porpertychange',function(){
+		var searchName = $("#searchName").val();
+		$('#documentList').find('tbody tr').each(function(){
+			var nameItem = $(this).attr('name');
+			if (searchName) {
+				if (nameItem.indexOf(searchName) != -1) {
+					$(this).show();
+				} else {
+					$(this).hide();
 				}
-			},
-			{
-				"data": 'baseUrlProduct',
-				"width":'30%',
-				"visible" : true,
-				"render": function ( data, type, row ) {
-					var htm = '';
-					htm += '线上：' + row.baseUrlProduct + '<br>';
-					htm += '预发：' + row.baseUrlPpe + '<br>';
-					htm += '测试：' + row.baseUrlQa + '<br>';
-					return htm;
-				}
-			},
-			{ "data": 'version', "visible" : true,"width":'10%'},
-			{
-				"data": '操作' ,
-				"width":'10%',
-				"render": function ( data, type, row ) {
-					return function(){
 
-						// 详情页
-						var goUrl = '/group?productId='+ row.id;
-
-						// html
-						var html = '<p id="'+ row.id +'" '+
-								' name="'+ row.name +'" '+
-								' desc="'+ row.desc +'" '+
-								' permission="'+ row.permission +'" '+
-								' baseUrlProduct="'+ row.baseUrlProduct +'" '+
-								' baseUrlPpe="'+ row.baseUrlPpe +'" '+
-								' baseUrlQa="'+row.baseUrlQa +'" '+
-								' version="'+row.version +'" '+
-								'>'+
-							'<button class="btn btn-warning btn-xs update" type="button">编辑</button>  '+
-							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>  <br>'+
-							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + goUrl + '\')" >进入</button>  '+
-							'</p>';
-
-						return html;
-					};
-				}
+			} else {
+				$(this).show();
 			}
-		],
-		"language" : {
-			"sProcessing" : "处理中...",
-			"sLengthMenu" : "每页 _MENU_ 条记录",
-			"sZeroRecords" : "没有匹配结果",
-			"sInfo" : "第 _PAGE_ 页 ( 总共 _PAGES_ 页，_TOTAL_ 条记录 )",
-			"sInfoEmpty" : "无记录",
-			"sInfoFiltered" : "(由 _MAX_ 项结果过滤)",
-			"sInfoPostFix" : "",
-			"sSearch" : "搜索:",
-			"sUrl" : "",
-			"sEmptyTable" : "表中数据为空",
-			"sLoadingRecords" : "载入中...",
-			"sInfoThousands" : ",",
-			"oPaginate" : {
-				"sFirst" : "首页",
-				"sPrevious" : "上页",
-				"sNext" : "下页",
-				"sLast" : "末页"
-			},
-			"oAria" : {
-				"sSortAscending" : ": 以升序排列此列",
-				"sSortDescending" : ": 以降序排列此列"
-			}
-		}
-	});
-
-	$("#search").click(function(){
-		projectTable.fnDraw();
-	});
-
-	// job operate
-	$("#project_list").on('click', '.delete',function() {
-		var id = $(this).parent('p').attr("id");
-		ComConfirm.show("确认删除该项目?", function(){
-			$.ajax({
-				type : 'POST',
-				url : base_url + "/project/delete",
-				data : {
-					"id" : id
-				},
-				dataType : "json",
-				success : function(data){
-					if (data.code == 200) {
-						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
-						});
-					} else {
-						ComAlert.show(2, (data.msg || "删除失败") );
-					}
-				},
-			});
 		});
-	});
 
+	});
 
 	/*
 	// 新增-添加参数

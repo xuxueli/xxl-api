@@ -57,6 +57,9 @@ $(function() {
 				"render": function ( data, type, row ) {
 					return function(){
 
+						// 详情页
+						var goUrl = '/group?productId='+ row.id;
+
 						// html
 						var html = '<p id="'+ row.id +'" '+
 								' name="'+ row.name +'" '+
@@ -68,7 +71,8 @@ $(function() {
 								' version="'+row.version +'" '+
 								'>'+
 							'<button class="btn btn-warning btn-xs update" type="button">编辑</button>  '+
-							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>  '+
+							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>  <br>'+
+							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + goUrl + '\')" >进入</button>  '+
 							'</p>';
 
 						return html;
@@ -195,14 +199,17 @@ $(function() {
 	});
 
 	// 更新
-	$("#user_list").on('click', '.update',function() {
+	$("#project_list").on('click', '.update',function() {
 
 		// base data
 		$("#updateModal .form input[name='id']").val($(this).parent('p').attr("id"));
-		$("#updateModal .form input[name='userName']").val($(this).parent('p').attr("userName"));
-        $("#updateModal .form input[name='password']").val("");
-		$("#updateModal .form input[name='type']").eq($(this).parent('p').attr("type")).click();
-		$("#updateModal .form input[name='realName']").val($(this).parent('p').attr("realName"));
+		$("#updateModal .form input[name='name']").val($(this).parent('p').attr("name"));
+		$("#updateModal .form input[name='desc']").val($(this).parent('p').attr("desc"));
+		$("#updateModal .form input[name='permission']").eq($(this).parent('p').attr("permission")).click();
+		$("#updateModal .form input[name='baseUrlProduct']").val($(this).parent('p').attr("baseUrlProduct"));
+		$("#updateModal .form input[name='baseUrlPpe']").val($(this).parent('p').attr("baseUrlPpe"));
+		$("#updateModal .form input[name='baseUrlQa']").val($(this).parent('p').attr("baseUrlQa"));
+		$("#updateModal .form input[name='version']").val($(this).parent('p').attr("version"));
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');
@@ -211,6 +218,30 @@ $(function() {
 		errorElement : 'span',  
         errorClass : 'help-block',
         focusInvalid : true,
+		rules : {
+			name : {
+				required : true,
+				minlength: 5,
+				maxlength: 50
+			},
+			baseUrlProduct : {
+				required : true,
+				minlength: 5,
+				maxlength: 200
+			}
+		},
+		messages : {
+			name : {
+				required :"请输入“项目名称”",
+				minlength: "长度不可少于5",
+				minlength: "长度不可多余50"
+			},
+			baseUrlProduct : {
+				required :"请输入“跟地址：线上环境”",
+				minlength: "长度不可少于5",
+				maxlength: "长度不可多余200"
+			}
+		},
 		highlight : function(element) {
             $(element).closest('.form-group').addClass('has-error');  
         },
@@ -223,7 +254,7 @@ $(function() {
         },
         submitHandler : function(form) {
 			// post
-    		$.post(base_url + "/user/update", $("#updateModal .form").serialize(), function(data, status) {
+    		$.post(base_url + "/project/update", $("#updateModal .form").serialize(), function(data, status) {
     			if (data.code == "200") {
 					$('#updateModal').modal('hide');
 					setTimeout(function () {

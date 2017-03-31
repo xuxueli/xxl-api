@@ -135,23 +135,35 @@
          	<div class="modal-body">
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录账号<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="userName" placeholder="请输入“登录账号”" maxlength="20" readonly ></div>
+                        <label for="lastname" class="col-sm-4 control-label">项目名称<font color="red">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="name" placeholder="请输入“项目名称”" maxlength="50" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录密码<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="password" placeholder="请输入新“登录密码”，为空表示不更新" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">项目描述<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="desc" placeholder="请输入“项目描述”" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">用户类型<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="type" value="0" checked >普通用户
-                            <input type="radio" name="type" value="1" >超级管理员
+                        <label for="lastname" class="col-sm-4 control-label">访问权限<font color="red">*</font></label>
+                        <div class="col-sm-8">
+                            <input type="radio" name="permission" value="0" checked >公开  &nbsp;&nbsp;
+                            <input type="radio" name="permission" value="1" >私有
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">跟地址：线上环境<font color="red">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入“跟地址：线上环境”" maxlength="200" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-4 control-label">跟地址：预发布环境<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入“跟地址：预发布环境”" maxlength="200" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-4 control-label">跟地址：测试环境<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入“跟地址：测试环境”" maxlength="200" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-4 control-label">版本<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="version" placeholder="请输入“版本”" maxlength="50" ></div>
                     </div>
 
                     <div class="form-group">

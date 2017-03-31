@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiGroupMapper">
+	
+	<resultMap id="XxlApiGroup" type="com.xxl.api.admin.core.model.XxlApiGroup" >
+		<result column="id" property="id" />
+		<result column="project_id" property="productId" />
+		<result column="name" property="name" />
+	    <result column="order" property="order" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.project_id,
+		t.name,
+		t.order
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiGroup" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_group (
+			`project_id`,
+			`name`,
+			`order`
+		) VALUES (
+			#{productId},
+			#{name},
+			#{order}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiGroup" >
+		UPDATE xxl_api_group
+		SET
+			`name` = #{name},
+			`order` = #{order}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_group
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiGroup">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_group AS t
+		WHERE t.id = #{id}
+	</select>
+
+
+	<select id="loadAll" parameterType="java.lang.Integer" resultMap="XxlApiGroup">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_group AS t
+		WHERE t.project_id = #{productId}
+		ORDER BY order ASC
+	</select>
+
+</mapper>

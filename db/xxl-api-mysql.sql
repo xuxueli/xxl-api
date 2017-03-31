@@ -20,6 +20,14 @@ CREATE TABLE `xxl_api_document` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `xxl_api_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL COMMENT '项目ID',
+  `name` varchar(255) NOT NULL COMMENT '分组名称',
+  `order` int(11) NOT NULL COMMENT '分组排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -35,10 +43,10 @@ CREATE TABLE `xxl_api_project` (
   `name` varchar(50) NOT NULL COMMENT '项目名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '项目描述',
   `permission` tinyint(4) NOT NULL DEFAULT '0' COMMENT '访问权限：0-公开、1-私有',
-  `base_url_product` varchar(100) NOT NULL COMMENT '跟地址：线上环境',
-  `base_url_ppe` varchar(100) DEFAULT NULL COMMENT '跟地址：预发布环境',
-  `base_url_qa` varchar(100) DEFAULT NULL COMMENT '跟地址：测试环境',
-  `version` varchar(20) NOT NULL COMMENT '版本',
+  `base_url_product` varchar(200) NOT NULL COMMENT '跟地址：线上环境',
+  `base_url_ppe` varchar(200) DEFAULT NULL COMMENT '跟地址：预发布环境',
+  `base_url_qa` varchar(200) DEFAULT NULL COMMENT '跟地址：测试环境',
+  `version` varchar(50) NOT NULL COMMENT '版本',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,3 +76,4 @@ CREATE TABLE `xxl_api_user_permission` (
   `add_time` datetime NOT NULL COMMENT '新增时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

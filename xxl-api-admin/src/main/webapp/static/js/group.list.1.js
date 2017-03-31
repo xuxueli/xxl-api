@@ -186,6 +186,43 @@ $(function() {
 
 	});
 
+
+	$(".markStar").click(function(){
+		var $this = $(this);
+		var id = $($this).attr("_id");
+		var _starLevel = $($this).attr("_starLevel");
+
+		// 星标等级：0-普通接口、1-一星接口
+		var toStarLevel;
+		var toStarHtm;
+		if (_starLevel == 1) {
+			toStarLevel = 0;
+			toStarHtm = '<i class="fa fa-star-o text-yellow"></i>';
+		} else {
+			toStarLevel = 1;
+			toStarHtm = '<i class="fa fa-star text-yellow"></i>';
+		}
+
+		$.ajax({
+			type : 'POST',
+			url : base_url + "/document/markStar",
+			data : {
+				"id" : id,
+				"starLevel":toStarLevel
+			},
+			dataType : "json",
+			success : function(data){
+				if (data.code == 200) {
+					$($this).attr("_starLevel", toStarLevel);
+					$($this).html(toStarHtm);
+				} else {
+					ComAlert.show(2, (data.msg || "操作失败") );
+				}
+			},
+		});
+
+	});
+
 	/*
 	// 新增-添加参数
 	$("#addModal .addParam").on('click', function () {

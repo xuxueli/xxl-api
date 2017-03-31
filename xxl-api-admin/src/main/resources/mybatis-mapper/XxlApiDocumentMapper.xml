@@ -126,7 +126,7 @@
 		<if test="groupId gte 0" >
 			AND t.group_id = #{groupId}
 		</if>
-		ORDER BY t.add_time DESC
+		ORDER BY t.star_level DESC, t.add_time DESC
 	</select>
 
 	<select id="loadByGroupId" parameterType="java.lang.Integer" resultMap="XxlApiDocument">

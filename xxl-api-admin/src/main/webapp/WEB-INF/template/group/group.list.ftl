@@ -113,7 +113,13 @@
                                         <#if documentList?exists && documentList?size gt 0>
                                             <#list documentList as document>
                                                 <tr name="${document.name}" >
-                                                    <td class="mailbox-star"><a href="#"><#if document.starLevel == 1><i class="fa fa-star text-yellow"></i><#else><i class="fa fa-star-o text-yellow"></i></#if></a></td>
+                                                    <td class="mailbox-star">
+                                                        <a href="#" class="markStar" _starLevel="${document.starLevel}" _id="${document.id}" >
+                                                            <#if document.starLevel == 1><i class="fa fa-star text-yellow"></i>
+                                                            <#else><i class="fa fa-star-o text-yellow"></i>
+                                                            </#if>
+                                                        </a>
+                                                    </td>
                                                     <td class="mailbox-name"><a href="${request.contextPath}/document?documentId=${document.id}">${document.name}</a></td>
                                                     <td class="mailbox-attachment"><span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;${document.requestUrl}</td>
                                                     <td class="mailbox-date">

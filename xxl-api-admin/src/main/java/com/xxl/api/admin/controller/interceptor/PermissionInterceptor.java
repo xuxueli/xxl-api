@@ -28,19 +28,40 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			return super.preHandle(request, response, handler);
 		}
 
-		boolean ifLimit = true;
+		// if limit
 		HandlerMethod method = (HandlerMethod)handler;
 		PermessionLimit permission = method.getMethodAnnotation(PermessionLimit.class);
-		if (permission != null && !permission.limit()) {
-			ifLimit = false;
-		}
+		boolean limit = (permission != null)?permission.limit():true;
+		int type = (permission != null)?permission.type():0;
 
+		// login user
 		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
 		request.setAttribute(LOGIN_IDENTITY_KEY, loginUser);
 
-		if (ifLimit && loginUser == null) {
-			response.sendRedirect("/toLogin");
-			//request.getRequestDispatcher("/toLogin").forward(request, response);
+		// if pass
+		boolean ifPass = false;
+		if (limit) {
+			if (loginUser == null) {
+				ifPass = false;
+			} else {
+				if (type == 0) {
+					// 普通用户
+					ifPass = true;
+				} else if (type == 1) {
+					if (loginUser.getType() == 1) {
+						// 超级管理员
+						ifPass = true;
+					} else {
+						ifPass = false;
+					}
+				}
+			}
+		} else {
+			ifPass = true;
+		}
+
+		if (!ifPass) {
+			response.sendRedirect("/toLogin");	//request.getRequestDispatcher("/toLogin").forward(request, response);
 			return false;
 		}
 		

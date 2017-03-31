@@ -1,9 +1,11 @@
 package com.xxl.api.admin.controller;
 
+import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiUserDao;
+import com.xxl.api.admin.service.IXxlApiUserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -28,8 +30,11 @@ public class XxlApiUserController {
 
 	@Resource
 	private IXxlApiUserDao xxlApiUserDao;
+	@Resource
+	private IXxlApiUserService xxlApiUserService;
 
 	@RequestMapping
+	@PermessionLimit(type = 1)
 	public String index(Model model, HttpServletRequest request) {
 
 		// permission
@@ -53,6 +58,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/add")
 	@ResponseBody
+	@PermessionLimit(type = 1)
 	public ReturnT<String> add(XxlApiUser xxlApiUser) {
 		// valid
 		if (StringUtils.isBlank(xxlApiUser.getUserName())) {
@@ -74,6 +80,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/update")
 	@ResponseBody
+	@PermessionLimit(type = 1)
 	public ReturnT<String> update(XxlApiUser xxlApiUser) {
 
 		// exist
@@ -95,8 +102,25 @@ public class XxlApiUserController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	@PermessionLimit(type = 1)
+	public ReturnT<String> delete(HttpServletRequest request, int id) {
 
+		// valid user
+		XxlApiUser delUser = xxlApiUserDao.findById(id);
+		if (delUser == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，用户ID非法");
+		}
+
+		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+		if (loginUser == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，系统登录异常");
+		}
+
+		if (delUser.getUserName().equals(loginUser.getUserName())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，不可以删除自己的用户信息");
+		}
+
+		// must leave one user
 		List<XxlApiUser> allUser = xxlApiUserDao.loadAll();
 		if (allUser==null || allUser.size()==1) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，系统至少保留一个登录用户");

@@ -13,35 +13,47 @@
 	<!-- header -->
 	<@netCommon.commonHeader />
 	<!-- left -->
-	<@netCommon.commonLeft "userList" />
+	<@netCommon.commonLeft "projectList" />
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>用户管理<small>API管理平台</small></h1>
+			<h1>项目管理<small>API管理平台</small></h1>
 		</section>
 
 		<!-- Main content -->
 	    <section class="content">
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">项目名称</span>
+                        <input type="text" class="form-control" id="name" autocomplete="on" >
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-block btn-info" id="searchBtn">搜索</button>
+                </div>
+                <div class="col-xs-2 pull-right">
+                    <button class="btn btn-block btn-success" type="button" id="add" >+新增项目</button>
+                </div>
+            </div>
+
 			<div class="row">
 				<div class="col-xs-12">
-
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">用户列表</h3>
-                            <button class="btn btn-info btn-xs pull-right" id="add" >+新增用户</button>
-                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="user_list" class="table table-bordered table-striped">
+                            <table id="project_list" class="table table-bordered table-striped">
                                 <thead>
 									<tr>
 										<th>ID</th>
-										<th>账号</th>
-										<th>密码</th>
-										<th>类型</th>
-										<th>真实姓名</th>
+										<th>项目名称</th>
+										<th>项目描述</th>
+										<th>访问权限</th>
+										<th>跟地址</th>
+                                        <th>版本</th>
                                         <th>操作</th>
 									</tr>
                                 </thead>
@@ -50,8 +62,6 @@
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
-
-
 
 				</div>
 			</div>
@@ -90,7 +100,6 @@
                         <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
                         <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
                     </div>
-
 
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
@@ -132,13 +141,6 @@
                         <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
                         <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
                     </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">性别<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="sex" value="0" checked >男
-                            <input type="radio" name="sex" value="1" >女
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
@@ -162,9 +164,6 @@
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<script>
-	userList = eval('('+ '${userList}' +')');
-</script>
-<script src="${request.contextPath}/static/js/user.list.1.js"></script>
+<script src="${request.contextPath}/static/js/project.list.1.js"></script>
 </body>
 </html>

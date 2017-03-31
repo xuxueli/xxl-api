@@ -19,4 +19,9 @@ public @interface PermessionLimit {
 	 */
 	boolean limit() default true;
 
+	/**
+	 * 用户类型：0-普通用户、1-超级管理员 (默认普通用户)
+	 */
+	int type() default 0;
+
 }

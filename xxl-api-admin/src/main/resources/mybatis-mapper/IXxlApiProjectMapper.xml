@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiProjectMapper">
+	
+	<resultMap id="XxlApiProject" type="com.xxl.api.admin.core.model.XxlApiProject" >
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+	    <result column="desc" property="desc" />
+	    <result column="permission" property="permission" />
+	    <result column="base_url_product" property="baseUrlProduct" />
+		<result column="base_url_ppe" property="baseUrlPpe" />
+		<result column="base_url_qa" property="baseUrlQa" />
+		<result column="version" property="version" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.name,
+		t.desc,
+		t.permission,
+		t.base_url_product,
+		t.base_url_ppe,
+		t.base_url_qa,
+		t.version
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiProject" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_user (
+			`name`,
+			`desc`,
+			permission,
+			base_url_product,
+			base_url_ppe,
+			base_url_qa,
+			version
+		) VALUES (
+			#{name},
+			#{desc},
+			#{permission},
+			#{baseUrlProduct},
+			#{baseUrlPpe},
+			#{baseUrlQa},
+			#{version}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiProject" >
+		UPDATE xxl_api_project
+		SET
+			`name` = #{name},
+			`desc` = #{desc},
+			permission = #{permission},
+			base_url_product = #{baseUrlProduct},
+			base_url_ppe = #{baseUrlPpe},
+			base_url_qa = #{baseUrlQa},
+			version = #{version}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_project
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiProject">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_project AS t
+		WHERE t.id = #{id}
+	</select>
+
+
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiProject">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_project AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="name != null and name != ''">
+				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
+			</if>
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_project AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="name != null and name != ''">
+				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

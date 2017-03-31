@@ -35,4 +35,16 @@ public class XxlApiDocumentController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	@RequestMapping("/delete")
+	@ResponseBody
+	public ReturnT<String> delete(int id) {
+
+		// 存在Test记录，拒绝删除
+
+		// 存在Mock记录，拒绝删除
+
+		int ret = xxlApiDocumentDao.delete(id);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
 }

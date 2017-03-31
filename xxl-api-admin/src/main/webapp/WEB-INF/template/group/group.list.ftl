@@ -87,6 +87,9 @@
                                 <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除</button>
                             </#if>
 
+                            &nbsp;&nbsp;
+                            共<#if documentList?exists>${documentList?size}<#else>0</#if>个接口
+
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
                                     <input type="text" class="form-control input-sm" id="searchName" placeholder="接口搜索">
@@ -131,9 +134,9 @@
                                                     </td>
                                                     <td class="mailbox-date">${document.updateTime?datetime}</td>
                                                     <td class="mailbox-date" >
-                                                        <a href="javascript:;" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-wrench"></i>删除</a>
+                                                        <a href="javascript:;"  style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-wrench"></i>修改</a>
                                                         &nbsp;&nbsp;
-                                                        <a href="javascript:;" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-trash-o"></i>删除</a>
+                                                        <a href="javascript:;" class="deleteDocument" _id="${document.id}" _name="${document.name}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" ><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                                     </td>
                                                 </tr>
                                             </#list>

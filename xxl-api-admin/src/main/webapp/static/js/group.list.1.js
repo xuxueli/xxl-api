@@ -187,6 +187,9 @@ $(function() {
 	});
 
 
+	/**
+	 * 标记星级，星级较高，排序靠前
+	 */
 	$(".markStar").click(function(){
 		var $this = $(this);
 		var id = $($this).attr("_id");
@@ -219,6 +222,32 @@ $(function() {
 					ComAlert.show(2, (data.msg || "操作失败") );
 				}
 			},
+		});
+
+	});
+
+	$(".deleteDocument").click(function(){
+		var id = $(this).attr("_id");
+		var name = $(this).attr("_name");
+
+		ComConfirm.show("确认删除该接口["+name+"]，将会删除该接口下测试记录和Mock数据?", function(){
+			$.ajax({
+				type : 'POST',
+				url : base_url + "/document/delete",
+				data : {
+					"id" : id
+				},
+				dataType : "json",
+				success : function(data){
+					if (data.code == 200) {
+						ComAlert.show(1, "删除成功", function(){
+							window.location.reload();
+						});
+					} else {
+						ComAlert.show(2, (data.msg || "删除失败") );
+					}
+				},
+			});
 		});
 
 	});

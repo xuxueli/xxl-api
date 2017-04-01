@@ -140,18 +140,18 @@
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
-                        <div class="chart tab-pane active" id="success_resp" style="position: relative; height: 365px;">
+                        <div class="chart tab-pane active" id="success_resp" style="position: relative; height: 100%;">
                             <div class="box-body">
                                 ${document.successRespType}
                                 <br>
-                                <pre name="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</pre>
+                                <pre name="successRespExample" style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</pre>
                             </div>
                         </div>
-                        <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 365px;">
+                        <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 100%;">
                             <div class="box-body">
                                 ${document.failRespType}
                                 <br>
-                                <pre name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
+                                <pre name="failRespExample" style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
                             </div>
                         </div>
                     </div>

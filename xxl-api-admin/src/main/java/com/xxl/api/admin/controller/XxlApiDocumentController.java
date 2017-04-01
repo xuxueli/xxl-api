@@ -1,13 +1,20 @@
 package com.xxl.api.admin.controller;
 
+import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
+import com.xxl.api.admin.core.model.XxlApiGroup;
+import com.xxl.api.admin.core.model.XxlApiProject;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
+import com.xxl.api.admin.dao.IXxlApiGroupDao;
+import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author xuxueli 2017-03-31 18:10:37
@@ -18,6 +25,10 @@ public class XxlApiDocumentController {
 
 	@Resource
 	private IXxlApiDocumentDao xxlApiDocumentDao;
+	@Resource
+	private IXxlApiProjectDao xxlApiProjectDao;
+	@Resource
+	private IXxlApiGroupDao xxlApiGroupDao;
 
 
 	@RequestMapping("/markStar")
@@ -54,7 +65,25 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/addPage")
-	public String addPage(int productId) {
+	public String addPage(Model model, int productId) {
+
+		// project
+		XxlApiProject project = xxlApiProjectDao.load(productId);
+		if (project == null) {
+			throw new RuntimeException("操作失败，项目ID非法");
+		}
+		model.addAttribute("project", project);
+		model.addAttribute("productId", productId);
+
+		// groupList
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(productId);
+		model.addAttribute("groupList", groupList);
+
+		// enum
+		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
+		model.addAttribute("requestHeadersList", RequestConfig.requestHeadersList);
+
+
 		return "document/document.add";
 	}
 	@RequestMapping("/add")

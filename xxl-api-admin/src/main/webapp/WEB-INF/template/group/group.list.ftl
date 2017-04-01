@@ -108,9 +108,9 @@
                                         <tr>
                                             <th width="5%" ><i class="fa fa-star text-yellow"></i></th>
                                             <th width="25%" >接口名称</th>
-                                            <th width="30%" >接口URL</th>
+                                            <th width="25%" >接口URL</th>
                                             <th width="10%" >分组</th>
-                                            <th width="15%" >更新日期</th>
+                                            <th width="20%" >更新日期</th>
                                             <th width="15%" >操作</th>
                                         </tr>
                                     </thead>

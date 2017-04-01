@@ -143,7 +143,7 @@ $(function() {
 		var id = $(this).attr("_id");
 		var productId = $(this).attr("_productId");
 
-		ComConfirm.show("确认删除该接口分组，将会删除该分组下所有接口?", function(){
+		ComConfirm.show("确认删除该接口分组?", function(){
 			$.ajax({
 				type : 'POST',
 				url : base_url + "/group/delete",

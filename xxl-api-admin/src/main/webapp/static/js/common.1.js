@@ -65,7 +65,7 @@ $(function(){
 		} else {
 			adminlte_settings = 'off';
 		}
-		$.cookie('adminlte_settings', adminlte_settings, { expires: 7 });	//$.cookie('the_cookie', '', { expires: -1 });
+		$.cookie('adminlte_settings', adminlte_settings, { expires: 7, path: '/' });	//$.cookie('the_cookie', '', { expires: -1 });
 	});
 	// 左侧菜单状态，js + cookie方式（遗弃）
 	/*

@@ -3,9 +3,10 @@
 <head>
   	<title>API管理平台</title>
   	<#import "/common/common.macro.ftl" as netCommon>
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
 	<@netCommon.commonStyle />
 	<!-- DataTables -->
-  	<link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
+
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">

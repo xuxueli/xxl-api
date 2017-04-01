@@ -98,8 +98,6 @@ public class XxlApiProjectController {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "该项目下存在分组信息，拒绝删除");
 		}
 
-		// 项目下是否存在接口
-
 		int ret = xxlApiProjectDao.delete(id);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}

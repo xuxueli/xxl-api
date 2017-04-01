@@ -219,6 +219,7 @@
                         <!-- Morris chart - Sales -->
                         <div class="chart tab-pane active" id="success_resp" style="position: relative; height: 365px;">
                             <div class="box-body">
+                                响应数据类型(MIME)：
                                 <#list ResponseContentType as item>
                                     <input type="radio" class="iCheck" name="successRespType" value="${item}" <#if document.successRespType==item>checked</#if> >${item}  &nbsp;&nbsp;
                                 </#list>
@@ -228,9 +229,10 @@
                         </div>
                         <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 365px;">
                             <div class="box-body">
-                            <#list ResponseContentType as item>
-                                <input type="radio" class="iCheck" name="failRespType" value="${item}" <#if document.failRespType==item>checked</#if> >${item}  &nbsp;&nbsp;
-                            </#list>
+                                响应数据类型(MIME)：
+                                <#list ResponseContentType as item>
+                                    <input type="radio" class="iCheck" name="failRespType" value="${item}" <#if document.failRespType==item>checked</#if> >${item}  &nbsp;&nbsp;
+                                </#list>
                                 <br>
                                 <textarea name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</textarea>
                             </div>

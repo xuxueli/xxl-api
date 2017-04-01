@@ -32,7 +32,8 @@ CREATE TABLE `xxl_api_group` (
 
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(50) NOT NULL COMMENT '账号',
+  `document_id` int(11) NOT NULL COMMENT '接口ID',
+  `uuid` varchar(50) NOT NULL COMMENT 'UUID',
   `resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：如JSON、XML、HTML、TEXT、JSONP',
   `resp_example` text COMMENT 'Response Content',
   PRIMARY KEY (`id`)

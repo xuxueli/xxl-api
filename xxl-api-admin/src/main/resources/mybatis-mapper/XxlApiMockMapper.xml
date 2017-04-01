@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiMockMapper">
+
+	<resultMap id="XxlApiMock" type="com.xxl.api.admin.core.model.XxlApiMock" >
+		<result column="id" property="id" />
+		<result column="document_id" property="documentId" />
+		<result column="uuid" property="uuid" />
+	    <result column="resp_type" property="respType" />
+		<result column="resp_example" property="respExample" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.`id`,
+		t.`document_id`,
+		t.`uuid`,
+		t.`resp_type`,
+		t.`resp_example`
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiMock" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_mock (
+			`document_id`,
+			`uuid`,
+			`resp_type`,
+			`resp_example`
+		) VALUES (
+			#{documentId},
+			#{uuid},
+			#{respType},
+			#{respExample}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiMock" >
+		UPDATE xxl_api_mock
+		SET
+			`resp_type` = #{respType},
+			`respExample` = #{respExample}
+		WHERE `id` = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_mock
+		WHERE id = #{id}
+	</delete>
+
+	<select id="loadAll" parameterType="java.lang.Integer" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_mock AS t
+		WHERE t.document_id = #{documentId}
+		ORDER BY t.id DESC
+	</select>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_mock AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="loadByUuid" parameterType="java.lang.String" resultMap="XxlApiMock">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_mock AS t
+		WHERE t.uuid = #{uuid}
+	</select>
+
+</mapper>

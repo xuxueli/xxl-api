@@ -5,6 +5,7 @@
     <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
   	<#import "/common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
     <link rel="stylesheet" href="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.css">
 
 </head>
@@ -34,8 +35,8 @@
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?productId=${productId}'" >返回接口列表</button>
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
-                            <button class="btn btn-info btn-xs" type="button" >Test</button>
-                            <button class="btn btn-info btn-xs" type="button" >Mock</button>
+                            <button class="btn btn-info btn-xs" type="button" id="addMock" >新增Mock数据</button>
+                            <button class="btn btn-info btn-xs" type="button" id="addTest" >接口测试</button>
                         </div>
                     </div>
 
@@ -177,8 +178,76 @@
 	<@netCommon.commonFooter />
 </div>
 
-<@netCommon.commonScript />
+<!-- 新增-分组.模态框 -->
+<div class="modal fade" id="addMockModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" >新增Mock数据</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form" role="form" >
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            响应数据类型(MIME)：
+                            <#list ResponseContentType as item>
+                                <input type="radio" class="iCheck" name="successRespType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
+                            </#list>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea name="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="button" class="btn btn-primary save"  >保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- 更新-分组.模态框 -->
+<div class="modal fade" id="updateMockModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" >更新接口分组</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form" role="form" >
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">分组名称<font color="red">*</font></label>
+                        <div class="col-sm-10"><input type="text" class="form-control" name="name" placeholder="请输入“分组名称”" maxlength="12" value="<#if groupInfo?exists>${groupInfo.name}</#if>" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">分组排序<font color="red">*</font></label>
+                        <div class="col-sm-10"><input type="text" class="form-control" name="order" placeholder="请输入“分组排序”" maxlength="5" value="<#if groupInfo?exists>${groupInfo.order}</#if>" ></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="submit" class="btn btn-primary"  >保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+                            <input type="hidden" name="id" value="<#if groupInfo?exists>${groupInfo.id}</#if>" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<@netCommon.commonScript />
+<script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/marked.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/prettify.min.js"></script>

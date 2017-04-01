@@ -1,6 +1,18 @@
 $(function() {
 
-	testEditormdView2 = editormd.markdownToHTML("remark", {
+	// base init
+	$('.iCheck').iCheck({
+		labelHover : false,
+		cursor : true,
+		checkboxClass : 'icheckbox_square-blue',
+		radioClass : 'iradio_square-blue',
+		increaseArea : '20%'
+	});
+
+	/**
+	 * remark view
+	 */
+	remarkView = editormd.markdownToHTML("remark", {
 		htmlDecode      : "style,script,iframe",  // you can filter tags decode
 		emoji           : false,
 		taskList        : false,
@@ -9,19 +21,30 @@ $(function() {
 		sequenceDiagram : false,  // 默认不解析
 	});
 
-	var remarkEditor = editormd.markdownToHTML("remark2", {
-		width   : "100%",
-		height  : 550,
-		syncScrolling : "single",
-		path    : base_url + "/static/plugins/editor.md-1.5.0/lib/",
-		autoFocus:false,
-		//markdown : "",
-		toolbarIcons : function() {
-			// Or return editormd.toolbarModes[name]; // full, simple, mini
-			return editormd.toolbarModes['simple'];
-			// Using "||" set icons align right.
-			//return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "info", "testIcon", "testIcon2", "file", "faicon", "||", "watch", "fullscreen", "preview", "testIcon"]
-		},
+	/**
+	 * 新增，Mock数据
+	 */
+	$("#addMock").click(function(){
+		$('#addMockModal').modal({backdrop: false, keyboard: false}).modal('show');
 	});
+	$('#addMockModal .save').click(function () {
+		$.ajax({
+			type : 'POST',
+			url : base_url + "/document/saveMock",
+			data : $('#addMockModal form').serialize(),
+			dataType : "json",
+			success : function(data){
+				if (data.code == 200) {
+					ComAlert.show(1, "Mock数据保存成功", function(){
+						window.location.reload();
+					});
+				} else {
+					ComAlert.show(2, (data.msg || "Mock数据保存失败") );
+				}
+			},
+		});
+
+	});
+
 
 });

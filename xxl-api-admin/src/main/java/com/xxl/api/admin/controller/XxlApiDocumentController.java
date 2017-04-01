@@ -142,7 +142,7 @@ public class XxlApiDocumentController {
 	}
 
 	/**
-	 * 详情页，API，待完善
+	 * 详情页，API
 	 * @return
 	 */
 	@RequestMapping("/detailPage")

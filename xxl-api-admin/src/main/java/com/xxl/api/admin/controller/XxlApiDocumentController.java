@@ -90,9 +90,9 @@ public class XxlApiDocumentController {
 	}
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(XxlApiDocument xxlApiDocument) {
+	public ReturnT<Integer> add(XxlApiDocument xxlApiDocument) {
 		int ret = xxlApiDocumentDao.add(xxlApiDocument);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?new ReturnT<Integer>(xxlApiDocument.getId()):new ReturnT<Integer>(ReturnT.FAIL_CODE, null);
 	}
 
 	/**

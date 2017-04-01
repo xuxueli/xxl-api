@@ -173,7 +173,7 @@ $(function() {
 					$('#addModal').modal('hide');
 					setTimeout(function () {
 						ComAlert.show(1, "新增成功", function(){
-							window.location.reload();
+							window.location.href  = base_url + '/document/detailPage?id=' + data.content;
 						});
 					}, 315);
 				} else {

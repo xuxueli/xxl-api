@@ -174,7 +174,8 @@ $(function() {
 					$('#addModal').modal('hide');
 					setTimeout(function () {
 						ComAlert.show(1, "更新成功", function(){
-							window.location.reload();
+							var id = $('#ducomentForm input[name=id]').val();
+							window.location.href  = base_url + '/document/detailPage?id=' + id;
 						});
 					}, 315);
 				} else {

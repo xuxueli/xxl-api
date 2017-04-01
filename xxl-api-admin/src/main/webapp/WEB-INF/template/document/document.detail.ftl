@@ -32,9 +32,10 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/group?productId=${productId}')" >返回接口列表</button>
-                            <button class="btn btn-info btn-xs" >Test</button>
-                            <button class="btn btn-info btn-xs" >Mock</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?productId=${productId}'" >返回接口列表</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
+                            <button class="btn btn-info btn-xs" type="button" >Test</button>
+                            <button class="btn btn-info btn-xs" type="button" >Mock</button>
                         </div>
                     </div>
 

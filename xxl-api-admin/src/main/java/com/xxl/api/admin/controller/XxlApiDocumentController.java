@@ -130,6 +130,13 @@ public class XxlApiDocumentController {
 	@RequestMapping("/update")
 	@ResponseBody
 	public ReturnT<String> update(XxlApiDocument xxlApiDocument) {
+
+		// fill not-change val
+		XxlApiDocument oldVo = xxlApiDocumentDao.load(xxlApiDocument.getId());
+		xxlApiDocument.setProjectId(oldVo.getProjectId());
+		xxlApiDocument.setStarLevel(oldVo.getStarLevel());
+		xxlApiDocument.setAddTime(oldVo.getAddTime());
+
 		int ret = xxlApiDocumentDao.update(xxlApiDocument);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}

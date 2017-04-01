@@ -4,8 +4,6 @@
   	<title>API管理平台</title>
     <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
   	<#import "/common/common.macro.ftl" as netCommon>
-    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
-    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
 	<@netCommon.commonStyle />
     <link rel="stylesheet" href="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.css">
 
@@ -21,7 +19,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>新增接口<small>API管理平台</small></h1>
+			<h1>接口详情<small>API管理平台</small></h1>
 		</section>
 
         <section class="content">
@@ -35,7 +33,8 @@
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/group?productId=${productId}')" >返回接口列表</button>
-                            <button class="btn btn-info btn-xs" type="submit" >保存接口</button>
+                            <button class="btn btn-info btn-xs" >Test</button>
+                            <button class="btn btn-info btn-xs" >Mock</button>
                         </div>
                     </div>
 
@@ -43,40 +42,39 @@
                         <div class="form-group">
                             <label class="col-sm-1 control-label">接口分组</label>
                             <div class="col-sm-4">
-                                <select class="form-control select2" style="width: 100%;" name="groupId">
-                                    <option value="0" <#if 0 == document.groupId>selected</#if> >默认分组</option>
+                                <#if 0 == document.groupId>默认分组
+                                <#else>
                                     <#if groupList?exists && groupList?size gt 0>
                                         <#list groupList as group>
-                                            <option value="${group.id}" <#if group.id == document.groupId>selected</#if> >${group.name}</option>
+                                            <#if group.id == document.groupId>${group.name}</#if>
                                         </#list>
                                     </#if>
-                                </select>
+                                </#if>
                             </div>
                             <label class="col-sm-1 control-label">接口状态</label>
                             <div class="col-sm-6">
-                                <input type="radio" class="iCheck" name="status" value="0" <#if 0 == document.status>checked</#if> >启用  &nbsp;&nbsp;
-                                <input type="radio" class="iCheck" name="status" value="1" <#if 1 == document.status>checked</#if> >维护  &nbsp;&nbsp;
-                                <input type="radio" class="iCheck" name="status" value="2" <#if 2 == document.status>checked</#if> >废弃
+                                <#if 0 == document.status>启用
+                                <#elseif 1 == document.status>维护
+                                <#elseif 2 == document.status>废弃
+                                </#if>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label">请求方法</label>
                             <div class="col-sm-4">
-                                <select class="form-control select2" style="width: 100%;" name="requestMethod">
-                                    <#list RequestMethodEnum as item>
-                                        <option value="${item}" <#if item == document.requestMethod>selected</#if> >${item}</option>
-                                    </#list>
-                                </select>
+                                <#list RequestMethodEnum as item>
+                                    <#if item == document.requestMethod>${item}</#if>
+                                </#list>
                             </div>
                             <label class="col-sm-1 control-label">接口URL</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="requestUrl" value="${document.requestUrl}" placeholder="请输入接口URL（相对地址）" maxlength="100" >
+                                ${document.requestUrl}
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label">接口名称</label>
                             <div class="col-sm-11">
-                                <input type="text" class="form-control" name="name" value="${document.name}" placeholder="请输入接口名称" maxlength="50" >
+                                ${document.name}
                             </div>
                         </div>
                     </div>
@@ -86,28 +84,6 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">请求头部</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" id="requestHeaders_add" ><i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-
-                    <div id="requestHeaders_example" style="display: none;" >
-                        <div class="form-group requestHeaders_item" >
-                            <label class="col-sm-1 control-label">头部标签</label>
-                            <div class="col-sm-4 item">
-                                <select class="form-control select2_tag_new key" >
-                                    <option value=""></option>
-                                    <#list requestHeadersEnum as item>
-                                        <option value="${item}">${item}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label">头部内容</label>
-                            <div class="col-sm-5 item">
-                                <input type="text" class="form-control value">
-                            </div>
-                            <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
-                        </div>
                     </div>
 
                     <div class="box-body" id="requestHeaders_parent" >
@@ -117,19 +93,9 @@
                                 <#assign value = requestHeadersMap['value'] />
                                 <div class="form-group requestHeaders_item" >
                                     <label class="col-sm-1 control-label">头部标签</label>
-                                    <div class="col-sm-4 item">
-                                        <select class="form-control select2_tag key" >
-                                            <option value="" <#if key==null>selected</#if> ></option>
-                                            <#list requestHeadersEnum as item>
-                                                <option value="${item}" <#if key==item>selected</#if> >${item}</option>
-                                            </#list>
-                                        </select>
-                                    </div>
+                                    <div class="col-sm-4 item">${key}</div>
                                     <label class="col-sm-1 control-label">头部内容</label>
-                                    <div class="col-sm-5 item">
-                                        <input type="text" class="form-control value" value="${value}" >
-                                    </div>
-                                    <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                                    <div class="col-sm-5 item">${value}</div>
                                 </div>
                             </#list>
                         </#if>
@@ -140,37 +106,6 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">请求参数</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" id="queryParams_add" ><i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-
-                    <div id="queryParams_example" style="display: none;" >
-                        <div class="form-group queryParams_item" >
-                            <div class="col-sm-1 item">
-                                <select class="form-control select2_tag_new notNull" style="width: 100%;">
-                                    <option value="true">必填</option>
-                                    <option value="false">非必填</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label">参数类型</label>
-                            <div class="col-sm-2 item">
-                                <select class="form-control select2_tag_new type" style="width: 100%;">
-                                    <#list QueryParamTypeEnum as item>
-                                        <option value="${item}">${item}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label">参数名称</label>
-                            <div class="col-sm-2 item">
-                                <input type="text" class="form-control name">
-                            </div>
-                            <label class="col-sm-1 control-label">参数说明</label>
-                            <div class="col-sm-3 item">
-                                <input type="text" class="form-control desc">
-                            </div>
-                            <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
-                        </div>
                     </div>
 
                     <div class="box-body" id="queryParams_parent" >
@@ -178,28 +113,16 @@
                             <#list queryParamList as queryParam>
                                 <div class="form-group queryParams_item" >
                                     <div class="col-sm-2 item">
-                                        <select class="form-control select2_tag notNull" style="width: 100%;">
-                                            <option value="true" <#if queryParam.notNull == "true" >selected</#if> >必填</option>
-                                            <option value="false" <#if queryParam.notNull == "false" >selected</#if> >非必填</option>
-                                        </select>
+                                        <#if queryParam.notNull == "true" >必填
+                                        <#else>非必填
+                                        </#if>
                                     </div>
                                     <label class="col-sm-1 control-label">参数类型</label>
-                                    <div class="col-sm-2 item">
-                                        <select class="form-control select2_tag type" style="width: 100%;">
-                                            <#list QueryParamTypeEnum as item>
-                                                <option value="${item}" <#if queryParam.type == item>selected</#if> >${item}</option>
-                                            </#list>
-                                        </select>
-                                    </div>
+                                    <div class="col-sm-2 item">${queryParam.type}</div>
                                     <label class="col-sm-1 control-label">参数名称</label>
-                                    <div class="col-sm-2 item">
-                                        <input type="text" class="form-control name" value="${queryParam.name}" >
-                                    </div>
+                                    <div class="col-sm-2 item">${queryParam.name}</div>
                                     <label class="col-sm-1 control-label">参数说明</label>
-                                    <div class="col-sm-2 item">
-                                        <input type="text" class="form-control desc" value="${queryParam.desc}" >
-                                    </div>
-                                    <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                                    <div class="col-sm-2 item">${queryParam.desc}</div>
                                 </div>
                             </#list>
                         </#if>
@@ -218,20 +141,16 @@
                         <!-- Morris chart - Sales -->
                         <div class="chart tab-pane active" id="success_resp" style="position: relative; height: 365px;">
                             <div class="box-body">
-                                <#list ResponseContentType as item>
-                                    <input type="radio" class="iCheck" name="successRespType" value="${item}" <#if document.successRespType==item>checked</#if> >${item}  &nbsp;&nbsp;
-                                </#list>
+                                ${document.successRespType}
                                 <br>
-                                <textarea name="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</textarea>
+                                <pre name="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</pre>
                             </div>
                         </div>
                         <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 365px;">
                             <div class="box-body">
-                            <#list ResponseContentType as item>
-                                <input type="radio" class="iCheck" name="failRespType" value="${item}" <#if document.failRespType==item>checked</#if> >${item}  &nbsp;&nbsp;
-                            </#list>
+                                ${document.failRespType}
                                 <br>
-                                <textarea name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</textarea>
+                                <pre name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
                             </div>
                         </div>
                     </div>
@@ -259,10 +178,9 @@
 
 <@netCommon.commonScript />
 
-<script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
-<script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
+<script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/marked.min.js"></script>
+<script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/prettify.min.js"></script>
 <script src="${request.contextPath}/static/js/document.detail.1.js"></script>
 </body>
 </html>

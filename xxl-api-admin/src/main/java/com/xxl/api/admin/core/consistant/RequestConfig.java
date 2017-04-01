@@ -52,6 +52,9 @@ public class RequestConfig {
         requestHeadersList.add("Warning");
     }
 
+    /**
+     * Query Param, Type
+     */
     public enum  QueryParamTypeEnum {
 
         STRING("string"),
@@ -72,6 +75,9 @@ public class RequestConfig {
         }
     }
 
+    /**
+     * Query Param
+     */
     public static class QueryParam {
 
         private boolean notNull;    // 是否必填
@@ -109,6 +115,22 @@ public class RequestConfig {
 
         public void setDesc(String desc) {
             this.desc = desc;
+        }
+    }
+
+    /**
+     * Reponse Headers, Content-Type
+     */
+    public enum ResponseContentType{
+        JSON("text/json"),  // text/json;charset=utf-8
+        XML("text/xml"),
+        HTML("text/html;"),
+        TEXT("text/plain"),
+        JSONP("text/json");
+
+        public final String type;
+        ResponseContentType(String type) {
+            this.type = type;
         }
     }
 

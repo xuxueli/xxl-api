@@ -83,7 +83,7 @@ public class XxlApiDocumentController {
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
 		model.addAttribute("requestHeadersList", RequestConfig.requestHeadersList);
 		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
-
+		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
 
 		return "document/document.add";
 	}

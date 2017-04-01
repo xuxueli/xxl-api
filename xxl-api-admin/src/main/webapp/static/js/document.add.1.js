@@ -12,6 +12,8 @@ $(function() {
 		increaseArea : '20%'
 	});
 
+	$(".textarea_remark").wysihtml5();
+
 	/**
 	 * 请求头部，新增一行
 	 */

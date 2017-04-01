@@ -5,6 +5,7 @@
   	<#import "/common/common.macro.ftl" as netCommon>
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 	<@netCommon.commonStyle />
 
 </head>
@@ -176,9 +177,21 @@
                                 <input type="radio" class="iCheck" name="failRespType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
                             </#list>
                                 <br>
-                                <textarea name="failRespExample" style="width: 100%;height: 200px;" ></textarea>
+                                <textarea name="failRespExample" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <#-- 备注 -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">备注</h3>
+                    </div>
+                    <div class="box-body pad">
+                        <form>
+                            <textarea class="textarea textarea_remark" name="remark" placeholder="请输入接口备注" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </form>
                     </div>
                 </div>
 
@@ -193,6 +206,7 @@
 </div>
 
 <@netCommon.commonScript />
+<script src="${request.contextPath}/static/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>

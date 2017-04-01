@@ -50,8 +50,66 @@ public class RequestConfig {
         requestHeadersList.add("User-Agent");
         requestHeadersList.add("Via");
         requestHeadersList.add("Warning");
-
     }
 
+    public enum  QueryParamTypeEnum {
+
+        STRING("string"),
+        BOOLEAN("boolean"),
+        SHORT("short"),
+        INT("int"),
+        LONG("long"),
+        FLOAT("float"),
+        DOUBLE("double"),
+        DATE("date"),
+        DATETIME("datetime"),
+        JSON("json"),
+        BYTE("byte");
+
+        public String title;
+        QueryParamTypeEnum(String title) {
+            this.title = title;
+        }
+    }
+
+    public static class QueryParam {
+
+        private boolean notNull;    // 是否必填
+        private String name;        // 参数名称
+        private String type;        // 参数类型
+        private String desc;        // 参数说明
+
+        public boolean isNotNull() {
+            return notNull;
+        }
+
+        public void setNotNull(boolean notNull) {
+            this.notNull = notNull;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+    }
 
 }

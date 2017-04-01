@@ -19,7 +19,6 @@
 		<result column="fail_resp_type" property="failRespType" />
 		<result column="fail_resp_example" property="failRespExample" />
 		<result column="remark" property="remark" />
-		<result column="remark_type" property="remarkType" />
 		<result column="add_time" property="addTime" />
 		<result column="update_time" property="updateTime" />
 	</resultMap>
@@ -40,7 +39,6 @@
 		t.`fail_resp_type`,
 		t.`fail_resp_example`,
 		t.`remark`,
-		t.`remark_type`,
 		t.`add_time`,
 		t.`update_time`
 	</sql>
@@ -61,7 +59,6 @@
 			`fail_resp_type`,
 			`fail_resp_example`,
 			`remark`,
-			`remark_type`,
 			`add_time`,
 			`update_time`
 		) VALUES (
@@ -79,7 +76,6 @@
 			#{failRespType},
 			#{failRespExample},
 			#{remark},
-			#{remarkType},
 			NOW(),
 			NOW()
 		);
@@ -101,7 +97,6 @@
 			 `fail_resp_type` = #{failRespType},
 			 `fail_resp_example` = #{failRespExample},
 			 `remark` = #{remark},
-			 `remark_type` = #{remarkType},
 			 `update_time` = NOW()
 		 WHERE `id` = #{id}
 

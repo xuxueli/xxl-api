@@ -158,7 +158,7 @@ $(function() {
 			name : {
             	required :"请输入“项目名称”",
 				minlength: "长度不可少于5",
-				minlength: "长度不可多余50"
+				maxlength: "长度不可多余50"
             },
 			baseUrlProduct : {
             	required :"请输入“跟地址：线上环境”",
@@ -234,7 +234,7 @@ $(function() {
 			name : {
 				required :"请输入“项目名称”",
 				minlength: "长度不可少于5",
-				minlength: "长度不可多余50"
+				maxlength: "长度不可多余50"
 			},
 			baseUrlProduct : {
 				required :"请输入“跟地址：线上环境”",

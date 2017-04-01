@@ -30,7 +30,7 @@ $(function() {
 	$('#addMockModal .save').click(function () {
 		$.ajax({
 			type : 'POST',
-			url : base_url + "/document/saveMock",
+			url : base_url + "/mock/add",
 			data : $('#addMockModal form').serialize(),
 			dataType : "json",
 			success : function(data){

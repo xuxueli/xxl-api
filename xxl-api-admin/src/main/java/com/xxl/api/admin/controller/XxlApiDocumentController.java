@@ -1,14 +1,13 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.core.consistant.RequestConfig;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiDocument;
-import com.xxl.api.admin.core.model.XxlApiGroup;
-import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
+import com.xxl.api.admin.dao.IXxlApiMockDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +30,8 @@ public class XxlApiDocumentController {
 	private IXxlApiProjectDao xxlApiProjectDao;
 	@Resource
 	private IXxlApiGroupDao xxlApiGroupDao;
+	@Resource
+	private IXxlApiMockDao xxlApiMockDao;
 
 
 	@RequestMapping("/markStar")
@@ -55,6 +56,10 @@ public class XxlApiDocumentController {
 		// 存在Test记录，拒绝删除
 
 		// 存在Mock记录，拒绝删除
+		List<XxlApiMock> mockList = xxlApiMockDao.loadAll(id);
+		if (CollectionUtils.isNotEmpty(mockList)) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，该接口下存在Mock记录，不允许删除");
+		}
 
 		int ret = xxlApiDocumentDao.delete(id);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
@@ -165,6 +170,10 @@ public class XxlApiDocumentController {
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
 		model.addAttribute("groupList", groupList);
 
+		// mock list
+		List<XxlApiMock> mockList = xxlApiMockDao.loadAll(id);
+		model.addAttribute("mockList", mockList);
+
 		// enum
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
 		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
@@ -172,18 +181,6 @@ public class XxlApiDocumentController {
 		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
 
 		return "document/document.detail";
-	}
-
-	/**
-	 * 保存Mock数据
-	 * @param xxlApiDocument
-	 * @return
-	 */
-	@RequestMapping("/saveMock")
-	@ResponseBody
-	public ReturnT<String> saveMock(XxlApiDocument xxlApiDocument) {
-		int ret = xxlApiDocumentDao.update(xxlApiDocument);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
 	/**
@@ -209,6 +206,5 @@ public class XxlApiDocumentController {
 	public ReturnT<String> testSave() {
 		return ReturnT.SUCCESS;
 	}
-
 
 }

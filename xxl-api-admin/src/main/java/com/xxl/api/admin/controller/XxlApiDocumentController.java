@@ -5,9 +5,11 @@ import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiGroup;
 import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +61,7 @@ public class XxlApiDocumentController {
 	}
 
 	/**
-	 * 新增，API，待完善
+	 * 新增，API
 	 *
 	 * @param productId
 	 * @return
@@ -72,7 +74,6 @@ public class XxlApiDocumentController {
 		if (project == null) {
 			throw new RuntimeException("操作失败，项目ID非法");
 		}
-		model.addAttribute("project", project);
 		model.addAttribute("productId", productId);
 
 		// groupList
@@ -81,7 +82,7 @@ public class XxlApiDocumentController {
 
 		// enum
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
-		model.addAttribute("requestHeadersList", RequestConfig.requestHeadersList);
+		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
 		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
 		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
 
@@ -95,11 +96,35 @@ public class XxlApiDocumentController {
 	}
 
 	/**
-	 * 更新，API，待完善
+	 * 更新，API
 	 * @return
 	 */
 	@RequestMapping("/updatePage")
-	public String updatePage() {
+	public String updatePage(Model model, int id) {
+
+		// document
+		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
+		if (xxlApiDocument == null) {
+			throw new RuntimeException("操作失败，接口ID非法");
+		}
+		model.addAttribute("document", xxlApiDocument);
+		model.addAttribute("requestHeadersList", (StringUtils.isNotBlank(xxlApiDocument.getRequestHeaders()))?JacksonUtil.readValue(xxlApiDocument.getRequestHeaders(), List.class):null );
+		model.addAttribute("queryParamList", (StringUtils.isNotBlank(xxlApiDocument.getQueryParams()))?JacksonUtil.readValue(xxlApiDocument.getQueryParams(), List.class):null );
+
+		// project
+		int projectId = xxlApiDocument.getProjectId();
+		model.addAttribute("productId", projectId);
+
+		// groupList
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
+		model.addAttribute("groupList", groupList);
+
+		// enum
+		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
+		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
+		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
+		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
+
 		return "document/document.update";
 	}
 	@RequestMapping("/update")
@@ -107,6 +132,39 @@ public class XxlApiDocumentController {
 	public ReturnT<String> update(XxlApiDocument xxlApiDocument) {
 		int ret = xxlApiDocumentDao.update(xxlApiDocument);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	/**
+	 * 详情页，API，待完善
+	 * @return
+	 */
+	@RequestMapping("/detailPage")
+	public String detailPage(Model model, int id) {
+
+		// document
+		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
+		if (xxlApiDocument == null) {
+			throw new RuntimeException("操作失败，接口ID非法");
+		}
+		model.addAttribute("document", xxlApiDocument);
+		model.addAttribute("requestHeadersList", (StringUtils.isNotBlank(xxlApiDocument.getRequestHeaders()))?JacksonUtil.readValue(xxlApiDocument.getRequestHeaders(), List.class):null );
+		model.addAttribute("queryParamList", (StringUtils.isNotBlank(xxlApiDocument.getQueryParams()))?JacksonUtil.readValue(xxlApiDocument.getQueryParams(), List.class):null );
+
+		// project
+		int projectId = xxlApiDocument.getProjectId();
+		model.addAttribute("productId", projectId);
+
+		// groupList
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
+		model.addAttribute("groupList", groupList);
+
+		// enum
+		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
+		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
+		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
+		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
+
+		return "document/document.detail";
 	}
 
 	/**
@@ -119,15 +177,6 @@ public class XxlApiDocumentController {
 	public ReturnT<String> saveMock(XxlApiDocument xxlApiDocument) {
 		int ret = xxlApiDocumentDao.update(xxlApiDocument);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
-	}
-
-	/**
-	 * 详情页，API，待完善
-	 * @return
-	 */
-	@RequestMapping("/detailPage")
-	public String detailPage() {
-		return "document/document.detail";
 	}
 
 	/**

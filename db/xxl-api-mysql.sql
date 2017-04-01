@@ -10,12 +10,11 @@ CREATE TABLE `xxl_api_document` (
   `request_method` varchar(20) NOT NULL COMMENT 'Request Method：如POST、GET',
   `request_headers` text COMMENT 'Request Headers：Map-JSON格式字符串',
   `query_params` text COMMENT 'Query String Parameters：Map-JSON格式字符串',
-  `success_resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：成功接口，如JSON、XML、HTML、TEXT',
+  `success_resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：成功接口，如JSON、XML、HTML、TEXT、JSONP',
   `success_resp_example` varchar(255) DEFAULT NULL COMMENT 'Response Content：成功接口',
   `fail_resp_type` varchar(255) NOT NULL COMMENT 'Response Content-type：失败接口',
   `fail_resp_example` varchar(255) DEFAULT NULL COMMENT 'Response Content：失败接口',
   `remark` text COMMENT '备注',
-  `remark_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '备注类型：0-markdown、1-富文本',
   `add_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -34,7 +33,7 @@ CREATE TABLE `xxl_api_group` (
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uuid` varchar(50) NOT NULL COMMENT '账号',
-  `resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：如JSON、XML、HTML、TEXT',
+  `resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：如JSON、XML、HTML、TEXT、JSONP',
   `resp_example` text COMMENT 'Response Content',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -78,4 +77,3 @@ CREATE TABLE `xxl_api_user_permission` (
   `add_time` datetime NOT NULL COMMENT '新增时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-

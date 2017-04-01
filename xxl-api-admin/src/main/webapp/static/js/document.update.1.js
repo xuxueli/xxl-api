@@ -24,8 +24,9 @@ $(function() {
 			return editormd.toolbarModes['simple'];
 			// Using "||" set icons align right.
 			//return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "info", "testIcon", "testIcon2", "file", "faicon", "||", "watch", "fullscreen", "preview", "testIcon"]
-		}
+		},
 	});
+
 
 	/**
 	 * 请求头部，新增一行
@@ -168,16 +169,16 @@ $(function() {
 					'queryParams':queryParams
 			});
 
-			$.post(base_url + "/document/add", params, function(data, status) {
+			$.post(base_url + "/document/update", params, function(data, status) {
 				if (data.code == "200") {
 					$('#addModal').modal('hide');
 					setTimeout(function () {
-						ComAlert.show(1, "新增成功", function(){
+						ComAlert.show(1, "更新成功", function(){
 							window.location.reload();
 						});
 					}, 315);
 				} else {
-					ComAlert.show(2, (data.msg || "新增失败") );
+					ComAlert.show(2, (data.msg || "更新失败") );
 				}
 			});
 		}

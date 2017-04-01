@@ -125,7 +125,12 @@
                                                             </#if>
                                                         </a>
                                                     </td>
-                                                    <td class="mailbox-name"><a href="${request.contextPath}/document/detailPage?id=${document.id}" target="_blank" >${document.name}</a></td>
+                                                    <td class="mailbox-name">
+                                                        <#if document.status==0><i class="fa fa-circle-o text-green"></i>
+                                                        <#elseif document.status==1><i class="fa fa-circle-o text-yellow"></i>
+                                                        <#else><i class="fa fa-circle-o text-light-gray"></i></#if>
+                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id}" target="_blank" >${document.name}</a>
+                                                    </td>
                                                     <td class="mailbox-attachment"><span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;${document.requestUrl}</td>
                                                     <td class="mailbox-date">
                                                         <#if groupList?exists && groupList?size gt 0>

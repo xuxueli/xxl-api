@@ -1,10 +1,6 @@
 package com.xxl.api.admin.core.model;
 
-import com.xxl.api.admin.core.consistant.RequestConfig;
-
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xuxueli on 17/3/31.
@@ -28,10 +24,6 @@ public class XxlApiDocument {
     private String remark;              // 备注
     private Date addTime;               // 创建时间
     private Date updateTime;            // 更新时间
-
-    // plugin
-    private List<Map<String, String>> requestHeaderList;
-    private List<RequestConfig.QueryParam> queryParamList;
 
     public int getId() {
         return id;
@@ -167,21 +159,5 @@ public class XxlApiDocument {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public List<Map<String, String>> getRequestHeaderList() {
-        return requestHeaderList;
-    }
-
-    public void setRequestHeaderList(List<Map<String, String>> requestHeaderList) {
-        this.requestHeaderList = requestHeaderList;
-    }
-
-    public List<RequestConfig.QueryParam> getQueryParamList() {
-        return queryParamList;
-    }
-
-    public void setQueryParamList(List<RequestConfig.QueryParam> queryParamList) {
-        this.queryParamList = queryParamList;
     }
 }

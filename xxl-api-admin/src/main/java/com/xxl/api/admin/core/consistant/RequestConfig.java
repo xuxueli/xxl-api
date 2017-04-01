@@ -18,38 +18,38 @@ public class RequestConfig {
     /**
      * Request Headers
      */
-    public static List<String> requestHeadersList = new LinkedList<String>();
+    public static List<String> requestHeadersEnum = new LinkedList<String>();
     static {
-        requestHeadersList.add("Accept");
-        requestHeadersList.add("Accept-Charset");
-        requestHeadersList.add("Accept-Encoding");
-        requestHeadersList.add("Accept-Language");
-        requestHeadersList.add("Accept-Ranges");
-        requestHeadersList.add("Authorization");
-        requestHeadersList.add("Cache-Control");
-        requestHeadersList.add("Connection");
-        requestHeadersList.add("Cookie");
-        requestHeadersList.add("Content-Length");
-        requestHeadersList.add("Content-Type");
-        requestHeadersList.add("Date");
-        requestHeadersList.add("Expect");
-        requestHeadersList.add("From");
-        requestHeadersList.add("Host");
-        requestHeadersList.add("If-Match");
-        requestHeadersList.add("If-Modified-Since");
-        requestHeadersList.add("If-None-Match");
-        requestHeadersList.add("If-Range");
-        requestHeadersList.add("If-Unmodified-Since");
-        requestHeadersList.add("Max-Forwards");
-        requestHeadersList.add("Pragma");
-        requestHeadersList.add("Proxy-Authorization");
-        requestHeadersList.add("Range");
-        requestHeadersList.add("Referer");
-        requestHeadersList.add("TE");
-        requestHeadersList.add("Upgrade");
-        requestHeadersList.add("User-Agent");
-        requestHeadersList.add("Via");
-        requestHeadersList.add("Warning");
+        requestHeadersEnum.add("Accept");
+        requestHeadersEnum.add("Accept-Charset");
+        requestHeadersEnum.add("Accept-Encoding");
+        requestHeadersEnum.add("Accept-Language");
+        requestHeadersEnum.add("Accept-Ranges");
+        requestHeadersEnum.add("Authorization");
+        requestHeadersEnum.add("Cache-Control");
+        requestHeadersEnum.add("Connection");
+        requestHeadersEnum.add("Cookie");
+        requestHeadersEnum.add("Content-Length");
+        requestHeadersEnum.add("Content-Type");
+        requestHeadersEnum.add("Date");
+        requestHeadersEnum.add("Expect");
+        requestHeadersEnum.add("From");
+        requestHeadersEnum.add("Host");
+        requestHeadersEnum.add("If-Match");
+        requestHeadersEnum.add("If-Modified-Since");
+        requestHeadersEnum.add("If-None-Match");
+        requestHeadersEnum.add("If-Range");
+        requestHeadersEnum.add("If-Unmodified-Since");
+        requestHeadersEnum.add("Max-Forwards");
+        requestHeadersEnum.add("Pragma");
+        requestHeadersEnum.add("Proxy-Authorization");
+        requestHeadersEnum.add("Range");
+        requestHeadersEnum.add("Referer");
+        requestHeadersEnum.add("TE");
+        requestHeadersEnum.add("Upgrade");
+        requestHeadersEnum.add("User-Agent");
+        requestHeadersEnum.add("Via");
+        requestHeadersEnum.add("Warning");
     }
 
     /**

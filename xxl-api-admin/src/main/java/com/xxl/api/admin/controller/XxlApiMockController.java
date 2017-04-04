@@ -1,15 +1,22 @@
 package com.xxl.api.admin.controller;
 
+import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiMock;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiMockDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 /**
@@ -18,6 +25,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/mock")
 public class XxlApiMockController {
+	private static Logger logger = LoggerFactory.getLogger(XxlApiMockController.class);
 
 	@Resource
 	private IXxlApiMockDao xxlApiMockDao;
@@ -56,6 +64,31 @@ public class XxlApiMockController {
 	public ReturnT<String> update(XxlApiMock xxlApiMock) {
 		int ret = xxlApiMockDao.update(xxlApiMock);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	@RequestMapping("/run/{uuid}")
+	public void run(@PathVariable("uuid") String uuid, HttpServletRequest request, HttpServletResponse response) {
+		XxlApiMock xxlApiMock = xxlApiMockDao.loadByUuid(uuid);
+		if (xxlApiMock == null) {
+			throw new RuntimeException("Mock数据ID非法");
+		}
+
+		RequestConfig.ResponseContentType contentType = RequestConfig.ResponseContentType.match(xxlApiMock.getRespType());
+		if (contentType == null) {
+			throw new RuntimeException("Mock数据响应数据类型(MIME)非法");
+		}
+
+		// write response
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType(contentType.type);
+
+			PrintWriter writer = response.getWriter();
+			writer.write(xxlApiMock.getRespExample());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
 	}
 
 }

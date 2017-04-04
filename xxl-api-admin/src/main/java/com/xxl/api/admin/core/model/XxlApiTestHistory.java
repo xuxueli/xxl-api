@@ -15,6 +15,7 @@ public class XxlApiTestHistory {
     private String requestMethod;       // Request Method：如POST、GET
     private String requestHeaders;      // Request Headers：Map-JSON格式字符串
     private String queryParams;         // Query String Parameters：VO-JSON格式字符串
+    private String respType;            // Response Content-type
 
     public int getId() {
         return id;
@@ -78,5 +79,13 @@ public class XxlApiTestHistory {
 
     public void setQueryParams(String queryParams) {
         this.queryParams = queryParams;
+    }
+
+    public String getRespType() {
+        return respType;
+    }
+
+    public void setRespType(String respType) {
+        this.respType = respType;
     }
 }

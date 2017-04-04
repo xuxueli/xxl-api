@@ -1,245 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-  	<title>API管理平台</title>
-  	<#import "/common/common.macro.ftl" as netCommon>
-	<@netCommon.commonStyle />
-	<!-- DataTables -->
-  	<link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
+    <title>API管理平台</title>
+    <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
+    <#import "/common/common.macro.ftl" as netCommon>
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
+    <@netCommon.commonStyle />
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
 <div class="wrapper">
-	<!-- header -->
-	<@netCommon.commonHeader />
-	<!-- left -->
-	<@netCommon.commonLeft "projectList" />
+    <!-- header -->
+<@netCommon.commonHeader />
+    <!-- left -->
+<@netCommon.commonLeft "projectList" />
 
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>接口管理<small>API管理平台</small></h1>
-		</section>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Test接口<small>API管理平台</small></h1>
+        </section>
 
         <section class="content">
-            <div class="row">
-                <!-- 接口分组 -->
-                <div class="col-md-3">
-                    <a class="btn btn-primary btn-block margin-bottom">${project.name}</a>
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">接口分组</h3>
-
-                            <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" id="addGroup" ><i class="fa fa-plus"></i></button>
-                            </div>
-
-                        </div>
-                        <div class="box-body no-padding">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li <#if groupId == -1>class="active"</#if> groupId="-1" >
-                                    <a href="/group?productId=${productId}&groupId=-1" >
-                                        <i class="fa fa-inbox"></i>全部
-                                        <#--<span class="label label-primary pull-right">12</span>-->
-                                    </a>
-                                </li>
-                                <li <#if groupId == 0>class="active"</#if> groupId="0" >
-                                    <a href="/group?productId=${productId}&groupId=0" >
-                                        <i class="fa fa-inbox"></i>默认分组
-                                        <#--<span class="label label-primary pull-right">12</span>-->
-                                    </a>
-                                </li>
-                                <#if groupList?exists && groupList?size gt 0>
-                                    <#list groupList as group>
-                                        <li <#if groupId == group.id >class="active"</#if> groupId="${group.id}" >
-                                            <a href="${request.contextPath}/group?productId=${productId}&groupId=${group.id}" >
-                                                <i class="fa fa-inbox"></i>${group.name}
-                                                <#--<span class="label label-primary pull-right">12</span>-->
-                                            </a>
-                                        </li>
-                                    </#list>
-                                </#if>
-                            </ul>
-                        </div>
-                        <!-- /.box-body -->
+            <form class="form-horizontal" id="ducomentForm" >
+                <#--基础信息-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">基础信息</h3>
                     </div>
 
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">请求方法</label>
+                            <div class="col-sm-4">
+                                <select class="form-control select2" style="width: 100%;" id="requestMethod">
+                                <#list RequestMethodEnum as item>
+                                    <option value="${item}">${item}</option>
+                                </#list>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">接口URL</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100" >
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.col -->
 
-                <#--接口列表-->
-                <div class="col-md-9">
-                    <div class="box box-primary">
-                        <#--标题栏-->
-                        <div class="box-header with-border">
-                            <h3 class="box-title">
-                                <#if groupId==-1>全部
-                                <#elseif groupId==0>默认分组
-                                <#else>
-                                    <#if groupInfo?exists>${groupInfo.name}</#if>
-                                </#if>
-                            </h3>
+                <#--请求头部-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">请求头部</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="requestHeaders_add" ><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
 
-                            <#if groupInfo?exists>
-                                &nbsp;&nbsp;
-                                <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑分组</button>
-                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除分组</button>
-                                |
+                    <div id="requestHeaders_example" style="display: none;" >
+                        <div class="form-group requestHeaders_item" >
+                            <label class="col-sm-1 control-label">头部标签</label>
+                            <div class="col-sm-4 item">
+                                <select class="form-control select2_tag_new key" >
+                                    <option value=""></option>
+                                <#list requestHeadersEnum as item>
+                                    <option value="${item}">${item}</option>
+                                </#list>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">头部内容</label>
+                            <div class="col-sm-5 item">
+                                <input type="text" class="form-control value">
+                            </div>
+                            <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" id="requestHeaders_parent" >
+                    </div>
+                </div>
+
+                <#--请求参数-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">请求参数</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="queryParams_add" ><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="queryParams_example" style="display: none;" >
+                        <div class="form-group queryParams_item" >
+                            <label class="col-sm-1 control-label">参数名称</label>
+                            <div class="col-sm-4 item">
+                                <input type="text" class="form-control key">
+                            </div>
+                            <label class="col-sm-1 control-label">参数说明</label>
+                            <div class="col-sm-5 item">
+                                <input type="text" class="form-control value">
+                            </div>
+                            <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" id="queryParams_parent" >
+                    </div>
+                </div>
+
+                <#--响应结果-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">响应结果</h3>
+                        <div class="box-tools pull-right">
+                            <input type="hidden" id="documentId" value="${documentId}" >
+                            <input type="hidden" id="testId" value="${testId}" >
+                            <#if testHistory?exists >
+                                <button class="btn btn-default btn-xs" type="button" >更新</button>
+                            <#elseif document?exists >
+                                <button class="btn btn-default btn-xs" type="button" >保存</button>
                             </#if>
-                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?productId=${productId}')" >+新增接口</button>
-
-                            &nbsp;&nbsp;
-                            共<#if documentList?exists>${documentList?size}<#else>0</#if>个接口
-
-                            <div class="box-tools pull-right">
-                                <div class="has-feedback">
-                                    <input type="text" class="form-control input-sm" id="searchName" placeholder="接口搜索">
-                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                                </div>
-                            </div>
+                            <button class="btn btn-info btn-xs" type="button" id="run" >运行</button>
                         </div>
-
-                        <div class="box-body no-padding">
-                            <#--接口列表-->
-                            <div class="table-responsive mailbox-messages">
-                                <table class="table table-hover table-striped" id="documentList" >
-                                    <thead>
-                                        <tr>
-                                            <th width="4%" ><i class="fa fa-star text-yellow"></i></th>
-                                            <th width="25%" >接口名称</th>
-                                            <th width="25%" >接口URL</th>
-                                            <th width="15%" >分组</th>
-                                            <th width="17%" >更新日期</th>
-                                            <th width="7%" >操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <#if documentList?exists && documentList?size gt 0>
-                                            <#list documentList as document>
-                                                <tr name="${document.name}" >
-                                                    <td class="mailbox-star">
-                                                        <a href="#" class="markStar" _starLevel="${document.starLevel}" _id="${document.id}" >
-                                                            <#if document.starLevel == 1><i class="fa fa-star text-yellow"></i>
-                                                            <#else><i class="fa fa-star-o text-yellow"></i>
-                                                            </#if>
-                                                        </a>
-                                                    </td>
-                                                    <td class="mailbox-name" title="${document.name}" >
-                                                        <#if document.status==0><i class="fa fa-circle-o text-green"></i>
-                                                        <#elseif document.status==1><i class="fa fa-circle-o text-yellow"></i>
-                                                        <#else><i class="fa fa-circle-o text-light-gray"></i></#if>
-                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id}" target="_blank" >
-                                                            <#if document.name?length gt 12>${document.name?substring(0, 12)}<#else>${document.name}</#if>
-                                                        </a>
-                                                    </td>
-                                                    <td class="mailbox-attachment" title="${document.requestUrl}" >
-                                                        <span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;<#if document.requestUrl?length gt 25>${document.requestUrl?substring(0, 25)}...<#else>${document.requestUrl}</#if>
-                                                    </td>
-                                                    <td class="mailbox-date">
-                                                        <#if groupList?exists && groupList?size gt 0>
-                                                            <#list groupList as group>
-                                                                <#if group.id == document.groupId >${group.name}</#if>
-                                                            </#list>
-                                                        </#if>
-                                                    </td>
-                                                    <td class="mailbox-date">${document.updateTime?datetime}</td>
-                                                    <td class="mailbox-date" >
-                                                        <a href="${request.contextPath}/document/updatePage?id=${document.id}" target="_blank"  style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" title="修改" ><i class="fa fa-fw fa-wrench"></i></a>
-                                                        <a href="javascript:;" class="deleteDocument" _id="${document.id}" _name="${document.name}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" title="删除" ><i class="fa fa-fw fa-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </#list>
-                                        </#if>
-                                    </tbody>
-                                </table>
-                                <!-- /.table -->
-                            </div>
-                        </div>
-
                     </div>
-                    <!-- /. box -->
+                    <div class="box-body">
+                        响应数据类型(MIME)：
+                        <#list ResponseContentType as item>
+                            <input type="radio" class="iCheck" id="respType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
+                        </#list>
+                        <br>
+                        <pre id="respContent" ><br><br><br><br><br></pre>
+                    </div>
                 </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+
+            </form>
+
         </section>
-        <!-- /.content -->
 
-	</div>
+    </div>
 
-	<!-- footer -->
-	<@netCommon.commonFooter />
-</div>
-
-<!-- 新增-分组.模态框 -->
-<div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog"  aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-            	<h4 class="modal-title" >新增接口分组</h4>
-         	</div>
-         	<div class="modal-body">
-				<form class="form-horizontal form" role="form" >
-					<div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">分组名称<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="name" placeholder="请输入“分组名称”" maxlength="12" ></div>
-					</div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">分组排序<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="order" placeholder="请输入“分组排序”" maxlength="5" ></div>
-                    </div>
-
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-6">
-							<button type="submit" class="btn btn-primary"  >保存</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
-                            <input type="hidden" name="productId" value="${productId}" >
-						</div>
-					</div>
-				</form>
-         	</div>
-		</div>
-	</div>
-</div>
-
-<!-- 更新-分组.模态框 -->
-<div class="modal fade" id="updateGroupModal" tabindex="-1" role="dialog"  aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-            	<h4 class="modal-title" >更新接口分组</h4>
-         	</div>
-         	<div class="modal-body">
-                <form class="form-horizontal form" role="form" >
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">分组名称<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="name" placeholder="请输入“分组名称”" maxlength="12" value="<#if groupInfo?exists>${groupInfo.name}</#if>" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">分组排序<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="order" placeholder="请输入“分组排序”" maxlength="5" value="<#if groupInfo?exists>${groupInfo.order}</#if>" ></div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-6">
-                            <button type="submit" class="btn btn-primary"  >保存</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
-                            <input type="hidden" name="id" value="<#if groupInfo?exists>${groupInfo.id}</#if>" >
-                        </div>
-                    </div>
-                </form>
-         	</div>
-		</div>
-	</div>
+    <!-- footer -->
+<@netCommon.commonFooter />
 </div>
 
 <@netCommon.commonScript />
-<!-- DataTables -->
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
-<!-- moment -->
-<script src="${request.contextPath}/static/js/group.list.1.js"></script>
+
+<script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script src="${request.contextPath}/static/js/test.index.1.js"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@
 		<result column="request_method" property="requestMethod" />
 		<result column="request_headers" property="requestHeaders" />
 		<result column="query_params" property="queryParams" />
+		<result column="resp_type" property="respType" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -22,7 +23,8 @@
 		t.`request_url`,
 		t.`request_method`,
 		t.`request_headers`,
-		t.`query_params`
+		t.`query_params`,
+		t.`resp_type`
 	</sql>
 
 	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiTestHistory" useGeneratedKeys="true" keyProperty="id" >
@@ -33,7 +35,8 @@
 			`request_url`,
 			`request_method`,
 			`request_headers`,
-			`query_params`
+			`query_params`,
+			`resp_type`
 		) VALUES (
 			#{documentId},
 			NOW(),
@@ -41,7 +44,8 @@
 			#{requestUrl},
 			#{requestMethod},
 			#{requestHeaders},
-			#{queryParams}
+			#{queryParams},
+			#{respType}
 		);
 	</insert>
 
@@ -52,6 +56,7 @@
 			`request_method` = #{requestMethod},
 			`request_headers` = #{requestHeaders},
 			`query_params` = #{queryParams},
+			`resp_type` = #{respType},
 			 `update_time` = NOW()
 		 WHERE `id` = #{id}
 

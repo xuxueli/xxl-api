@@ -56,8 +56,13 @@ CREATE TABLE `xxl_api_project` (
 
 CREATE TABLE `xxl_api_test_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `document_id` int(11) NOT NULL COMMENT ''接口ID'',
-  `query_params_data` text COMMENT ''Query String Parameters：Map-JSON格式字符串，具体请求数据'',
+  `document_id` int(11) NOT NULL COMMENT '接口ID',
+  `add_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `request_url` varchar(200) NOT NULL COMMENT 'Request URL：绝对地址',
+  `request_method` varchar(20) NOT NULL COMMENT 'Request Method：如POST、GET',
+  `request_headers` text COMMENT 'Request Headers：Map-JSON格式字符串',
+  `query_params` text COMMENT 'Query String Parameters：VO-JSON格式字符串',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

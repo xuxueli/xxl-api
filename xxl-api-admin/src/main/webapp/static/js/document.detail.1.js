@@ -113,4 +113,30 @@ $(function() {
 	});
 
 
+	/**
+	 * 删除，Test历史
+	 */
+	$('.deleteTest').click(function () {
+		var id = $(this).attr('_id');
+		ComConfirm.show("确认删除该Test历史?", function(){
+			$.ajax({
+				type : 'POST',
+				url : base_url + "/test/delete",
+				data : {
+					"id" : id
+				},
+				dataType : "json",
+				success : function(data){
+					if (data.code == 200) {
+						ComAlert.show(1, "删除成功", function(){
+							window.location.reload();
+						});
+					} else {
+						ComAlert.show(2, (data.msg || "删除失败") );
+					}
+				}
+			});
+		});
+	});
+
 });

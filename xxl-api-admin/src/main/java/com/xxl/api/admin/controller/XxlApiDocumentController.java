@@ -3,10 +3,7 @@ package com.xxl.api.admin.controller;
 import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.JacksonUtil;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
-import com.xxl.api.admin.dao.IXxlApiGroupDao;
-import com.xxl.api.admin.dao.IXxlApiMockDao;
-import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.dao.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -32,6 +29,8 @@ public class XxlApiDocumentController {
 	private IXxlApiGroupDao xxlApiGroupDao;
 	@Resource
 	private IXxlApiMockDao xxlApiMockDao;
+	@Resource
+	private IXxlApiTestHistoryDao xxlApiTestHistoryDao;
 
 
 	@RequestMapping("/markStar")
@@ -54,6 +53,10 @@ public class XxlApiDocumentController {
 	public ReturnT<String> delete(int id) {
 
 		// 存在Test记录，拒绝删除
+		List<XxlApiTestHistory> historyList = xxlApiTestHistoryDao.loadByDocumentId(id);
+		if (CollectionUtils.isNotEmpty(historyList)) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，该接口下存在Test记录，不允许删除");
+		}
 
 		// 存在Mock记录，拒绝删除
 		List<XxlApiMock> mockList = xxlApiMockDao.loadAll(id);
@@ -178,6 +181,10 @@ public class XxlApiDocumentController {
 		List<XxlApiMock> mockList = xxlApiMockDao.loadAll(id);
 		model.addAttribute("mockList", mockList);
 
+		// test list
+		List<XxlApiTestHistory> testHistoryList = xxlApiTestHistoryDao.loadByDocumentId(id);
+		model.addAttribute("testHistoryList", testHistoryList);
+
 		// enum
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
 		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
@@ -185,30 +192,6 @@ public class XxlApiDocumentController {
 		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
 
 		return "document/document.detail";
-	}
-
-	/**
-	 * 接口测试，待完善
-	 * @return
-	 */
-	@RequestMapping("/testPage")
-	public String testPage() {
-		return "document/document.test";
-	}
-	@RequestMapping("/test")
-	@ResponseBody
-	public ReturnT<String> test() {
-		return ReturnT.SUCCESS;
-	}
-
-	/**
-	 * 接口测试记录，保存接口
-	 * @return
-	 */
-	@RequestMapping("/testSave")
-	@ResponseBody
-	public ReturnT<String> testSave() {
-		return ReturnT.SUCCESS;
 	}
 
 }

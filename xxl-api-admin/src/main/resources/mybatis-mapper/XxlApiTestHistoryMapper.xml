@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiTestHistoryMapper">
+	
+	<resultMap id="XxlApiTestHistory" type="com.xxl.api.admin.core.model.XxlApiTestHistory" >
+		<result column="id" property="id" />
+		<result column="document_id" property="documentId" />
+		<result column="add_time" property="addTime" />
+	    <result column="update_time" property="updateTime" />
+		<result column="request_url" property="requestUrl" />
+		<result column="request_method" property="requestMethod" />
+		<result column="request_headers" property="requestHeaders" />
+		<result column="query_params" property="queryParams" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.`id`,
+		t.`document_id`,
+		t.`add_time`,
+		t.`update_time`,
+		t.`request_url`,
+		t.`request_method`,
+		t.`request_headers`,
+		t.`query_params`
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiTestHistory" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_test_history (
+			`document_id`,
+			`add_time`,
+			`update_time`,
+			`request_url`,
+			`request_method`,
+			`request_headers`,
+			`query_params`
+		) VALUES (
+			#{documentId},
+			NOW(),
+			NOW(),
+			#{requestUrl},
+			#{requestMethod},
+			#{requestHeaders},
+			#{queryParams}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiTestHistory" >
+		UPDATE xxl_api_test_history
+		SET
+			`request_url` = #{requestUrl},
+			`request_method` = #{requestMethod},
+			`request_headers` = #{requestHeaders},
+			`query_params` = #{queryParams},
+			 `update_time` = NOW()
+		 WHERE `id` = #{id}
+
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_test_history
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiTestHistory">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_test_history AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="loadByDocumentId" parameterType="java.lang.Integer" resultMap="XxlApiTestHistory">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_test_history AS t
+		WHERE t.document_id = #{documentId}
+		ORDER BY t.add_time DESC
+	</select>
+
+</mapper>

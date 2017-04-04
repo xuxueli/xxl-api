@@ -70,7 +70,7 @@ $(function() {
 		// param
 		var requestMethod = $('#requestMethod').val();
 		var requestUrl = $('#requestUrl').val();
-		var respType = $('#respType_parent input[name=respType]').val();
+		var respType = $('#respType_parent input[name=respType]:checked').val();
 
 		if (!requestUrl) {
 			ComAlert.show(2, '请输入"接口URL"');
@@ -133,6 +133,11 @@ $(function() {
 			var $respContent = $('#respContent');
 			if (data.code == "200") {
 				$($respContent).text(data.content);
+
+				if ('JSON'==respType || 'JSONP'==respType) {
+					var json = eval('('+ data.content +')');
+					$('#respContent').JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
+				}
 			} else {
 				ComAlert.show(2, (data.msg || "请求失败") );
 			}
@@ -148,7 +153,7 @@ $(function() {
 		// param
 		var requestMethod = $('#requestMethod').val();
 		var requestUrl = $('#requestUrl').val();
-		var respType = $('#respType_parent input[name=respType]').val();
+		var respType = $('#respType_parent input[name=respType]:checked').val();
 
 		if (!requestUrl) {
 			ComAlert.show(2, '请输入"接口URL"');

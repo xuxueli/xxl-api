@@ -6,6 +6,7 @@
     <#import "/common/common.macro.ftl" as netCommon>
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.css">
     <@netCommon.commonStyle />
 
 </head>
@@ -174,9 +175,7 @@
                     <div class="box-body" id="respType_parent">
                         响应数据类型(MIME)：
                         <#list ResponseContentType as item>
-                            <#if item=='TEXT'>
-                                <input type="radio" class="iCheck" name="respType" value="${item}" checked >${item}  &nbsp;&nbsp;
-                            </#if>
+                            <input type="radio" class="iCheck" name="respType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
                         </#list>
                         <br>
                         <pre id="respContent" ><br><br><br><br><br></pre>
@@ -197,6 +196,7 @@
 
 <script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
 <script src="${request.contextPath}/static/js/test.index.1.js"></script>
 </body>
 </html>

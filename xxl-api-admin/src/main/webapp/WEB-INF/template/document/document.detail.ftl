@@ -195,8 +195,8 @@
                             <#list responseParamList as responseParam>
                                 <tr>
                                     <td>
-                                        <#if responseParam.notNull == "true" >必填
-                                        <#else>非必填
+                                        <#if responseParam.notNull == "true" >非空
+                                        <#else>可空
                                         </#if>
                                     </td>
                                     <td>${responseParam.type}</td>
@@ -254,7 +254,7 @@
                 <#--Test历史-->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Test查看</h3>
+                        <h3 class="box-title">Test历史</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/test?documentId=${document.id}');" >+ 接口测试</button>
                         </div>
@@ -265,16 +265,16 @@
                                 <th style="width: 25%;" >创建时间</th>
                                 <th style="width: 75%;" >操作</th>
                             </tr>
-                            <tr>
-                                <#list testHistoryList as testInfo>
+                            <#list testHistoryList as testInfo>
+                                <tr>
                                     <td>${testInfo.addTime?datetime}</td>
                                     <td>
                                         <a href="${request.contextPath}/test?testId=${testInfo.id}" target="_blank" >运行</a>
                                         &nbsp;
                                         <a href="javascript:;" class="deleteTest" _id="${testInfo.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                     </td>
-                                </#list>
-                            </tr>
+                                </tr>
+                            </#list>
                         </table>
                     </div>
                 </div>

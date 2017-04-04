@@ -200,8 +200,8 @@
                         <div class="form-group responseParams_item" >
                             <div class="col-sm-2 item">
                                 <select class="form-control select2_tag_new notNull" style="width: 100%;">
-                                    <option value="true">必填</option>
-                                    <option value="false">非必填</option>
+                                    <option value="true">非空</option>
+                                    <option value="false">可空</option>
                                 </select>
                             </div>
                             <label class="col-sm-1 control-label">参数类型</label>

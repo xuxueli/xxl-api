@@ -132,12 +132,102 @@ $(function() {
 		$.post(base_url + "/test/run", params, function(data, status) {
 			var $respContent = $('#respContent');
 			if (data.code == "200") {
-				$($respContent).text(data.content + "<br><br><br><br><br>");
+				$($respContent).text(data.content);
 			} else {
 				ComAlert.show(2, (data.msg || "请求失败") );
 			}
 		});
 
+	});
+
+
+	/**
+	 * 保存
+	 */
+	$('#save').click(function () {
+		// param
+		var requestMethod = $('#requestMethod').val();
+		var requestUrl = $('#requestUrl').val();
+		var respType = $('#respType_parent input[name=respType]').val();
+
+		if (!requestUrl) {
+			ComAlert.show(2, '请输入"接口URL"');
+			return;
+		}
+
+		// request headers
+		var requestHeaderList = new Array();
+		if ($('#requestHeaders_parent').find('.requestHeaders_item').length > 0) {
+			$('#requestHeaders_parent').find('.requestHeaders_item').each(function () {
+				var key = $(this).find('.key').val();
+				var value = $(this).find('.value').val();
+				if (key) {
+					requestHeaderList.push({
+						'key':key,
+						'value':value
+					});
+				} else {
+					if (value) {
+						ComAlert.show(2, '请检查"请求头部"数据是否填写完整');
+						return;
+					}
+				}
+			});
+		}
+		var requestHeaders = JSON.stringify(requestHeaderList);
+
+		// query params
+		var queryParamList = new Array();
+		if ($('#queryParams_parent').find('.queryParams_item').length > 0) {
+			$('#queryParams_parent').find('.queryParams_item').each(function () {
+				var key = $(this).find('.key').val();
+				var value = $(this).find('.value').val();
+				if (key) {
+					queryParamList.push({
+						'key':key,
+						'value':value
+					});
+				} else {
+					if (desc) {
+						ComAlert.show(2, '请检查"请求参数"数据是否填写完整');
+						return;
+					}
+				}
+			});
+		}
+		var queryParams = JSON.stringify(queryParamList);
+
+		// id
+		var documentId = $(this).attr('documentId');
+		var testId = $(this).attr('testId');
+
+		// final params
+		var params = {
+			'requestMethod':requestMethod,
+			'requestUrl':requestUrl,
+			'requestHeaders':requestHeaders,
+			'queryParams':queryParams,
+			'respType':respType,
+			'documentId':documentId,
+			'id':testId
+		}
+
+		// url
+		var url = base_url + "/test/add";
+		if (testId > 0) {
+			url = base_url + "/test/update";
+		}
+
+		$.post(url, params, function(data, status) {
+			if (data.code == "200") {
+				if (testId == 0 && data.content>0) {
+					$('#save').attr('testId', data.content);
+				}
+				ComAlert.show(1, (data.msg || "保存成功"));
+			} else {
+				ComAlert.show(2, (data.msg || "保存失败") );
+			}
+		});
 	});
 
 

@@ -147,11 +147,11 @@
                                 <div class="form-group queryParams_item" >
                                     <label class="col-sm-1 control-label">参数名称</label>
                                     <div class="col-sm-4 item">
-                                        <input type="text" class="form-control key" value="${item.name}">
+                                        <input type="text" class="form-control key" value="<#if testId gt 0>${item.key}<#else>${item.name}</#if>" >
                                     </div>
                                     <label class="col-sm-1 control-label">参数说明</label>
                                     <div class="col-sm-5 item">
-                                        <input type="text" class="form-control value" value="${item.desc}">
+                                        <input type="text" class="form-control value" value="<#if testId gt 0>${item.value}<#else></#if>" >
                                     </div>
                                     <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
                                 </div>
@@ -166,7 +166,7 @@
                         <h3 class="box-title">响应结果</h3>
                         <div class="box-tools pull-right">
                             <#if document?exists>
-                                <button class="btn btn-default btn-xs" type="button" id="save" testId="${testId}" documentId="${documentId}" >保存</button>
+                                <button class="btn btn-default btn-xs" type="button" id="save" testId="${testId}" documentId="${document.id}" >保存</button>
                             </#if>
                             <button class="btn btn-info btn-xs" type="button" id="run" >运行</button>
                         </div>

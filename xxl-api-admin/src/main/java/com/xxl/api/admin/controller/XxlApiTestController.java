@@ -62,26 +62,36 @@ public class XxlApiTestController {
 			@RequestParam(required = false, defaultValue = "0") int documentId,
 			@RequestParam(required = false, defaultValue = "0") int testId) {
 
-		// document
-		model.addAttribute("documentId", documentId);
-		if (documentId > 0) {
-			XxlApiDocument document = xxlApiDocumentDao.load(documentId);
-			model.addAttribute("document", document);
-			List<Map<String, String>> requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
-			List<Map<String, String>> queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
-			model.addAttribute("requestHeaders", requestHeaders);
-			model.addAttribute("queryParams", queryParams);
 
-			XxlApiProject project = xxlApiProjectDao.load(document.getProjectId());
-			model.addAttribute("project", project);
-		}
+		// params
+		XxlApiProject project = null;
+		XxlApiDocument document = null;
+		List<Map<String, String>> requestHeaders = null;
+		List<Map<String, String>> queryParams = null;
 
-		// test history
-		model.addAttribute("testId", testId);
 		if (testId > 0) {
 			XxlApiTestHistory testHistory = xxlApiTestHistoryDao.load(testId);
-			model.addAttribute("testHistory", testHistory);
+			documentId = testHistory.getDocumentId();
+
+			document = xxlApiDocumentDao.load(documentId);
+			project = xxlApiProjectDao.load(document.getProjectId());
+
+			requestHeaders = (StringUtils.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
+			queryParams = (StringUtils.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
+		} else {
+			document = xxlApiDocumentDao.load(documentId);
+			project = xxlApiProjectDao.load(document.getProjectId());
+
+			requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
+			queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
 		}
+
+		model.addAttribute("document", document);
+		model.addAttribute("project", project);
+		model.addAttribute("requestHeaders", requestHeaders);
+		model.addAttribute("queryParams", queryParams);
+        model.addAttribute("documentId", documentId);
+        model.addAttribute("testId", testId);
 
 		// enum
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
@@ -94,9 +104,9 @@ public class XxlApiTestController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(XxlApiTestHistory xxlApiTestHistory) {
+	public ReturnT<Integer> add(XxlApiTestHistory xxlApiTestHistory) {
 		int ret = xxlApiTestHistoryDao.add(xxlApiTestHistory);
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+		return ret>0?new ReturnT<Integer>(xxlApiTestHistory.getId()):new ReturnT<Integer>(ReturnT.FAIL_CODE, null);
 	}
 
 	@RequestMapping("/update")

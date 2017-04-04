@@ -10,6 +10,13 @@ $(function() {
 	});
 
 	/**
+	 * project base url
+	 */
+	$('#projectBaseUrlUpdate').change(function () {
+		$('#projectBaseUrl').text( $(this).val() );
+	});
+
+	/**
 	 * remark view
 	 */
 	remarkView = editormd.markdownToHTML("remark", {

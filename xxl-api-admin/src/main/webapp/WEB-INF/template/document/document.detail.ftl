@@ -35,14 +35,12 @@
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?productId=${productId}'" >返回接口列表</button>
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
-                            <button class="btn btn-info btn-xs" type="button" id="addMock" >新增Mock数据</button>
-                            <button class="btn btn-info btn-xs" type="button" id="addTest" >接口测试</button>
                         </div>
                     </div>
 
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">接口分组</label>
+                            <label class="col-sm-1">接口分组</label>
                             <div class="col-sm-4">
                                 <#if 0 == document.groupId>默认分组
                                 <#else>
@@ -53,7 +51,7 @@
                                     </#if>
                                 </#if>
                             </div>
-                            <label class="col-sm-1 control-label">接口状态</label>
+                            <label class="col-sm-1">接口状态</label>
                             <div class="col-sm-6">
                                 <#if 0 == document.status>启用
                                 <#elseif 1 == document.status>维护
@@ -62,19 +60,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">请求方法</label>
+                            <label class="col-sm-1">请求方法</label>
                             <div class="col-sm-4">
                                 <#list RequestMethodEnum as item>
                                     <#if item == document.requestMethod>${item}</#if>
                                 </#list>
                             </div>
-                            <label class="col-sm-1 control-label">接口URL</label>
+                            <label class="col-sm-1">接口URL</label>
                             <div class="col-sm-6">
-                                ${document.requestUrl}
+                                <select id="projectBaseUrlUpdate" >
+                                    <#if project.baseUrlProduct?exists>
+                                        <option value="${project.baseUrlProduct}" >线上环境</option>
+                                    </#if>
+                                    <#if project.baseUrlPpe?exists>
+                                        <option value="${project.baseUrlPpe}" >预发布环境</option>
+                                    </#if>
+                                    <#if project.baseUrlQa?exists>
+                                        <option value="${project.baseUrlQa}" >测试环境</option>
+                                    </#if>
+                                </select>
+                                &nbsp;&nbsp;
+                                <span id="projectBaseUrl" >${project.baseUrlProduct}</span><span>${document.requestUrl}</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">接口名称</label>
+                            <label class="col-sm-1">接口名称</label>
                             <div class="col-sm-11">
                                 ${document.name}
                             </div>
@@ -179,34 +189,59 @@
 
 
                 <#--Mock数据-->
-                <#if queryParamList?exists>
-                    <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title">Mock数据</h3>
-                        </div>
-                        <div class="box-body no-padding" >
-                            <table class="table table-striped">
-                                <tr>
-                                    <th style="width: 25%;" >响应数据类型(MIME)</th>
-                                    <th style="width: 75%;" >操作</th>
-                                </tr>
-                                <#list mockList as mock>
-                                    <textarea id="respExample_${mock.id}" style="display: none;" >${mock.respExample}</textarea>
-                                    <tr>
-                                        <td>${mock.respType}</td>
-                                        <td>
-                                            <a href="/mock/run/${mock.uuid}" target="_blank" >运行</a>
-                                            &nbsp;
-                                            <a href="javascript:;" class="updateMock" _id="${mock.id}" respType="${mock.respType}" style="color: gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-wrench"></i>修改</a>
-                                            &nbsp;
-                                            <a href="javascript:;" class="deleteMock" _id="${mock.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
-                                        </td>
-                                    </tr>
-                                </#list>
-                            </table>
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Mock数据</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-info btn-xs" type="button" id="addMock" >新增Mock数据</button>
                         </div>
                     </div>
-                </#if>
+                    <div class="box-body no-padding" >
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="width: 25%;" >响应数据类型(MIME)</th>
+                                <th style="width: 75%;" >操作</th>
+                            </tr>
+                            <#list mockList as mock>
+                                <textarea id="respExample_${mock.id}" style="display: none;" >${mock.respExample}</textarea>
+                                <tr>
+                                    <td>${mock.respType}</td>
+                                    <td>
+                                        <a href="/mock/run/${mock.uuid}" target="_blank" >运行</a>
+                                        &nbsp;
+                                        <a href="javascript:;" class="updateMock" _id="${mock.id}" respType="${mock.respType}" style="color: gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-wrench"></i>修改</a>
+                                        &nbsp;
+                                        <a href="javascript:;" class="deleteMock" _id="${mock.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
+                                    </td>
+                                </tr>
+                            </#list>
+                        </table>
+                    </div>
+                </div>
+
+                <#--Test数据-->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Test数据</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-info btn-xs" type="button" id="addTest" >接口测试</button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding" >
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="width: 25%;" >--</th>
+                                <th style="width: 25%;" >--</th>
+                                <th style="width: 25%;" >--</th>
+                            </tr>
+                            <tr>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>--</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 
 
             </form>

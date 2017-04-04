@@ -164,7 +164,9 @@ public class XxlApiDocumentController {
 
 		// project
 		int projectId = xxlApiDocument.getProjectId();
+		XxlApiProject project = xxlApiProjectDao.load(projectId);
 		model.addAttribute("productId", projectId);
+		model.addAttribute("project", project);
 
 		// groupList
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);

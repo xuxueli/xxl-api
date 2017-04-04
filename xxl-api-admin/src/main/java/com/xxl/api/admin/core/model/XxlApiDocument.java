@@ -16,7 +16,8 @@ public class XxlApiDocument {
     private String requestUrl;          // Request URL：相对地址
     private String requestMethod;       // Request Method：如POST、GET
     private String requestHeaders;      // Request Headers：Map-JSON格式字符串
-    private String queryParams;         // Query String Parameters：Map-JSON格式字符串
+    private String queryParams;         // Query String Parameters：VO-JSON格式字符串
+    private String responseParams;      // Response Parameters：VO-JSON格式字符串
     private String successRespType;     // Response Content-type：成功接口，如JSON、XML、HTML、TEXT
     private String successRespExample;  // Response Content：成功接口
     private String failRespType;        // Response Content-type：失败接口
@@ -103,6 +104,14 @@ public class XxlApiDocument {
 
     public void setQueryParams(String queryParams) {
         this.queryParams = queryParams;
+    }
+
+    public String getResponseParams() {
+        return responseParams;
+    }
+
+    public void setResponseParams(String responseParams) {
+        this.responseParams = responseParams;
     }
 
     public String getSuccessRespType() {

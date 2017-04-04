@@ -154,13 +154,13 @@
                     </div>
                 </div>
 
-                <#--请求结果-->
+                <#--响应结果-->
                 <div class="nav-tabs-custom">
                     <!-- Tabs within a box -->
                     <ul class="nav nav-tabs pull-right">
-                        <li><a href="#fail_resp" data-toggle="tab">失败结果</a></li>
-                        <li class="active"><a href="#success_resp" data-toggle="tab">成功结果</a></li>
-                        <li class="pull-left header">请求结果</li>
+                        <li><a href="#fail_resp" data-toggle="tab">失败响应结果</a></li>
+                        <li class="active"><a href="#success_resp" data-toggle="tab">成功响应结果</a></li>
+                        <li class="pull-left header">响应结果</li>
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
@@ -184,6 +184,47 @@
                                 <textarea name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" ></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <#--响应结果参数-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">响应结果参数</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="responseParams_add" ><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div id="responseParams_example" style="display: none;" >
+                        <div class="form-group responseParams_item" >
+                            <div class="col-sm-2 item">
+                                <select class="form-control select2_tag_new notNull" style="width: 100%;">
+                                    <option value="true">必填</option>
+                                    <option value="false">非必填</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">参数类型</label>
+                            <div class="col-sm-2 item">
+                                <select class="form-control select2_tag_new type" style="width: 100%;">
+                                <#list QueryParamTypeEnum as item>
+                                    <option value="${item}">${item}</option>
+                                </#list>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">参数名称</label>
+                            <div class="col-sm-2 item">
+                                <input type="text" class="form-control name">
+                            </div>
+                            <label class="col-sm-1 control-label">参数说明</label>
+                            <div class="col-sm-2 item">
+                                <input type="text" class="form-control desc">
+                            </div>
+                            <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="box-body" id="responseParams_parent" >
                     </div>
                 </div>
 

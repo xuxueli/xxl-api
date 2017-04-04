@@ -115,6 +115,7 @@ public class XxlApiDocumentController {
 		model.addAttribute("document", xxlApiDocument);
 		model.addAttribute("requestHeadersList", (StringUtils.isNotBlank(xxlApiDocument.getRequestHeaders()))?JacksonUtil.readValue(xxlApiDocument.getRequestHeaders(), List.class):null );
 		model.addAttribute("queryParamList", (StringUtils.isNotBlank(xxlApiDocument.getQueryParams()))?JacksonUtil.readValue(xxlApiDocument.getQueryParams(), List.class):null );
+		model.addAttribute("responseParamList", (StringUtils.isNotBlank(xxlApiDocument.getResponseParams()))?JacksonUtil.readValue(xxlApiDocument.getResponseParams(), List.class):null );
 
 		// project
 		int projectId = xxlApiDocument.getProjectId();
@@ -161,6 +162,7 @@ public class XxlApiDocumentController {
 		model.addAttribute("document", xxlApiDocument);
 		model.addAttribute("requestHeadersList", (StringUtils.isNotBlank(xxlApiDocument.getRequestHeaders()))?JacksonUtil.readValue(xxlApiDocument.getRequestHeaders(), List.class):null );
 		model.addAttribute("queryParamList", (StringUtils.isNotBlank(xxlApiDocument.getQueryParams()))?JacksonUtil.readValue(xxlApiDocument.getQueryParams(), List.class):null );
+		model.addAttribute("responseParamList", (StringUtils.isNotBlank(xxlApiDocument.getResponseParams()))?JacksonUtil.readValue(xxlApiDocument.getResponseParams(), List.class):null );
 
 		// project
 		int projectId = xxlApiDocument.getProjectId();

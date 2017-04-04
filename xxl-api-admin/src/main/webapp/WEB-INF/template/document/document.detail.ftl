@@ -150,13 +150,13 @@
                     </div>
                 </div>
 
-                <#--请求结果-->
+                <#--响应结果-->
                 <div class="nav-tabs-custom">
                     <!-- Tabs within a box -->
                     <ul class="nav nav-tabs pull-right">
-                        <li><a href="#fail_resp" data-toggle="tab">失败结果</a></li>
-                        <li class="active"><a href="#success_resp" data-toggle="tab">成功结果</a></li>
-                        <li class="pull-left header">请求结果</li>
+                        <li><a href="#fail_resp" data-toggle="tab">失败响应结果</a></li>
+                        <li class="active"><a href="#success_resp" data-toggle="tab">成功响应结果</a></li>
+                        <li class="pull-left header">响应结果</li>
                     </ul>
                     <div class="tab-content no-padding">
                         <!-- Morris chart - Sales -->
@@ -174,6 +174,38 @@
                                 <pre name="failRespExample" style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <#--响应结果参数-->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">响应结果参数</h3>
+                    </div>
+
+                    <div class="box-body no-padding" >
+                    <#if responseParamList?exists>
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="width: 25%;" >是否必填</th>
+                                <th style="width: 25%;" >参数类型</th>
+                                <th style="width: 25%;" >参数名称</th>
+                                <th style="width: 25%;" >参数说明</th>
+                            </tr>
+                            <#list responseParamList as responseParam>
+                                <tr>
+                                    <td>
+                                        <#if responseParam.notNull == "true" >必填
+                                        <#else>非必填
+                                        </#if>
+                                    </td>
+                                    <td>${responseParam.type}</td>
+                                    <td>${responseParam.name}</td>
+                                    <td>${responseParam.desc}</td>
+                                </tr>
+                            </#list>
+                        </table>
+                    </#if>
                     </div>
                 </div>
 

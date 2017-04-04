@@ -70,6 +70,27 @@ $(function() {
 		$(this).parents('.queryParams_item').remove();
 	});
 
+	/**
+	 * 响应结果参数，新增一行
+	 */
+	$('#responseParams_add').click(function () {
+		var html = $('#responseParams_example').html();
+		$('#responseParams_parent').append(html);
+
+		$("#responseParams_parent .select2_tag_new").each(function () {
+			var $select2 = $(this);
+			$($select2).removeClass('select2_tag_new');
+			$($select2).addClass('select2_tag');
+			$($select2).select2();
+		});
+	});
+	/**
+	 * 响应结果参数，删除一行
+	 */
+	$('#responseParams_parent').on('click', '.delete',function () {
+		$(this).parents('.responseParams_item').remove();
+	});
+
 
 	/**
 	 * 保存接口
@@ -134,7 +155,7 @@ $(function() {
 					}
 				});
 			}
-			var requestHeaders = JSON.stringify(requestHeaderList)
+			var requestHeaders = JSON.stringify(requestHeaderList);
 
 			// query params
 			var queryParamList = new Array();
@@ -159,14 +180,40 @@ $(function() {
 					}
 				});
 			}
-			var queryParams = JSON.stringify(queryParamList)
+			var queryParams = JSON.stringify(queryParamList);
+
+			// response params
+			var responseParamList = new Array();
+			if ($('#responseParams_parent').find('.responseParams_item').length > 0) {
+				$('#responseParams_parent').find('.responseParams_item').each(function () {
+					var notNull = $(this).find('.notNull').val();
+					var type = $(this).find('.type').val();
+					var name = $(this).find('.name').val();
+					var desc = $(this).find('.desc').val();
+					if (name) {
+						responseParamList.push({
+							'notNull':notNull,
+							'type':type,
+							'name':name,
+							'desc':desc
+						});
+					} else {
+						if (desc) {
+							ComAlert.show(2, '新增接口失败，请检查"响应结果参数"数据是否填写完整');
+							return;
+						}
+					}
+				});
+			}
+			var responseParams = JSON.stringify(responseParamList);
 
 			// final params
 			var params = $("#ducomentForm").serialize();
 			params += '&' + $.param({
 					'remark':remark,
 					'requestHeaders':requestHeaders,
-					'queryParams':queryParams
+					'queryParams':queryParams,
+					'responseParams':responseParams
 			});
 
 			$.post(base_url + "/document/update", params, function(data, status) {

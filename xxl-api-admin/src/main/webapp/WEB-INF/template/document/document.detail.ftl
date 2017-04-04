@@ -69,13 +69,13 @@
                             <label class="col-sm-1">接口URL</label>
                             <div class="col-sm-6">
                                 <select id="projectBaseUrlUpdate" >
-                                    <#if project.baseUrlProduct?exists>
+                                    <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
                                         <option value="${project.baseUrlProduct}" >线上环境</option>
                                     </#if>
-                                    <#if project.baseUrlPpe?exists>
+                                    <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
                                         <option value="${project.baseUrlPpe}" >预发布环境</option>
                                     </#if>
-                                    <#if project.baseUrlQa?exists>
+                                    <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
                                         <option value="${project.baseUrlQa}" >测试环境</option>
                                     </#if>
                                 </select>

@@ -3,9 +3,11 @@ package com.xxl.api.admin.controller;
 import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
+import com.xxl.api.admin.core.model.XxlApiProject;
 import com.xxl.api.admin.core.model.XxlApiTestHistory;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
+import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -48,6 +50,8 @@ public class XxlApiTestController {
 	private IXxlApiDocumentDao xxlApiDocumentDao;
 	@Resource
 	private IXxlApiTestHistoryDao xxlApiTestHistoryDao;
+	@Resource
+	private IXxlApiProjectDao xxlApiProjectDao;
 
 	/**
 	 * 接口测试，待完善
@@ -59,14 +63,25 @@ public class XxlApiTestController {
 			@RequestParam(required = false, defaultValue = "0") int testId) {
 
 		// document
-		XxlApiDocument document = xxlApiDocumentDao.load(documentId);
-		model.addAttribute("document", document);
 		model.addAttribute("documentId", documentId);
+		if (documentId > 0) {
+			XxlApiDocument document = xxlApiDocumentDao.load(documentId);
+			model.addAttribute("document", document);
+			List<Map<String, String>> requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
+			List<Map<String, String>> queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
+			model.addAttribute("requestHeaders", requestHeaders);
+			model.addAttribute("queryParams", queryParams);
+
+			XxlApiProject project = xxlApiProjectDao.load(document.getProjectId());
+			model.addAttribute("project", project);
+		}
 
 		// test history
-		XxlApiTestHistory testHistory = xxlApiTestHistoryDao.load(testId);
-		model.addAttribute("testHistory", testHistory);
 		model.addAttribute("testId", testId);
+		if (testId > 0) {
+			XxlApiTestHistory testHistory = xxlApiTestHistoryDao.load(testId);
+			model.addAttribute("testHistory", testHistory);
+		}
 
 		// enum
 		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());

@@ -269,7 +269,7 @@
                                 <#list testHistoryList as testInfo>
                                     <td>${testInfo.addTime?datetime}</td>
                                     <td>
-                                        <a href="${request.contextPath}/test?testId=${testInfo.id}" target="_blank" >查看</a>
+                                        <a href="${request.contextPath}/test?testId=${testInfo.id}" target="_blank" >运行</a>
                                         &nbsp;
                                         <a href="javascript:;" class="deleteTest" _id="${testInfo.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                     </td>

@@ -34,8 +34,8 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label class="col-sm-1 control-label">请求方法</label>
-                            <div class="col-sm-4">
-                                <select class="form-control select2" style="width: 100%;" id="requestMethod">
+                            <div class="col-sm-2">
+                                <select class="form-control select2" id="requestMethod">
                                 <#list RequestMethodEnum as item>
                                     <option value="${item}">${item}</option>
                                 </#list>
@@ -45,6 +45,21 @@
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100" >
                             </div>
+                            <#if project?exists>
+                                <div class="col-sm-2">
+                                    <select class="form-control select2" id="projectBaseUrlUpdate" >
+                                    <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
+                                        <option value="${project.baseUrlProduct}${document.requestUrl}" >线上环境</option>
+                                    </#if>
+                                    <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
+                                        <option value="${project.baseUrlPpe}${document.requestUrl}" >预发布环境</option>
+                                    </#if>
+                                    <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
+                                        <option value="${project.baseUrlQa}${document.requestUrl}" >测试环境</option>
+                                    </#if>
+                                    </select>
+                                </div>
+                            </#if>
                         </div>
                     </div>
                 </div>
@@ -78,6 +93,28 @@
                     </div>
 
                     <div class="box-body" id="requestHeaders_parent" >
+                        <#if requestHeaders?exists>
+                            <#list requestHeaders as item>
+                                <#assign key = item['key'] />
+                                <#assign value = item['value'] />
+                                <div class="form-group requestHeaders_item" >
+                                    <label class="col-sm-1 control-label">头部标签</label>
+                                    <div class="col-sm-4 item">
+                                        <select class="form-control select2_tag key" >
+                                            <option value=""></option>
+                                            <#list requestHeadersEnum as item>
+                                                <option value="${item}" <#if item == key>selected</#if> >${item}</option>
+                                            </#list>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label">头部内容</label>
+                                    <div class="col-sm-5 item">
+                                        <input type="text" class="form-control value" value="${value}">
+                                    </div>
+                                    <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                                </div>
+                            </#list>
+                        </#if>
                     </div>
                 </div>
 
@@ -105,6 +142,21 @@
                     </div>
 
                     <div class="box-body" id="queryParams_parent" >
+                        <#if queryParams?exists>
+                            <#list queryParams as item>
+                                <div class="form-group queryParams_item" >
+                                    <label class="col-sm-1 control-label">参数名称</label>
+                                    <div class="col-sm-4 item">
+                                        <input type="text" class="form-control key" value="${item.name}">
+                                    </div>
+                                    <label class="col-sm-1 control-label">参数说明</label>
+                                    <div class="col-sm-5 item">
+                                        <input type="text" class="form-control value" value="${item.desc}">
+                                    </div>
+                                    <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
+                                </div>
+                            </#list>
+                        </#if>
                     </div>
                 </div>
 
@@ -113,20 +165,18 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">响应结果</h3>
                         <div class="box-tools pull-right">
-                            <input type="hidden" id="documentId" value="${documentId}" >
-                            <input type="hidden" id="testId" value="${testId}" >
-                            <#if testHistory?exists >
-                                <button class="btn btn-default btn-xs" type="button" >更新</button>
-                            <#elseif document?exists >
-                                <button class="btn btn-default btn-xs" type="button" >保存</button>
+                            <#if document?exists>
+                                <button class="btn btn-default btn-xs" type="button" id="save" testId="${testId}" documentId="${documentId}" >保存</button>
                             </#if>
                             <button class="btn btn-info btn-xs" type="button" id="run" >运行</button>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body" id="respType_parent">
                         响应数据类型(MIME)：
                         <#list ResponseContentType as item>
-                            <input type="radio" class="iCheck" id="respType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
+                            <#if item=='TEXT'>
+                                <input type="radio" class="iCheck" name="respType" value="${item}" checked >${item}  &nbsp;&nbsp;
+                            </#if>
                         </#list>
                         <br>
                         <pre id="respContent" ><br><br><br><br><br></pre>

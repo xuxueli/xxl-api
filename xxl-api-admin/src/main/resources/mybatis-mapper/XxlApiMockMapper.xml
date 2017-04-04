@@ -37,7 +37,7 @@
 		UPDATE xxl_api_mock
 		SET
 			`resp_type` = #{respType},
-			`respExample` = #{respExample}
+			`resp_example` = #{respExample}
 		WHERE `id` = #{id}
 	</update>
 

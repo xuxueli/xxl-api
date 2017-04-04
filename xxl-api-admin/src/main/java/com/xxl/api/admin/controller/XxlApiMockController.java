@@ -44,5 +44,18 @@ public class XxlApiMockController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	@RequestMapping("/delete")
+	@ResponseBody
+	public ReturnT<String> delete(int id) {
+		int ret = xxlApiMockDao.delete(id);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
+
+	@RequestMapping("/update")
+	@ResponseBody
+	public ReturnT<String> update(XxlApiMock xxlApiMock) {
+		int ret = xxlApiMockDao.update(xxlApiMock);
+		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+	}
 
 }

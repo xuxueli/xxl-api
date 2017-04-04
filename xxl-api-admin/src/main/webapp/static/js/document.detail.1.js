@@ -46,5 +46,64 @@ $(function() {
 
 	});
 
+	/**
+	 * 删除，Mock数据
+	 */
+	$('.deleteMock').click(function () {
+		var id = $(this).attr('_id');
+		ComConfirm.show("确认删除该Mock数据?", function(){
+			$.ajax({
+				type : 'POST',
+				url : base_url + "/mock/delete",
+				data : {
+					"id" : id
+				},
+				dataType : "json",
+				success : function(data){
+					if (data.code == 200) {
+						ComAlert.show(1, "删除成功", function(){
+							window.location.reload();
+						});
+					} else {
+						ComAlert.show(2, (data.msg || "删除失败") );
+					}
+				}
+			});
+		});
+	});
+
+	/**
+	 * 修改，Mock数据
+	 */
+	$(".updateMock").click(function(){
+		var id = $(this).attr('_id');
+		var respType = $(this).attr('respType');
+		var respExample = $('#respExample_'+id).val();
+
+
+		$('#updateMockModal input[name=id]').val(id);
+		$('#updateMockModal input[name=respType][value="'+respType+'"]').iCheck('check');
+		$('#updateMockModal textarea[name=respExample]').val(respExample);
+
+		$('#updateMockModal').modal({backdrop: false, keyboard: false}).modal('show');
+	});
+	$('#updateMockModal .save').click(function () {
+		$.ajax({
+			type : 'POST',
+			url : base_url + "/mock/update",
+			data : $('#updateMockModal form').serialize(),
+			dataType : "json",
+			success : function(data){
+				if (data.code == 200) {
+					ComAlert.show(1, "Mock数据保存成功", function(){
+						window.location.reload();
+					});
+				} else {
+					ComAlert.show(2, (data.msg || "Mock数据保存失败") );
+				}
+			},
+		});
+	});
+
 
 });

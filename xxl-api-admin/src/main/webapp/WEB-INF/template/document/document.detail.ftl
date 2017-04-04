@@ -84,49 +84,58 @@
 
                 <#--请求头部-->
                 <div class="box box-primary">
-                    <div class="box-header with-border">
+                    <div class="box-header">
                         <h3 class="box-title">请求头部</h3>
                     </div>
 
-                    <div class="box-body" id="requestHeaders_parent" >
+                    <div class="box-body no-padding" >
                         <#if requestHeadersList?exists >
-                            <#list requestHeadersList as requestHeadersMap>
-                                <#assign key = requestHeadersMap['key'] />
-                                <#assign value = requestHeadersMap['value'] />
-                                <div class="form-group requestHeaders_item" >
-                                    <label class="col-sm-1 control-label">头部标签</label>
-                                    <div class="col-sm-4 item">${key}</div>
-                                    <label class="col-sm-1 control-label">头部内容</label>
-                                    <div class="col-sm-5 item">${value}</div>
-                                </div>
-                            </#list>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th style="width: 25%;" >头部标签</th>
+                                    <th style="width: 75%;" >头部内容</th>
+                                </tr>
+                                <#list requestHeadersList as requestHeadersMap>
+                                    <#assign key = requestHeadersMap['key'] />
+                                    <#assign value = requestHeadersMap['value'] />
+                                    <tr>
+                                        <td>${key}</td>
+                                        <td>${value}</td>
+                                    </tr>
+                                </#list>
+                            </table>
                         </#if>
                     </div>
                 </div>
 
                 <#--请求参数-->
                 <div class="box box-primary">
-                    <div class="box-header with-border">
+                    <div class="box-header">
                         <h3 class="box-title">请求参数</h3>
                     </div>
 
-                    <div class="box-body" id="queryParams_parent" >
+                    <div class="box-body no-padding" >
                         <#if queryParamList?exists>
-                            <#list queryParamList as queryParam>
-                                <div class="form-group queryParams_item" >
-                                    <div class="col-sm-2 item">
-                                        <#if queryParam.notNull == "true" >必填
-                                        <#else>非必填
-                                        </#if>
-                                    </div>
-                                    <label class="col-sm-1 control-label">参数类型</label>
-                                    <div class="col-sm-2 item">${queryParam.type}</div>
-                                    <label class="col-sm-1 control-label">参数名称</label>
-                                    <div class="col-sm-2 item">${queryParam.name}</div>
-                                    <label class="col-sm-1 control-label">参数说明</label>
-                                    <div class="col-sm-2 item">${queryParam.desc}</div>
-                                </div>
-                            </#list>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th style="width: 25%;" >是否必填</th>
+                                    <th style="width: 25%;" >参数类型</th>
+                                    <th style="width: 25%;" >参数名称</th>
+                                    <th style="width: 25%;" >参数说明</th>
+                                </tr>
+                                <#list queryParamList as queryParam>
+                                    <tr>
+                                        <td>
+                                            <#if queryParam.notNull == "true" >必填
+                                            <#else>非必填
+                                            </#if>
+                                        </td>
+                                        <td>${queryParam.type}</td>
+                                        <td>${queryParam.name}</td>
+                                        <td>${queryParam.desc}</td>
+                                    </tr>
+                                </#list>
+                            </table>
                         </#if>
                     </div>
                 </div>
@@ -172,29 +181,33 @@
                 <#--Mock数据-->
                 <#if queryParamList?exists>
                     <div class="box box-primary">
-                        <div class="box-header with-border">
+                        <div class="box-header">
                             <h3 class="box-title">Mock数据</h3>
                         </div>
-                        <div class="box-body" id="queryParams_parent" >
-                            <#list mockList as mock>
-                                <div class="form-group queryParams_item" >
-                                    <label class="col-sm-3 control-label">
-                                        响应数据类型(MIME)：
-                                        ${mock.respType}
-                                    </label>
-                                    <label class="col-sm-3 control-label">
-                                        操作：
-                                        <a href="/document/updatePage?id=32" target="_blank" >运行</a>
-                                        &nbsp;
-                                        <a href="/document/updatePage?id=32" target="_blank" style="color: gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-wrench"></i>修改</a>
-                                        &nbsp;
-                                        <a href="javascript:;" class="deleteDocument" _id="32" _name="Demo接口33" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
-                                    </label>
-                                </div>
-                            </#list>
+                        <div class="box-body no-padding" >
+                            <table class="table table-striped">
+                                <tr>
+                                    <th style="width: 25%;" >响应数据类型(MIME)</th>
+                                    <th style="width: 75%;" >操作</th>
+                                </tr>
+                                <#list mockList as mock>
+                                    <textarea id="respExample_${mock.id}" style="display: none;" >${mock.respExample}</textarea>
+                                    <tr>
+                                        <td>${mock.respType}</td>
+                                        <td>
+                                            <a href="/document/updatePage?id=32" target="_blank" >运行</a>
+                                            &nbsp;
+                                            <a href="javascript:;" class="updateMock" _id="${mock.id}" respType="${mock.respType}" style="color: gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-wrench"></i>修改</a>
+                                            &nbsp;
+                                            <a href="javascript:;" class="deleteMock" _id="${mock.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
+                                        </td>
+                                    </tr>
+                                </#list>
+                            </table>
                         </div>
                     </div>
                 </#if>
+
 
             </form>
 
@@ -243,22 +256,34 @@
 
 <!-- 更新-分组.模态框 -->
 <div class="modal fade" id="updateMockModal" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" >更新接口分组</h4>
+                <h4 class="modal-title" >更新Mock数据</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal form" role="form" >
-                    <label for="lastname" class="col-sm-2 control-label">分组名称<font color="red">*</font></label>
-                    <div class="col-sm-3"><input type="text" class="form-control" name="name" placeholder="请输入“分组名称”" maxlength="12" value="<#if groupInfo?exists>${groupInfo.name}</#if>" ></div>
-                    <label for="lastname" class="col-sm-1 control-label">分组排序<font color="red">*</font></label>
-                    <div class="col-sm-2"><input type="text" class="form-control" name="order" placeholder="请输入“分组排序”" maxlength="5" value="<#if groupInfo?exists>${groupInfo.order}</#if>" ></div>
-                    <div class="col-sm-offset-3 col-sm-6">
-                        <button type="submit" class="btn btn-primary"  >保存</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            响应数据类型(MIME)：
+                            <#list ResponseContentType as item>
+                                <input type="radio" class="iCheck" name="respType" value="${item}" >${item}  &nbsp;&nbsp;
+                            </#list>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <textarea name="respExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="button" class="btn btn-primary save"  >保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <input type="hidden" name="documentId" value="${document.id}" >
 
-                        <input type="hidden" name="id" value="<#if groupInfo?exists>${groupInfo.id}</#if>" >
+                            <input type="hidden" name="id" >
+                        </div>
                     </div>
                 </form>
             </div>

@@ -24,7 +24,8 @@ $(function() {
 			return editormd.toolbarModes['simple'];
 			// Using "||" set icons align right.
 			//return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "info", "testIcon", "testIcon2", "file", "faicon", "||", "watch", "fullscreen", "preview", "testIcon"]
-		}
+		},
+        placeholder      : "请输入备注"
 	});
 
 	/**

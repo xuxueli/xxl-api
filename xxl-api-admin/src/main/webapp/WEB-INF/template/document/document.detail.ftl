@@ -86,20 +86,19 @@
                         <div class="form-group">
                             <label class="col-sm-1">接口名称</label>
                             <div class="col-sm-11">
-                                ${document.name}
+                                <a>${document.name}</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <#--请求头部-->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">请求头部</h3>
-                    </div>
-
-                    <div class="box-body no-padding" >
-                        <#if requestHeadersList?exists >
+                <#if requestHeadersList?exists && requestHeadersList?size gt 0 >
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">请求头部</h3>
+                        </div>
+                        <div class="box-body no-padding" >
                             <table class="table table-striped">
                                 <tr>
                                     <th style="width: 25%;" >头部标签</th>
@@ -114,9 +113,9 @@
                                     </tr>
                                 </#list>
                             </table>
-                        </#if>
+                        </div>
                     </div>
-                </div>
+                </#if>
 
                 <#--请求参数-->
                 <div class="box box-primary">
@@ -178,46 +177,48 @@
                 </div>
 
                 <#--响应结果参数-->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">响应结果参数</h3>
-                    </div>
+                <#if responseParamList?exists && responseParamList?size gt 0 >
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">响应结果参数</h3>
+                        </div>
 
-                    <div class="box-body no-padding" >
-                    <#if responseParamList?exists>
-                        <table class="table table-striped">
-                            <tr>
-                                <th style="width: 25%;" >是否必填</th>
-                                <th style="width: 25%;" >参数类型</th>
-                                <th style="width: 25%;" >参数名称</th>
-                                <th style="width: 25%;" >参数说明</th>
-                            </tr>
-                            <#list responseParamList as responseParam>
+                        <div class="box-body no-padding" >
+                            <table class="table table-striped">
                                 <tr>
-                                    <td>
-                                        <#if responseParam.notNull == "true" >非空
-                                        <#else>可空
-                                        </#if>
-                                    </td>
-                                    <td>${responseParam.type}</td>
-                                    <td>${responseParam.name}</td>
-                                    <td>${responseParam.desc}</td>
+                                    <th style="width: 25%;" >是否必填</th>
+                                    <th style="width: 25%;" >参数类型</th>
+                                    <th style="width: 25%;" >参数名称</th>
+                                    <th style="width: 25%;" >参数说明</th>
                                 </tr>
-                            </#list>
-                        </table>
-                    </#if>
+                                <#list responseParamList as responseParam>
+                                    <tr>
+                                        <td>
+                                            <#if responseParam.notNull == "true" >非空
+                                            <#else>可空
+                                            </#if>
+                                        </td>
+                                        <td>${responseParam.type}</td>
+                                        <td>${responseParam.name}</td>
+                                        <td>${responseParam.desc}</td>
+                                    </tr>
+                                </#list>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                </#if>
 
                 <#-- 接口备注 -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">接口备注</h3>
+                <#if document.remark?exists && document.remark?length gt 0 >
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">接口备注</h3>
+                        </div>
+                        <div class="box-body" >
+                            <div class="box-body pad" id="remark" ><textarea style="display:none;">${document.remark}</textarea></div>
+                        </div>
                     </div>
-                    <div class="box-body" >
-                        <div class="box-body pad" id="remark" ><textarea style="display:none;">${document.remark}</textarea></div>
-                    </div>
-                </div>
+                </#if>
 
 
                 <#--Mock数据-->

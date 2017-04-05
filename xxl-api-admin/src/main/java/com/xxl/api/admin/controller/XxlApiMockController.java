@@ -1,5 +1,6 @@
 package com.xxl.api.admin.controller;
 
+import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
@@ -67,6 +68,7 @@ public class XxlApiMockController {
 	}
 
 	@RequestMapping("/run/{uuid}")
+	@PermessionLimit(limit=false)
 	public void run(@PathVariable("uuid") String uuid, HttpServletRequest request, HttpServletResponse response) {
 		XxlApiMock xxlApiMock = xxlApiMockDao.loadByUuid(uuid);
 		if (xxlApiMock == null) {

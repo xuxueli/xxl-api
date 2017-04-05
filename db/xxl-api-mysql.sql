@@ -77,6 +77,8 @@ CREATE TABLE `xxl_api_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert into `xxl_api_user` ( `username`, `password`, `type`, `realname`) values ( 'admin', '123456', '1', '管理员');
+
 
 CREATE TABLE `xxl_api_user_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

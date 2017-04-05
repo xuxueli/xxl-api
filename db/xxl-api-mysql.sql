@@ -19,7 +19,7 @@ CREATE TABLE `xxl_api_document` (
   `add_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_group` (
@@ -28,7 +28,7 @@ CREATE TABLE `xxl_api_group` (
   `name` varchar(255) NOT NULL COMMENT '分组名称',
   `order` int(11) NOT NULL COMMENT '分组排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_mock` (
@@ -38,7 +38,7 @@ CREATE TABLE `xxl_api_mock` (
   `resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：如JSON、XML、HTML、TEXT、JSONP',
   `resp_example` text COMMENT 'Response Content',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_project` (
@@ -51,7 +51,7 @@ CREATE TABLE `xxl_api_project` (
   `base_url_qa` varchar(200) DEFAULT NULL COMMENT '跟地址：测试环境',
   `version` varchar(50) NOT NULL COMMENT '版本',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_test_history` (
@@ -65,7 +65,7 @@ CREATE TABLE `xxl_api_test_history` (
   `query_params` text COMMENT 'Query String Parameters：VO-JSON格式字符串',
   `resp_type` varchar(50) DEFAULT NULL COMMENT 'Response Content-type：如JSON',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_user` (
@@ -75,7 +75,7 @@ CREATE TABLE `xxl_api_user` (
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
   `realname` varchar(50) DEFAULT NULL COMMENT '真实姓名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `xxl_api_user_permission` (

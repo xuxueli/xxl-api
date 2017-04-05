@@ -232,10 +232,15 @@ public class XxlApiTestController {
 			HttpResponse response = httpClient.execute(remoteRequest);
 			HttpEntity entity = response.getEntity();
 			if (null != entity) {
-				if (response.getStatusLine().getStatusCode() == 200) {
+				int statusCode = response.getStatusLine().getStatusCode();
+				if (statusCode == 200) {
 					responseContent = EntityUtils.toString(entity, "UTF-8");
 				} else {
-					responseContent = EntityUtils.toString(entity, "UTF-8");
+					responseContent = "请求状态异常：" + response.getStatusLine().getStatusCode();
+					if (statusCode == 302) {
+						responseContent += "<br>Redirect地址：" + response.getHeaders("Location");
+					}
+
 				}
 				EntityUtils.consume(entity);
 			}

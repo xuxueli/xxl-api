@@ -24,7 +24,7 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 ##### 博客地址 (将会在两个博客同步更新文档)
 
 - [oschina地址](https://my.oschina.net/xuxueli/blog/873667)
-- [cnblogs地址](http://www.cnblogs.com/xuxueli/p/5021979.html)
+- [cnblogs地址](http://www.cnblogs.com/xuxueli/p/6671139.html)
 
 ##### 技术交流群 (仅作技术交流)
 

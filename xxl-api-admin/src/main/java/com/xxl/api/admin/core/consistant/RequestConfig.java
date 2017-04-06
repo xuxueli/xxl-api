@@ -126,7 +126,7 @@ public class RequestConfig {
         XML("text/xml"),
         HTML("text/html;"),
         TEXT("text/plain"),
-        JSONP("text/json");
+        JSONP("application/javascript");
 
         public final String type;
         ResponseContentType(String type) {

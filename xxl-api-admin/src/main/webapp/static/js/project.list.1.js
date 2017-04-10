@@ -58,7 +58,7 @@ $(function() {
 					return function(){
 
 						// 详情页
-						var goUrl = '/group?productId='+ row.id;
+						var goUrl = base_url + '/group?productId='+ row.id;
 
 						// html
 						var html = '<p id="'+ row.id +'" '+

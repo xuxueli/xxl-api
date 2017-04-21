@@ -39,13 +39,13 @@
                         <div class="box-body no-padding">
                             <ul class="nav nav-pills nav-stacked">
                                 <li <#if groupId == -1>class="active"</#if> groupId="-1" >
-                                    <a href="/group?productId=${productId}&groupId=-1" >
+                                    <a href="${request.contextPath}/group?productId=${productId}&groupId=-1" >
                                         <i class="fa fa-inbox"></i>全部
                                         <#--<span class="label label-primary pull-right">12</span>-->
                                     </a>
                                 </li>
                                 <li <#if groupId == 0>class="active"</#if> groupId="0" >
-                                    <a href="/group?productId=${productId}&groupId=0" >
+                                    <a href="${request.contextPath}/group?productId=${productId}&groupId=0" >
                                         <i class="fa fa-inbox"></i>默认分组
                                         <#--<span class="label label-primary pull-right">12</span>-->
                                     </a>

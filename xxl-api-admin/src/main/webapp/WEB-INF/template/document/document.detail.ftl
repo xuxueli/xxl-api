@@ -240,7 +240,7 @@
                                 <tr>
                                     <td>${mock.respType}</td>
                                     <td>
-                                        <a href="/mock/run/${mock.uuid}" target="_blank" >运行</a>
+                                        <a href="${request.contextPath}/mock/run/${mock.uuid}" target="_blank" >运行</a>
                                         &nbsp;
                                         <a href="javascript:;" class="updateMock" _id="${mock.id}" respType="${mock.respType}" style="color: gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-wrench"></i>修改</a>
                                         &nbsp;

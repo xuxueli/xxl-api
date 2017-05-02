@@ -154,7 +154,7 @@ public class XxlApiTestController {
 		// query param
 		Map<String, String> queryParamMap = null;
 		List<Map<String, String>> queryParams = (StringUtils.isNotBlank(xxlApiTestHistory.getQueryParams()))? JacksonUtil.readValue(xxlApiTestHistory.getQueryParams(), List.class):null;
-		if (CollectionUtils.isNotEmpty(requestHeaders)) {
+		if (CollectionUtils.isNotEmpty(queryParams)) {
 			queryParamMap = new HashMap<String, String>();
 			for (Map<String, String> item: queryParams) {
 				queryParamMap.put(item.get("key"), item.get("value"));

@@ -53,10 +53,10 @@ public class XxlApiBizController {
         return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
     }
 
-    @RequestMapping("/udpate")
+    @RequestMapping("/update")
     @ResponseBody
     @PermessionLimit(superUser = true)
-    public ReturnT<String> udpate(XxlApiBiz xxlApiBiz) {
+    public ReturnT<String> update(XxlApiBiz xxlApiBiz) {
         if (StringUtils.isBlank(xxlApiBiz.getBizName())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
         }
@@ -70,7 +70,7 @@ public class XxlApiBizController {
     @PermessionLimit(superUser = true)
     public ReturnT<String> delete(int id) {
 
-        int count = xxlApiProjectDao.pageListCount(0, 10, null, -1);
+        int count = xxlApiProjectDao.pageListCount(0, 10, null, id);
         if (count > 0) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线下存在项目，不允许删除");
         }

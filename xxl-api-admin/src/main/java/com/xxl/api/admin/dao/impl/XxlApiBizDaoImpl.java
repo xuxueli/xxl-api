@@ -24,7 +24,7 @@ public class XxlApiBizDaoImpl implements IXxlApiBizDao {
 
     @Override
     public int udpate(XxlApiBiz xxlApiBiz) {
-        return sqlSessionTemplate.update("XxlApiBizMapper.udpate", xxlApiBiz);
+        return sqlSessionTemplate.update("XxlApiBizMapper.update", xxlApiBiz);
     }
 
     @Override

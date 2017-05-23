@@ -1,8 +1,10 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.core.model.ReturnT;
+import com.xxl.api.admin.core.model.XxlApiBiz;
 import com.xxl.api.admin.core.model.XxlApiGroup;
 import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,9 +31,19 @@ public class XxlApiProjectController {
 	private IXxlApiProjectDao xxlApiProjectDao;
 	@Resource
 	private IXxlApiGroupDao xxlApiGroupDao;
+	@Resource
+	private IXxlApiBizDao xxlApiBizDao;
 
 	@RequestMapping
-	public String index(Model model) {
+	public String index(Model model, @RequestParam(required = false, defaultValue = "0") int bizId) {
+
+		// 业务线ID
+		model.addAttribute("bizId", bizId);
+
+		// 业务线列表
+		List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
+		model.addAttribute("bizList", bizList);
+
 		return "project/project.list";
 	}
 
@@ -39,10 +51,10 @@ public class XxlApiProjectController {
 	@ResponseBody
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
 										@RequestParam(required = false, defaultValue = "10") int length,
-										String name) {
+										String name, int bizId) {
 		// page list
-		List<XxlApiProject> list = xxlApiProjectDao.pageList(start, length, name);
-		int list_count = xxlApiProjectDao.pageListCount(start, length, name);
+		List<XxlApiProject> list = xxlApiProjectDao.pageList(start, length, name, bizId);
+		int list_count = xxlApiProjectDao.pageListCount(start, length, name, bizId);
 
 		// package result
 		Map<String, Object> maps = new HashMap<String, Object>();

@@ -10,6 +10,7 @@ $(function() {
 			type:"post",
 			data : function ( d ) {
 				var obj = {};
+				obj.bizId = $('#bizId').val();
 				obj.name = $('#name').val();
 				obj.start = d.start;
 				obj.length = d.length;
@@ -50,7 +51,6 @@ $(function() {
 					return htm;
 				}
 			},
-			{ "data": 'version', "visible" : true,"width":'10%'},
 			{
 				"data": '操作' ,
 				"width":'10%',
@@ -68,7 +68,7 @@ $(function() {
 								' baseUrlProduct="'+ row.baseUrlProduct +'" '+
 								' baseUrlPpe="'+ row.baseUrlPpe +'" '+
 								' baseUrlQa="'+row.baseUrlQa +'" '+
-								' version="'+row.version +'" '+
+								' bizId="'+row.bizId +'" '+
 								'>'+
 							'<button class="btn btn-warning btn-xs update" type="button">编辑</button>  '+
 							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>  <br>'+
@@ -108,6 +108,11 @@ $(function() {
 
 	$("#search").click(function(){
 		projectTable.fnDraw();
+	});
+
+	$('#bizId').change(function () {
+		var bizId = $('#bizId').val();
+		window.location.href = base_url + "/project?bizId=" + bizId;
 	});
 
 	// job operate
@@ -209,7 +214,7 @@ $(function() {
 		$("#updateModal .form input[name='baseUrlProduct']").val($(this).parent('p').attr("baseUrlProduct"));
 		$("#updateModal .form input[name='baseUrlPpe']").val($(this).parent('p').attr("baseUrlPpe"));
 		$("#updateModal .form input[name='baseUrlQa']").val($(this).parent('p').attr("baseUrlQa"));
-		$("#updateModal .form input[name='version']").val($(this).parent('p').attr("version"));
+		$("#updateModal .form select[name='bizId']").find("option[value='"+ $(this).parent('p').attr("bizId") +"']").attr("selected",true);
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');

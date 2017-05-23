@@ -11,7 +11,7 @@
 	    <result column="base_url_product" property="baseUrlProduct" />
 		<result column="base_url_ppe" property="baseUrlPpe" />
 		<result column="base_url_qa" property="baseUrlQa" />
-		<result column="version" property="version" />
+		<result column="biz_id" property="bizId" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -22,7 +22,7 @@
 		t.base_url_product,
 		t.base_url_ppe,
 		t.base_url_qa,
-		t.version
+		t.biz_id
 	</sql>
 
 	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiProject" useGeneratedKeys="true" keyProperty="id" >
@@ -33,7 +33,7 @@
 			base_url_product,
 			base_url_ppe,
 			base_url_qa,
-			version
+			biz_id
 		) VALUES (
 			#{name},
 			#{desc},
@@ -41,7 +41,7 @@
 			#{baseUrlProduct},
 			#{baseUrlPpe},
 			#{baseUrlQa},
-			#{version}
+			#{bizId}
 		);
 	</insert>
 
@@ -54,7 +54,7 @@
 			base_url_product = #{baseUrlProduct},
 			base_url_ppe = #{baseUrlPpe},
 			base_url_qa = #{baseUrlQa},
-			version = #{version}
+			biz_id = #{bizId}
 		WHERE id = #{id}
 	</update>
 
@@ -77,6 +77,9 @@
 			<if test="name != null and name != ''">
 				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
 			</if>
+			<if test="bizId gte 0" >
+				AND t.biz_id = #{bizId}
+			</if>
 		</trim>
 		ORDER BY id DESC
 		LIMIT #{offset}, #{pagesize}
@@ -88,6 +91,9 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
 			<if test="name != null and name != ''">
 				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
+			</if>
+			<if test="bizId gte 0" >
+				AND t.biz_id = #{bizId}
 			</if>
 		</trim>
 	</select>

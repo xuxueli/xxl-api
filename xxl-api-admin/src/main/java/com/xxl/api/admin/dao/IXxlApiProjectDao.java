@@ -14,7 +14,7 @@ public interface IXxlApiProjectDao {
     public int delete(int id);
 
     public XxlApiProject load(int id);
-    public List<XxlApiProject> pageList(int offset, int pagesize, String name);
-    public int pageListCount(int offset, int pagesize, String name);
+    public List<XxlApiProject> pageList(int offset, int pagesize, String name, int bizId);
+    public int pageListCount(int offset, int pagesize, String name, int bizId);
 
 }

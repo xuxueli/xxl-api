@@ -40,21 +40,23 @@ public class XxlApiProjectDaoImpl implements IXxlApiProjectDao {
     }
 
     @Override
-    public List<XxlApiProject> pageList(int offset, int pagesize, String name) {
+    public List<XxlApiProject> pageList(int offset, int pagesize, String name, int bizId) {
         Map<String, Object> params = new HashMap();
         params.put("offset", offset);
         params.put("pagesize", pagesize);
         params.put("name", name);
+        params.put("bizId", bizId);
 
         return sqlSessionTemplate.selectList("XxlApiProjectMapper.pageList", params);
     }
 
     @Override
-    public int pageListCount(int offset, int pagesize, String name) {
+    public int pageListCount(int offset, int pagesize, String name, int bizId) {
         Map<String, Object> params = new HashMap();
         params.put("offset", offset);
         params.put("pagesize", pagesize);
         params.put("name", name);
+        params.put("bizId", bizId);
 
         return sqlSessionTemplate.selectOne("XxlApiProjectMapper.pageListCount", params);
     }

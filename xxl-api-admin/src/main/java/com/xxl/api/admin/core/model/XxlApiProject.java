@@ -12,7 +12,7 @@ public class XxlApiProject {
     private String baseUrlProduct;  // 跟地址：线上环境
     private String baseUrlPpe;      // 跟地址：预发布环境
     private String baseUrlQa;       // 跟地址：测试环境
-    private String version;         // 项目版本
+    private int bizId;              // 业务线ID
 
     public int getId() {
         return id;
@@ -70,11 +70,11 @@ public class XxlApiProject {
         this.baseUrlQa = baseUrlQa;
     }
 
-    public String getVersion() {
-        return version;
+    public int getBizId() {
+        return bizId;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setBizId(int bizId) {
+        this.bizId = bizId;
     }
 }

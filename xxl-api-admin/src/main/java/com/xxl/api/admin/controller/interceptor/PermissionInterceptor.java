@@ -60,7 +60,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		if (!ifPass) {
-			response.sendRedirect("/toLogin");	//request.getRequestDispatcher("/toLogin").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/toLogin");	//request.getRequestDispatcher("/toLogin").forward(request, response);
 			return false;
 		}
 		

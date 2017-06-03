@@ -140,4 +140,10 @@
 		WHERE t.group_id = #{groupId}
 	</select>
 
+	<select id="findByResponseDataTypeId" parameterType="java.lang.Integer" resultMap="XxlApiDocument">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_document AS t
+		WHERE t.response_datatype_id = #{responseDatatypeId}
+	</select>
+
 </mapper>

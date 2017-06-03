@@ -53,4 +53,9 @@ public class XxlApiDocumentDaoImpl implements IXxlApiDocumentDao {
         return sqlSessionTemplate.selectList("XxlApiDocumentMapper.loadByGroupId", groupId);
     }
 
+    @Override
+    public List<XxlApiDocument> findByResponseDataTypeId(int responseDatatypeId) {
+        return sqlSessionTemplate.selectList("XxlApiDocumentMapper.findByResponseDataTypeId", responseDatatypeId);
+    }
+
 }

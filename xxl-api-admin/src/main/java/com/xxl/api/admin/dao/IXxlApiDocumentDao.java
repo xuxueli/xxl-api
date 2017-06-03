@@ -17,4 +17,7 @@ public interface IXxlApiDocumentDao {
     public List<XxlApiDocument> loadAll(int productId, int groupId);
 
     public List<XxlApiDocument> loadByGroupId(int id);
+
+    List<XxlApiDocument> findByResponseDataTypeId(int responseDatatypeId);
+
 }

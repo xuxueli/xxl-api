@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiDataTypeFieldFieldMapper">
+
+	<resultMap id="XxlApiDataTypeField" type="com.xxl.api.admin.core.model.XxlApiDataTypeField" >
+		<result column="id" property="id" />
+		<result column="parent_datatype_id" property="parentDatatypeId" />
+		<result column="field_name" property="fieldName" />
+		<result column="field_about" property="fieldAbout" />
+		<result column="field_datatype_id" property="fieldDatatypeId" />
+		<result column="field_type" property="fieldType" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.`parent_datatype_id`,
+		t.`field_name`,
+		t.`field_about`,
+		t.`field_datatype_id`,
+		t.`field_type`
+	</sql>
+
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_datatype_fileds (
+			`parent_datatype_id`,
+			`field_name`,
+			`field_about`,
+			`field_datatype_id`,
+			`field_type`
+		) VALUES
+		<foreach collection="xxlApiDataTypeFieldList" item="xxlApiDataTypeField" index="index" separator="," >
+		(
+			#{xxlApiDataTypeField.parentDatatypeId},
+			#{xxlApiDataTypeField.fieldName},
+			#{xxlApiDataTypeField.fieldAbout},
+			#{xxlApiDataTypeField.fieldDatatypeId},
+			#{xxlApiDataTypeField.fieldType}
+		)
+		</foreach>
+	</insert>
+
+	<delete id="deleteByParentDatatypeId" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_datatype_fileds
+		WHERE parent_datatype_id = #{parentDatatypeId}
+	</delete>
+
+	<select id="findByParentDatatypeId" parameterType="java.lang.Integer" resultMap="XxlApiDataTypeField">
+		SELECT <include refid="Base_Column_List" />
+		WHERE t.parent_datatype_id = #{parentDatatypeId}
+		ORDER BY t.id ASC
+	</select>
+
+	<select id="findByFieldDatatypeId" parameterType="java.lang.Integer" resultMap="XxlApiDataTypeField">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_datatype_fileds AS t
+		WHERE t.field_datatype_id = #fieldDatatypeId#
+	</select>
+
+</mapper>

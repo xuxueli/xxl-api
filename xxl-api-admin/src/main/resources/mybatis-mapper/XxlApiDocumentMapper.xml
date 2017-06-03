@@ -15,6 +15,7 @@
 		<result column="request_headers" property="requestHeaders" />
 		<result column="query_params" property="queryParams" />
 		<result column="response_params" property="responseParams" />
+		<result column="response_datatype_id" property="responseDatatypeId" />
 		<result column="success_resp_type" property="successRespType" />
 		<result column="success_resp_example" property="successRespExample" />
 		<result column="fail_resp_type" property="failRespType" />
@@ -36,6 +37,7 @@
 		t.`request_headers`,
 		t.`query_params`,
 		t.`response_params`,
+		t.`response_datatype_id`,
 		t.`success_resp_type`,
 		t.`success_resp_example`,
 		t.`fail_resp_type`,
@@ -57,6 +59,7 @@
 			`request_headers`,
 			`query_params`,
 			`response_params`,
+			`response_datatype_id`,
 			`success_resp_type`,
 			`success_resp_example`,
 			`fail_resp_type`,
@@ -75,6 +78,7 @@
 			#{requestHeaders},
 			#{queryParams},
 			#{responseParams},
+			#{responseDatatypeId},
 			#{successRespType},
 			#{successRespExample},
 			#{failRespType},
@@ -97,6 +101,7 @@
 			`request_headers` = #{requestHeaders},
 			`query_params` = #{queryParams},
 			`response_params` = #{responseParams},
+			`response_datatype_id` = #{responseDatatypeId},
 			`success_resp_type` = #{successRespType},
 			`success_resp_example` = #{successRespExample},
 			 `fail_resp_type` = #{failRespType},

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XxlApiDataTypeMapper">
+	
+	<resultMap id="XxlApiDataType" type="com.xxl.api.admin.core.model.XxlApiDataType" >
+		<result column="id" property="id" />
+	    <result column="name" property="name" />
+		<result column="about" property="about" />
+		<result column="biz_id" property="bizId" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.`id`,
+		t.`name`,
+		t.`about`,
+		t.`biz_id`
+	</sql>
+
+	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiDataType" useGeneratedKeys="true" keyProperty="id" >
+		INSERT INTO xxl_api_datatype (
+			`name`,
+			`about`,
+			`biz_id`
+		) VALUES (
+			#{name},
+			#{about},
+			#{bizId}
+		);
+	</insert>
+
+	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiDataType" >
+		UPDATE xxl_api_datatype
+		SET
+			`name` = #{name},
+			`about` = #{about},
+			`biz_id` = #{bizId}
+		 WHERE `id` = #{id}
+
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_api_datatype
+		WHERE id = #{id}
+	</delete>
+
+	<select id="load" parameterType="java.lang.Integer" resultMap="XxlApiDataType">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_datatype AS t
+		WHERE t.id = #{id}
+	</select>
+
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiDataType">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_datatype AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizId gte 0" >
+				AND t.biz_id = #{bizId}
+			</if>
+			<if test="name != null and name != ''">
+				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
+			</if>
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_datatype AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizId gte 0" >
+				AND t.biz_id = #{bizId}
+			</if>
+			<if test="name != null and name != ''">
+				AND t.name like CONCAT(CONCAT('%', #{name}), '%')
+			</if>
+		</trim>
+	</select>
+
+	<select id="loadByName" parameterType="java.lang.String" resultMap="XxlApiDataType">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_datatype AS t
+		WHERE t.name = #{name}
+	</select>
+
+</mapper>

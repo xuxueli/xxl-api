@@ -45,9 +45,16 @@ $(function() {
 				"visible" : true,
 				"render": function ( data, type, row ) {
 					var htm = '';
-					htm += '线上：' + row.baseUrlProduct + '<br>';
-					htm += '预发：' + row.baseUrlPpe + '<br>';
-					htm += '测试：' + row.baseUrlQa + '<br>';
+					if (row.baseUrlProduct) {
+						htm += '线上：' + row.baseUrlProduct + '<br>';
+					}
+					if (row.baseUrlPpe) {
+						htm += '预发：' + row.baseUrlPpe + '<br>';
+					}
+					if (row.baseUrlQa) {
+						htm += '测试：' + row.baseUrlQa + '<br>';
+					}
+
 					return htm;
 				}
 			},
@@ -61,7 +68,7 @@ $(function() {
 						var goUrl = base_url + '/group?productId='+ row.id;
 
 						// html
-						var html = '<p id="'+ row.id +'" '+
+						var html = '<span id="'+ row.id +'" '+
 								' name="'+ row.name +'" '+
 								' desc="'+ row.desc +'" '+
 								' permission="'+ row.permission +'" '+
@@ -73,7 +80,7 @@ $(function() {
 							'<button class="btn btn-warning btn-xs update" type="button">编辑</button>  '+
 							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>  <br>'+
 							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + goUrl + '\')" >进入项目</button>  '+
-							'</p>';
+							'</span>';
 
 						return html;
 					};
@@ -117,7 +124,7 @@ $(function() {
 
 	// job operate
 	$("#project_list").on('click', '.delete',function() {
-		var id = $(this).parent('p').attr("id");
+		var id = $(this).parent('span').attr("id");
 		ComConfirm.show("确认删除该项目?", function(){
 			$.ajax({
 				type : 'POST',
@@ -207,14 +214,14 @@ $(function() {
 	$("#project_list").on('click', '.update',function() {
 
 		// base data
-		$("#updateModal .form input[name='id']").val($(this).parent('p').attr("id"));
-		$("#updateModal .form input[name='name']").val($(this).parent('p').attr("name"));
-		$("#updateModal .form input[name='desc']").val($(this).parent('p').attr("desc"));
-		$("#updateModal .form input[name='permission']").eq($(this).parent('p').attr("permission")).click();
-		$("#updateModal .form input[name='baseUrlProduct']").val($(this).parent('p').attr("baseUrlProduct"));
-		$("#updateModal .form input[name='baseUrlPpe']").val($(this).parent('p').attr("baseUrlPpe"));
-		$("#updateModal .form input[name='baseUrlQa']").val($(this).parent('p').attr("baseUrlQa"));
-		$("#updateModal .form select[name='bizId']").find("option[value='"+ $(this).parent('p').attr("bizId") +"']").attr("selected",true);
+		$("#updateModal .form input[name='id']").val($(this).parent('span').attr("id"));
+		$("#updateModal .form input[name='name']").val($(this).parent('span').attr("name"));
+		$("#updateModal .form input[name='desc']").val($(this).parent('span').attr("desc"));
+		$("#updateModal .form input[name='permission']").eq($(this).parent('span').attr("permission")).click();
+		$("#updateModal .form input[name='baseUrlProduct']").val($(this).parent('span').attr("baseUrlProduct"));
+		$("#updateModal .form input[name='baseUrlPpe']").val($(this).parent('span').attr("baseUrlPpe"));
+		$("#updateModal .form input[name='baseUrlQa']").val($(this).parent('span').attr("baseUrlQa"));
+		$("#updateModal .form select[name='bizId']").find("option[value='"+ $(this).parent('span').attr("bizId") +"']").attr("selected",true);
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');

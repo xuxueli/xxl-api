@@ -168,12 +168,12 @@ $(function() {
 	/**
 	 * 关键字搜索
 	 */
-	$("#searchName").bind('input porpertychange',function(){
-		var searchName = $("#searchName").val();
+	$("#searchUrl").bind('input porpertychange',function(){
+		var searchUrl = $("#searchUrl").val();
 		$('#documentList').find('tbody tr').each(function(){
-			var nameItem = $(this).attr('name');
-			if (searchName) {
-				if (nameItem.indexOf(searchName) != -1) {
+			var requestUrl = $(this).attr('requestUrl');
+			if (searchUrl) {
+				if (requestUrl.indexOf(searchUrl) != -1) {
 					$(this).show();
 				} else {
 					$(this).hide();

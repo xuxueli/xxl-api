@@ -94,7 +94,7 @@
 
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                    <input type="text" class="form-control input-sm" id="searchName" placeholder="接口搜索">
+                                    <input type="text" class="form-control input-sm" id="searchUrl" placeholder="接口搜索">
                                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                     <tbody>
                                         <#if documentList?exists && documentList?size gt 0>
                                             <#list documentList as document>
-                                                <tr name="${document.name}" >
+                                                <tr requestUrl="${document.requestUrl}" >
                                                     <td class="mailbox-star">
                                                         <a href="#" class="markStar" _starLevel="${document.starLevel}" _id="${document.id}" >
                                                             <#if document.starLevel == 1><i class="fa fa-star text-yellow"></i>

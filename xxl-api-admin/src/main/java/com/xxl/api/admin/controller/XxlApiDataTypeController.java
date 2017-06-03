@@ -44,7 +44,7 @@ public class XxlApiDataTypeController {
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
 
-        return "apihome/datatype/datatype.list";
+        return "datatype/datatype.list";
     }
 
 
@@ -56,7 +56,7 @@ public class XxlApiDataTypeController {
         // page list
         List<XxlApiDataType> list = xxlApiDataTypeDao.pageList(start, length, bizId, name);
         int count = xxlApiDataTypeDao.pageListCount(start, length, bizId, name);
-        
+
         // package result
         Map<String, Object> maps = new HashMap<String, Object>();
         maps.put("recordsTotal", count);		// 总记录数
@@ -67,7 +67,7 @@ public class XxlApiDataTypeController {
 
     /**
      * load datatype
-     * 
+     *
      * @param dataTypeId
      * @return
      */
@@ -112,7 +112,7 @@ public class XxlApiDataTypeController {
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
 
-        return "apihome/datatype/datatype.add";
+        return "datatype/datatype.add";
     }
 
     @RequestMapping("/addDataType")
@@ -188,7 +188,7 @@ public class XxlApiDataTypeController {
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
 
-        return "apihome/datatype/datatype.update";
+        return "datatype/datatype.update";
     }
 
     @RequestMapping("/updateDataType")
@@ -263,7 +263,7 @@ public class XxlApiDataTypeController {
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
 
-        return "apihome/datatype/datatype.detail";
+        return "datatype/datatype.detail";
     }
 
     @RequestMapping("/deleteDataType")

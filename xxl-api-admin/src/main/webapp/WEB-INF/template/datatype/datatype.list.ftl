@@ -2,10 +2,10 @@
 <html>
 <head>
   	<title>API管理平台</title>
-  	<#import "/apihome/common/common.macro.ftl" as netCommon>
+    <#import "/common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />
 	<!-- DataTables -->
-  	<link rel="stylesheet" href="${request.contextPath}/resources/apihome/adminlte/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
@@ -225,12 +225,12 @@
 
 <@netCommon.commonScript />
 <!-- DataTables -->
-<script src="${request.contextPath}/resources/apihome/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/plugins/jquery/jquery.validate.min.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
-<script src="${request.contextPath}/resources/apihome/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<script src="${request.contextPath}/resources/apihome/js/datatype.list.1.js"></script>
+<script src="${request.contextPath}/static/js/datatype.list.1.js"></script>
 </body>
 </html>

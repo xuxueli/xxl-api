@@ -6,7 +6,7 @@ $(function() {
 		"processing" : true,
 		"serverSide": true,
 		"ajax": {
-			url: base_url + "/mvc/apihome/datatype/pageList",
+			url: base_url + "/datatype/pageList",
 			type:"post",
 			data : function ( d ) {
 				var obj = {};
@@ -30,8 +30,8 @@ $(function() {
 				"render": function ( data, type, row ) {
 					return function(){
 
-						var updateUrl = base_url + '/mvc/apihome/datatype/updateDataTypePage?dataTypeId='+ row.id;
-						var detailUrl = base_url + '/mvc/apihome/datatype/dataTypeDetail?dataTypeId='+ row.id;
+						var updateUrl = base_url + '/datatype/updateDataTypePage?dataTypeId='+ row.id;
+						var detailUrl = base_url + '/datatype/dataTypeDetail?dataTypeId='+ row.id;
 
 						// html
 						var html = '<span id="'+ row.id +'" >'+
@@ -81,7 +81,7 @@ $(function() {
 		ComConfirm.show("确认删除该数据类型?", function(){
 			$.ajax({
 				type : 'POST',
-				url : base_url + "/mvc/apihome/datatype/deleteDataType",
+				url : base_url + "/datatype/deleteDataType",
 				data : {
 					"id" : id
 				},

@@ -51,7 +51,7 @@
                     <button class="btn btn-block btn-info" id="search">搜索</button>
                 </div>
                 <div class="col-xs-2 pull-right">
-                    <button class="btn btn-block btn-success" type="button" onclick="javascript:window.open('${request.contextPath}/mvc/apihome/datatype/addDataTypePage')" >+新增数据类型</button>
+                    <button class="btn btn-block btn-success" type="button" onclick="javascript:window.open('${request.contextPath}/datatype/addDataTypePage')" >+新增数据类型</button>
                 </div>
             </div>
 

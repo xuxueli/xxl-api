@@ -65,9 +65,9 @@ public class JacksonUtil {
 		}
     	return null;
     }
-    public static <T> T readValueRefer(String jsonStr, Class<T> clazz) {
+    public static <T> T readValueRefer(String jsonStr, TypeReference typeReference) {
     	try {
-			return getInstance().readValue(jsonStr, new TypeReference<T>() { });
+			return getInstance().readValue(jsonStr, typeReference);		// new TypeReference<T>() { }
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

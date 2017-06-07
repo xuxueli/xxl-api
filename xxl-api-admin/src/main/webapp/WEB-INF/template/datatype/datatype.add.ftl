@@ -3,8 +3,8 @@
 <head>
   	<title>API管理平台</title>
     <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
-  	<#import "/apihome/common/common.macro.ftl" as netCommon>
-    <link rel="stylesheet" href="${request.contextPath}/resources/apihome/adminlte/plugins/select2/select2.min.css">
+    <#import "/common/common.macro.ftl" as netCommon>
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
 	<@netCommon.commonStyle />
 
 </head>
@@ -113,8 +113,8 @@
 
 <@netCommon.commonScript />
 
-<script src="${request.contextPath}/resources/apihome/adminlte/plugins/select2/select2.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/plugins/jquery/jquery.validate.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/js/datatype.add.1.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
+<script src="${request.contextPath}/static/js/datatype.add.1.js"></script>
 </body>
 </html>

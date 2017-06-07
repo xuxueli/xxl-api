@@ -20,21 +20,21 @@ public class XxlApiDataTypeFieldDaoImpl implements IXxlApiDataTypeFieldDao {
 
     @Override
     public int add(List<XxlApiDataTypeField> xxlApiDataTypeFieldList) {
-        return sqlSessionTemplate.insert("XxlApiDataTypeFieldFieldMapper.add", xxlApiDataTypeFieldList);
+        return sqlSessionTemplate.insert("XxlApiDataTypeFieldMapper.add", xxlApiDataTypeFieldList);
     }
 
     @Override
     public int deleteByParentDatatypeId(int parentDatatypeId) {
-        return sqlSessionTemplate.delete("XxlApiDataTypeFieldFieldMapper.deleteByParentDatatypeId", parentDatatypeId);
+        return sqlSessionTemplate.delete("XxlApiDataTypeFieldMapper.deleteByParentDatatypeId", parentDatatypeId);
     }
 
     @Override
     public List<XxlApiDataTypeField> findByParentDatatypeId(int parentDatatypeId) {
-        return sqlSessionTemplate.selectList("XxlApiDataTypeFieldFieldMapper.findByParentDatatypeId", parentDatatypeId);
+        return sqlSessionTemplate.selectList("XxlApiDataTypeFieldMapper.findByParentDatatypeId", parentDatatypeId);
     }
 
     @Override
     public List<XxlApiDataTypeField> findByFieldDatatypeId(int fieldDatatypeId) {
-        return sqlSessionTemplate.selectList("XxlApiDataTypeFieldFieldMapper.findByFieldDatatypeId", fieldDatatypeId);
+        return sqlSessionTemplate.selectList("XxlApiDataTypeFieldMapper.findByFieldDatatypeId", fieldDatatypeId);
     }
 }

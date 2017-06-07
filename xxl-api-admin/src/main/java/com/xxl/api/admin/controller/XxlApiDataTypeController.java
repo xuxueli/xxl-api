@@ -9,6 +9,7 @@ import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,7 +121,7 @@ public class XxlApiDataTypeController {
     public ReturnT<Integer> addDataType(XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringUtils.isNotBlank(fieldTypeJson)) {
-            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValue(fieldTypeJson, List.class);
+            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
             if (CollectionUtils.isNotEmpty(fieldList)) {
                 apiDataTypeDTO.setFieldList(fieldList);
             }
@@ -196,7 +197,7 @@ public class XxlApiDataTypeController {
     public ReturnT<String> updateDataType(XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringUtils.isNotBlank(fieldTypeJson)) {
-            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValue(fieldTypeJson, List.class);
+            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
             if (CollectionUtils.isNotEmpty(fieldList)) {
                 apiDataTypeDTO.setFieldList(fieldList);
             }

@@ -97,7 +97,7 @@ public class XxlApiDataTypeController {
         // parse field list
         if (CollectionUtils.isNotEmpty(dataType.getFieldList()) && maxRelateLevel>0) {
             for (XxlApiDataTypeField field: dataType.getFieldList()) {
-                XxlApiDataType fieldDataType = loadDataType(field.getFieldDatatypeId());
+                XxlApiDataType fieldDataType = xxlApiDataTypeDao.load(field.getFieldDatatypeId());
                 fieldDataType = fillFileDataType(fieldDataType, --maxRelateLevel);
                 field.setFieldDatatype(fieldDataType);
             }
@@ -158,13 +158,13 @@ public class XxlApiDataTypeController {
         }
 
         // add datatype
-        int datatypeId = xxlApiDataTypeDao.add(apiDataTypeDTO);
-        if (datatypeId < 1) {
+        int addRet = xxlApiDataTypeDao.add(apiDataTypeDTO);
+        if (addRet < 1) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型新增失败");
         }
         if (CollectionUtils.isNotEmpty(apiDataTypeDTO.getFieldList())) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
-                field.setParentDatatypeId(datatypeId);
+                field.setParentDatatypeId(apiDataTypeDTO.getId());
             }
             // add field
             int ret = xxlApiDataTypeFieldDao.add(apiDataTypeDTO.getFieldList());
@@ -173,7 +173,7 @@ public class XxlApiDataTypeController {
             }
         }
 
-        return datatypeId>0? new ReturnT<Integer>(datatypeId) : new ReturnT<Integer>(ReturnT.FAIL_CODE, "");
+        return apiDataTypeDTO.getId()>0? new ReturnT<Integer>(apiDataTypeDTO.getId()) : new ReturnT<Integer>(ReturnT.FAIL_CODE, "");
     }
 
     @RequestMapping("/updateDataTypePage")

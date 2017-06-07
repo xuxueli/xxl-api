@@ -15,7 +15,7 @@ $(function() {
 				$($select2).select2({
 					ajax: {
 						type:'GET',
-						url: base_url + "/mvc/apihome/datatype/pageList",
+						url: base_url + "/datatype/pageList",
 						dataType: 'json',
 						delay: 250,
 						data: function (params) {
@@ -172,12 +172,12 @@ $(function() {
 				"fieldTypeJson":fieldTypeJson
 			}
 
-			$.post(base_url + "/mvc/apihome/datatype/updateDataType", data, function(data, status) {
+			$.post(base_url + "/datatype/updateDataType", data, function(data, status) {
 				if (data.code == "200") {
 					$('#addModal').modal('hide');
 					setTimeout(function () {
 						ComAlert.show(1, "更新成功", function(){
-							window.location.href  = base_url + '/mvc/apihome/datatype/dataTypeDetail?dataTypeId=' + $("#datatypeForm input[name=id]").val();
+							window.location.href  = base_url + '/datatype/dataTypeDetail?dataTypeId=' + $("#datatypeForm input[name=id]").val();
 						});
 					}, 315);
 				} else {

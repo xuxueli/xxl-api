@@ -3,7 +3,7 @@
 <head>
     <title>API管理平台</title>
     <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
-    <#import "/apihome/common/common.macro.ftl" as netCommon>
+    <#import "/common/common.macro.ftl" as netCommon>
     <@netCommon.commonStyle />
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
@@ -30,7 +30,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/mvc/apihome/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}'" >前往修改页面</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}'" >前往修改页面</button>
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                                 <tr>
                                     <td>${field.fieldName}</td>
                                     <td>
-                                        <a href="${request.contextPath}/mvc/apihome/datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}" target="_blank">
+                                        <a href="${request.contextPath}//datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}" target="_blank">
                                             ${field.fieldDatatype.name}
                                             <#if field.fieldType==1>[]</#if>
                                         </a>

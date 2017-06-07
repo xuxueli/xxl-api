@@ -3,8 +3,8 @@
 <head>
     <title>API管理平台</title>
     <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
-<#import "/apihome/common/common.macro.ftl" as netCommon>
-    <link rel="stylesheet" href="${request.contextPath}/resources/apihome/adminlte/plugins/select2/select2.min.css">
+    <#import "/common/common.macro.ftl" as netCommon>
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
 <@netCommon.commonStyle />
 
 </head>
@@ -31,7 +31,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/mvc/apihome/datatype/dataTypeDetail?dataTypeId=${apiDataType.id}'" >返回详情页</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/datatype/dataTypeDetail?dataTypeId=${apiDataType.id}'" >返回详情页</button>
                             <button class="btn btn-info btn-xs" type="submit" >保存数据类型</button>
                         </div>
                     </div>
@@ -145,8 +145,8 @@
 
 <@netCommon.commonScript />
 
-<script src="${request.contextPath}/resources/apihome/adminlte/plugins/select2/select2.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/plugins/jquery/jquery.validate.min.js"></script>
-<script src="${request.contextPath}/resources/apihome/js/datatype.update.1.js"></script>
+<script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
+<script src="${request.contextPath}/static/js/datatype.update.1.js"></script>
 </body>
 </html>

@@ -187,7 +187,7 @@
                     </div>
                 </div>
 
-                <#--响应结果参数-->
+                <#--响应结果参数
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">响应结果参数</h3>
@@ -227,6 +227,27 @@
                     <div class="box-body" id="responseParams_parent" >
                     </div>
                 </div>
+                -->
+
+                <#--响应数据类型-->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">响应数据类型</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/datatype/addDataTypePage');" >+ 新增数据类型</button>
+                        </div>
+                    </div>
+                    <div class="box-body" >
+
+                        <label class="col-sm-1 control-label">数据类型</label>
+                        <div class="col-sm-4 item">
+                            <select class="form-control" style="width: 100%;" id="responseDatatypeId" name="responseDatatypeId"  >
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
 
                 <#-- 接口备注 -->
                 <div class="box box-primary">

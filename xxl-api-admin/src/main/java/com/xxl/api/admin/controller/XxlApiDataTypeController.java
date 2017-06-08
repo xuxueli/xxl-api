@@ -7,6 +7,7 @@ import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
+import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
@@ -36,6 +37,8 @@ public class XxlApiDataTypeController {
     private IXxlApiBizDao xxlApiBizDao;
     @Resource
     private IXxlApiDocumentDao xxlApiDocumentDao;
+    @Resource
+    private IXxlApiDataTypeService xxlApiDataTypeService;
 
 
     @RequestMapping
@@ -64,45 +67,6 @@ public class XxlApiDataTypeController {
         maps.put("recordsFiltered", count);	    // 过滤后的总记录数
         maps.put("data", list);  				// 分页列表
         return maps;
-    }
-
-    /**
-     * load datatype
-     *
-     * @param dataTypeId
-     * @return
-     */
-    private XxlApiDataType loadDataType(int dataTypeId) {
-        XxlApiDataType dataType = xxlApiDataTypeDao.load(dataTypeId);
-        if (dataType == null) {
-            return dataType;
-        }
-
-        // fill field datatype
-        int maxRelateLevel = 5;
-        dataType = fillFileDataType(dataType, maxRelateLevel);
-        return dataType;
-    }
-    /**
-     * parse field of datatype (注意，循环引用问题；此处显示最长引用链路长度为5；)
-     *
-     * @param dataType
-     * @param maxRelateLevel
-     * @return
-     */
-    private XxlApiDataType fillFileDataType(XxlApiDataType dataType, int maxRelateLevel){
-        // init field list
-        List<XxlApiDataTypeField> fieldList = xxlApiDataTypeFieldDao.findByParentDatatypeId(dataType.getId());
-        dataType.setFieldList(fieldList);
-        // parse field list
-        if (CollectionUtils.isNotEmpty(dataType.getFieldList()) && maxRelateLevel>0) {
-            for (XxlApiDataTypeField field: dataType.getFieldList()) {
-                XxlApiDataType fieldDataType = xxlApiDataTypeDao.load(field.getFieldDatatypeId());
-                fieldDataType = fillFileDataType(fieldDataType, --maxRelateLevel);
-                field.setFieldDatatype(fieldDataType);
-            }
-        }
-        return dataType;
     }
 
 
@@ -146,7 +110,7 @@ public class XxlApiDataTypeController {
                     return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段名称不可为空");
                 }
 
-                XxlApiDataType filedDataType = loadDataType(field.getFieldDatatypeId());
+                XxlApiDataType filedDataType = xxlApiDataTypeService.loadDataType(field.getFieldDatatypeId());
                 if (filedDataType == null) {
                     return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段数据类型ID非法");
                 }
@@ -179,7 +143,7 @@ public class XxlApiDataTypeController {
     @RequestMapping("/updateDataTypePage")
     public String updateDataTypePage(Model model, int dataTypeId) {
 
-        XxlApiDataType apiDataType = loadDataType(dataTypeId);
+        XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
             throw new RuntimeException("数据类型ID非法");
         }
@@ -254,7 +218,7 @@ public class XxlApiDataTypeController {
     @RequestMapping("/dataTypeDetail")
     public String dataTypeDetail(Model model, int dataTypeId) {
 
-        XxlApiDataType apiDataType = loadDataType(dataTypeId);
+        XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
             throw new RuntimeException("数据类型ID非法");
         }

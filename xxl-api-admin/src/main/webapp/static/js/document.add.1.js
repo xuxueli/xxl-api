@@ -70,9 +70,9 @@ $(function() {
 		$(this).parents('.queryParams_item').remove();
 	});
 
-	/**
+	/*/!**
 	 * 响应结果参数，新增一行
-	 */
+	 *!/
 	$('#responseParams_add').click(function () {
 		var html = $('#responseParams_example').html();
 		$('#responseParams_parent').append(html);
@@ -84,11 +84,53 @@ $(function() {
 			$($select2).select2();
 		});
 	});
-	/**
+	/!**
 	 * 响应结果参数，删除一行
-	 */
+	 *!/
 	$('#responseParams_parent').on('click', '.delete',function () {
 		$(this).parents('.responseParams_item').remove();
+	});*/
+
+	$('#responseDatatypeId').select2({
+		ajax: {
+			type:'GET',
+			url: base_url + "/datatype/pageList",
+			dataType: 'json',
+			delay: 250,
+			data: function (params) {
+				return {
+					bizId: -1,
+					start:0,
+					length:100,
+					name: params.term, // search term
+					page: params.page
+				};
+			},
+			processResults: function (data, params) {
+				params.page = params.page || 1;
+
+				var itemList = [];//当数据对象不是{id:0,text:'ANTS'}这种形式的时候，可以使用类似此方法创建新的数组对象
+				var arr = data.data;
+				for(i in arr){
+					itemList.push({id: arr[i].id, text: arr[i].name})
+				}
+				return {
+					results: itemList,	//data.items
+					pagination: {
+						more: (params.page * 30) < data.total_count
+					}
+				};
+			},
+			cache: true
+		},
+		placeholder:'请选择',//默认文字提示
+		language: "zh-CN",
+		tags: false,//允许手动添加
+		allowClear: true,//允许清空
+		escapeMarkup: function (markup) { return markup; }, // 自定义格式化防止xss注入
+		minimumInputLength: 1,//最少输入多少个字符后开始查询
+		formatResult: function formatRepo(repo){return repo.text;}, // 函数用来渲染结果
+		formatSelection: function formatRepoSelection(repo){return repo.text;} // 函数用于呈现当前的选择
 	});
 
 
@@ -182,7 +224,7 @@ $(function() {
 			}
 			var queryParams = JSON.stringify(queryParamList);
 
-			// response params
+			/*// response params
 			var responseParamList = new Array();
 			if ($('#responseParams_parent').find('.responseParams_item').length > 0) {
 				$('#responseParams_parent').find('.responseParams_item').each(function () {
@@ -205,15 +247,15 @@ $(function() {
 					}
 				});
 			}
-			var responseParams = JSON.stringify(responseParamList);
+			var responseParams = JSON.stringify(responseParamList);*/
 
 			// final params
 			var params = $("#ducomentForm").serialize();
 			params += '&' + $.param({
 					'remark':remark,
 					'requestHeaders':requestHeaders,
-					'queryParams':queryParams,
-					'responseParams':responseParams
+					'queryParams':queryParams
+					/*'responseParams':responseParams*/
 			});
 
 			$.post(base_url + "/document/add", params, function(data, status) {

@@ -176,6 +176,37 @@
                     </div>
                 </div>
 
+                <#--响应数据类型-->
+                <#if responseDatatype?exists>
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">响应数据类型</h3>
+                        </div>
+                        <div class="box-body " >
+
+                            <#macro fieldShow fieldList >
+                                <#if fieldList?exists && fieldList?size gt 0>
+                                    <ul style="display: block;" >
+                                        <#list fieldList as field>
+                                            <li>
+                                                <span style="font-weight: bold;margin-right: 10px;" >${field.fieldName}</span> {类型：${field.fieldDatatype.name} <#if field.fieldType==1>[]</#if>，描述：${field.fieldAbout}}
+                                                <@fieldShow field.fieldDatatype.fieldList />
+                                            </li>
+                                        </#list>
+                                    </ul>
+                                </#if>
+                            </#macro>
+
+                            <p>
+                                <span style="font-weight: bold;margin-right: 10px;" >${responseDatatype.name}:</span> ${responseDatatype.about}
+                                <a href="${request.contextPath}/datatype/dataTypeDetail?dataTypeId=${responseDatatype.id}" target="_blank">>>>接口详情</a>
+                                <@fieldShow responseDatatype.fieldList />
+                            </p>
+
+                        </div>
+                    </div>
+                </#if>
+
                 <#--响应结果参数-->
                 <#if responseParamList?exists && responseParamList?size gt 0 >
                     <div class="box box-primary">

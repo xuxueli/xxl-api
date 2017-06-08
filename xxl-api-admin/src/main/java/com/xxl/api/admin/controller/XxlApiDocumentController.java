@@ -4,6 +4,7 @@ import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.*;
+import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,8 @@ public class XxlApiDocumentController {
 	private IXxlApiMockDao xxlApiMockDao;
 	@Resource
 	private IXxlApiTestHistoryDao xxlApiTestHistoryDao;
+	@Resource
+	private IXxlApiDataTypeService xxlApiDataTypeService;
 
 
 	@RequestMapping("/markStar")
@@ -134,6 +137,10 @@ public class XxlApiDocumentController {
 		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
 		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
 
+		// 响应数据类型
+		XxlApiDataType responseDatatypeRet = xxlApiDataTypeService.loadDataType(xxlApiDocument.getResponseDatatypeId());
+		model.addAttribute("responseDatatype", responseDatatypeRet);
+
 		return "document/document.update";
 	}
 	@RequestMapping("/update")
@@ -190,6 +197,10 @@ public class XxlApiDocumentController {
 		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
 		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
 		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
+
+		// 响应数据类型
+		XxlApiDataType responseDatatypeRet = xxlApiDataTypeService.loadDataType(xxlApiDocument.getResponseDatatypeId());
+		model.addAttribute("responseDatatype", responseDatatypeRet);
 
 		return "document/document.detail";
 	}

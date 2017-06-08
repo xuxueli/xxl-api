@@ -100,7 +100,7 @@
 		<div class="pull-right hidden-xs">
             <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;
                 <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>&nbsp;
-                <a href="http://my.oschina.net/xuxueli/blog/666" target="_blank" >oschina</a>
+                <a href="https://my.oschina.net/xuxueli/blog/873667" target="_blank" >oschina</a>
             </strong><!-- All rights reserved. -->
 		</div>
 	</footer>

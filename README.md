@@ -28,9 +28,10 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 
 ##### 技术交流群 (仅作技术交流)
 
-- 群3：242151780    [![image](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=bab676dc27c7e855da54da433fc39cef8474db6c7095711e4bd21097f89bf320 )
-- 群2：438249535    [![image](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=e288e6a50a82a1eeed89117f45b4839b4ba69db9a87da63ea915fae5294cc50d )   （群即将满，请加群3）
-- 群1：367260654    [![image](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=4686e3fe01118445c75673a66b4cc6b2c7ce0641528205b6f403c179062b0a52 )   （群即将满，请加群3）
+- 群4：464762661    [![image](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=c1660fbf8f81934b6f9095f9212f413ed2b127e72223502bb3c65888a0236ad3 )
+- 群3：242151780    （群即将满，请加群4）
+- 群2：438249535    （群即将满，请加群4）
+- 群1：367260654    （群即将满，请加群4）
 
 #### 1.4 环境
 - Servlet/JSP Spec：3.0/2.2

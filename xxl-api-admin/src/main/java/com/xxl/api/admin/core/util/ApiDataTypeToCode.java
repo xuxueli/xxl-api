@@ -77,8 +77,8 @@ public class ApiDataTypeToCode {
                     importSet.add(importItem);
                     sb.append(importItem + "\r\n");
                 }
-                sb.append("\r\n");
             }
+            sb.append("\r\n");
         }
 
         // 类注释
@@ -178,7 +178,7 @@ public class ApiDataTypeToCode {
             return "byte";
         }
 
-        return null;
+        return paramDataType;
     }
 
 

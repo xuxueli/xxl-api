@@ -2,6 +2,7 @@ package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
 import com.xxl.api.admin.core.model.*;
+import com.xxl.api.admin.core.util.ApiDataTypeToCode;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
@@ -227,6 +228,10 @@ public class XxlApiDataTypeController {
         // 业务线列表
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
+
+        // 代码生成
+        String codeContent = ApiDataTypeToCode.parseDataTypeToCode(apiDataType);
+        model.addAttribute("codeContent", codeContent);
 
         return "datatype/datatype.detail";
     }

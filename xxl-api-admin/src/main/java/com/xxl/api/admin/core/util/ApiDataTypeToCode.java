@@ -54,7 +54,7 @@ public class ApiDataTypeToCode {
      * @param apiDataTypeDTO
      * @return
      */
-    private static String parseDataTypeToCode(XxlApiDataType apiDataTypeDTO) {
+    public static String parseDataTypeToCode(XxlApiDataType apiDataTypeDTO) {
         StringBuffer sb = new StringBuffer();
 
         // package

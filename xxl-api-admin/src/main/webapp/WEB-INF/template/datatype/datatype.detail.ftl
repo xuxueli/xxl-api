@@ -117,6 +117,18 @@
                     </div>
                 </div>
 
+                <#-- 代码生成 -->
+                <#if codeContent?exists>
+                    <div class="box box-primary"  id="codeContent" >
+                        <div class="box-header">
+                            <h3 class="box-title">数据结构-代码生成</h3>
+                        </div>
+                        <div class="box-body " >
+                            <pre style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; margin-top: 15px;" >${codeContent}</pre>
+                        </div>
+                    </div>
+                </#if>
+
             </form>
 
         </section>

@@ -20,9 +20,6 @@
 
 [XXL-API管理平台文档](https://github.com/xuxueli/xxl-api/blob/master/doc/XXL-API管理平台文档.md)
 
-[XXL-API客户端官方文档](https://github.com/xuxueli/xxl-api/blob/master/doc/XXL-API客户端官方文档.md)
-
->"XXL-API管理平台" 和 "XXL-API客户端" 可以单独使用。后期将会进行深度整合，二者配合使用从而进一步提高API开发效率和体验。
 
 #### 3. 下载
 ##### 源码地址 (将会在两个git仓库同步发布最新代码)

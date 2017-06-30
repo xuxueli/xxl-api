@@ -8,6 +8,8 @@
 
 	<modules>
 		<module>xxl-api-admin</module>
+		<module>xxl-api-client</module>
+		<module>xxl-api-client-example</module>
 	</modules>
 
 	<build>

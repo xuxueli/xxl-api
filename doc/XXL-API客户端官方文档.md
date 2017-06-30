@@ -16,10 +16,10 @@ Java Web Framework.
 ##### 1、maven依赖
 
 ```
-<!-- xxl-web-core -->
+<!-- xxl-api-client -->
 <dependency>
-    <groupId>com.xxl</groupId>
-    <artifactId>xxl-web-core</artifactId>
+    <groupId>com.xuxueli</groupId>
+    <artifactId>xxl-api-client</artifactId>
     <version>${project.parent.version}</version>
 </dependency>
 ```
@@ -27,16 +27,16 @@ Java Web Framework.
 ##### 2、web.xml 配置统一路由
 
 ```
-<!-- xxl-web start -->
+<!-- xxl-api-client start -->
 <servlet>
     <servlet-name>xxlapi</servlet-name>
-    <servlet-class>com.xxl.web.core.dispatch.XxlWebDispatchServlet</servlet-class>
+    <servlet-class>com.xxl.api.client.dispatch.XxlWebDispatchServlet</servlet-class>
 </servlet>
 <servlet-mapping>
     <servlet-name>xxlapi</servlet-name>
     <url-pattern>*.xxlapi</url-pattern>
 </servlet-mapping>
-<!-- xxl-web stop -->
+<!-- xxl-api-client stop -->
 ```
 
 ##### 3、xxl-web 容器初始化
@@ -44,11 +44,11 @@ Java Web Framework.
 可参考示例项目 "apihome-client-example" 配置文件 "applicationcontext-apihome.xml"；
 
 ```
-<!-- init xxl-web handler factory -->
-<bean class="com.xxl.web.core.handler.XxlWebHandlerFactory" />
+<!-- init xxl-api-client handler factory -->
+<bean class="com.xxl.api.client.handler.XxlWebHandlerFactory" />
 
-<!-- scan xxl-web handler -->
-<context:component-scan base-package="com.xxl.web.example.handler" />
+<!-- scan xxl-api-client handler -->
+<context:component-scan base-package="com.xxl.api.client.example.handler" />
 ```
 
 至此，配置全部Finish。
@@ -62,5 +62,6 @@ xxl-web中每一个接口对应三个文件：Request + Handler + Response。例
     DemoHandler：API接口业务处理器，继承统一父类 "XxlWebHandler" ，通过注解@ApiHandlerMapping绑定API路由。通常绑定指定参数对象，接收 "XxlWebRequest" 进行业务处理，返回Request对象。
 
 
-    
-
+## TODO LIST
+1、Mocker，客户端支持根据mock-uuid，对调用进行自动mock；
+2、根据代码自动生成API文档信息，支持导入管理平台；

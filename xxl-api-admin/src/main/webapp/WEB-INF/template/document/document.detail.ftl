@@ -208,7 +208,7 @@
                 </#if>
 
                 <#--响应结果参数-->
-                <#if responseParamList?exists && responseParamList?size gt 0 >
+                <#--<#if responseParamList?exists && responseParamList?size gt 0 >
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">响应结果参数</h3>
@@ -237,7 +237,7 @@
                             </table>
                         </div>
                     </div>
-                </#if>
+                </#if>-->
 
                 <#-- 接口备注 -->
                 <#if document.remark?exists && document.remark?length gt 0 >

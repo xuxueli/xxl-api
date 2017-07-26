@@ -263,7 +263,7 @@
                 </div>
 
                 <#--响应结果参数-->
-                <div class="box box-primary">
+                <#--<div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">响应结果参数</h3>
                         <div class="box-tools pull-right">
@@ -330,7 +330,7 @@
                             </#list>
                         </#if>
                     </div>
-                </div>
+                </div>-->
 
                 <#-- 接口备注 -->
                 <div class="box box-primary">

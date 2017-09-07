@@ -28,25 +28,8 @@
 					<a target="_blank" href="https://github.com/xuxueli/xxl-api">github地址</a>&nbsp;&nbsp;&nbsp;&nbsp;
 					<iframe src="https://ghbtns.com/github-btn.html?user=xuxueli&repo=xxl-api&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px" style="margin-bottom:-5px;"></iframe>
 					<br><br>
-					<a target="_blank" href="http://my.oschina.net/xuxueli/blog/690978">oschina地址</a>
+					<a target="_blank" href="http://www.xuxueli.com/page/community.html">社区交流</a>
                     <br><br>
-
-                    <a >技术交流群4：464762661</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=2b7c60319cadc36eedf2655d43b0c98a58b5a3f42128453abdf2710338c30201">
-                        <img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="《xxl-javaer》（四群）" title="《xxl-javaer》（四群）">
-                    </a>
-                    <br><br>
-
-                    <a >技术交流群3：242151780</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    （群即将满，请加群4）
-                    <br><br>
-
-                    <a >技术交流群2：438249535</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    （群即将满，请加群4）
-                    <br><br>
-
-                    <a >技术交流群1：367260654</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    （群即将满，请加群4）
 
 				</p>
 				<p></p>

@@ -34,10 +34,7 @@
 
 ##### 技术交流群 (仅作技术交流)
 
-- 群4：464762661    [![image](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=c1660fbf8f81934b6f9095f9212f413ed2b127e72223502bb3c65888a0236ad3 )
-- 群3：242151780    （群即将满，请加群4）
-- 群2：438249535    （群即将满，请加群4）
-- 群1：367260654    （群即将满，请加群4）
+- [社区交流](http://www.xuxueli.com/page/community.html)
 
 
 #### 4. 报告问题

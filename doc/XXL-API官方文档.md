@@ -16,15 +16,18 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 
 ### 1.3 下载
-#### 源码地址 (将会在两个git仓库同步发布最新代码)
 
-- [github地址](https://github.com/xuxueli/xxl-api)
-- [git.osc地址](http://git.oschina.net/xuxueli0323/xxl-api)
+#### 文档地址
 
-#### 博客地址 (将会在两个博客同步更新文档)
+- [中文文档](http://www.xuxueli.com/xxl-api/)
 
-- [oschina地址](https://my.oschina.net/xuxueli/blog/873667)
-- [cnblogs地址](http://www.cnblogs.com/xuxueli/p/6671139.html)
+#### 源码仓库地址
+
+源码仓库地址 | Release Download
+--- | ---
+[https://github.com/xuxueli/xxl-api](https://github.com/xuxueli/xxl-api) | [Download](https://github.com/xuxueli/xxl-api/releases)  
+[http://git.oschina.net/xuxueli0323/xxl-api](http://git.oschina.net/xuxueli0323/xxl-api) | [Download](http://git.oschina.net/xuxueli0323/xxl-api/releases)
+
 
 #### 技术交流群 (仅作技术交流)
 
@@ -289,15 +292,24 @@ Mock数据属性说明：
 - 12、配合xxl-web，实现线上Mocker，支持根据mock-uuid，对调用进行自动mock；
 - 13、配合xxl-web，实现根据代码代码自动生成api文档并导入xxl-api管理平台；
 
+
 ## 七、其他
 
-### 7.1 报告问题
-XXL-API托管在Github上，如有问题可在 [ISSUES](https://github.com/xuxueli/xxl-api/issues/) 上提问，也可以加入上文技术交流群；
+### 7.1 项目贡献
+欢迎参与项目贡献！比如提交PR修复一个bug，或者新建 [Issue](https://github.com/xuxueli/xxl-api/issues/) 讨论新特性或者变更。
 
-### 7.2 接入登记（登记仅为了推广，产品开源免费）
-更多接入公司，欢迎在github [登记](https://github.com/xuxueli/xxl-api/issues/1 )
+### 7.2 用户接入登记
+更多接入的公司，欢迎在 [登记地址](https://github.com/xuxueli/xxl-api/issues/1 ) 登记，登记仅仅为了产品推广。
+
+### 7.3 开源协议和版权
+产品开源免费，并且将持续提供免费的社区技术支持。个人或企业内部可自由的接入和使用。
+
+- Licensed under the GNU General Public License (GPL) v3.
+- Copyright (c) 2015-present, xuxueli.
 
 ---
-### 支持的话可以扫一扫，支持 [XXL系列](https://github.com/xuxueli) 的建设。
+### 捐赠
+无论金额多少都足够表达您这份心意，非常感谢 ：）    [XXL系列捐赠记录](http://www.xuxueli.com/page/donate.html )
 
-![输入图片说明](http://images2015.cnblogs.com/blog/554415/201605/554415-20160513183306234-1939652116.png "在这里输入图片标题")
+微信：<img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/donate-wechat.png" width="200">
+支付宝：<img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/donate-alipay.jpg" width="200">

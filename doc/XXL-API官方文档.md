@@ -28,9 +28,7 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 [https://github.com/xuxueli/xxl-api](https://github.com/xuxueli/xxl-api) | [Download](https://github.com/xuxueli/xxl-api/releases)  
 [http://git.oschina.net/xuxueli0323/xxl-api](http://git.oschina.net/xuxueli0323/xxl-api) | [Download](http://git.oschina.net/xuxueli0323/xxl-api/releases)
 
-
-#### 技术交流群 (仅作技术交流)
-
+#### 技术交流
 - [社区交流](http://www.xuxueli.com/page/community.html)
 
 ### 1.4 环境

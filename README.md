@@ -18,7 +18,7 @@
 
 #### 3. 文档
 
-[XXL-API管理平台文档](https://github.com/xuxueli/xxl-api/blob/master/doc/XXL-API管理平台文档.md)
+[XXL-API官方文档](https://github.com/xuxueli/xxl-api/blob/master/doc/XXL-API官方文档.md)
 
 
 #### 3. 下载

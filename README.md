@@ -35,7 +35,7 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 
 ## Documentation
-[中文文档](http://www.xuxueli.com/xxl-api/)
+- [中文文档](http://www.xuxueli.com/xxl-api/)
 
 
 ## Communication

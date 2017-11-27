@@ -134,7 +134,7 @@
                             <div class="col-sm-4 item">
                                 <input type="text" class="form-control key">
                             </div>
-                            <label class="col-sm-1 control-label">参数说明</label>
+                            <label class="col-sm-1 control-label">参数值</label>
                             <div class="col-sm-5 item">
                                 <input type="text" class="form-control value">
                             </div>
@@ -150,7 +150,7 @@
                                     <div class="col-sm-4 item">
                                         <input type="text" class="form-control key" value="<#if testId gt 0>${item.key}<#else>${item.name}</#if>" >
                                     </div>
-                                    <label class="col-sm-1 control-label">参数说明</label>
+                                    <label class="col-sm-1 control-label">参数值</label>
                                     <div class="col-sm-5 item">
                                         <input type="text" class="form-control value" value="<#if testId gt 0>${item.value}<#else></#if>" >
                                     </div>

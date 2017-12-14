@@ -289,7 +289,7 @@ Mock数据属性说明：
 - 11、数据类型，代码生成
 - 12、配合xxl-web，实现线上Mocker，支持根据mock-uuid，对调用进行自动mock；
 - 13、配合xxl-web，实现根据代码代码自动生成api文档并导入xxl-api管理平台；
-
+- 14、支持Restful类型接口；
 
 ## 七、其他
 

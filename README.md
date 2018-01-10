@@ -1,7 +1,5 @@
 <p align="center">
-    <a href="http://www.xuxueli.com/xxl-api/">
-        <img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.jpg" width="150">
-    </a>
+    <img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.jpg" width="150">
     <h3 align="center">XXL-API</h3>
     <p align="center">
         XXL-API, a api management platform.

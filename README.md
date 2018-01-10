@@ -6,7 +6,7 @@
     <p align="center">
         XXL-API, a api management platform.
         <br>
-        <a href="http://www.xuxueli.com/xxl-api/"><strong>-- Browse website. --</strong></a>
+        <a href="http://www.xuxueli.com/xxl-api/"><strong>-- Home Page --</strong></a>
         <br>
         <br>
          <a href="https://github.com/xuxueli/xxl-api/releases">

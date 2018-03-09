@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -78,7 +79,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/addPage")
-	public String addPage(Model model, int projectId) {
+	public String addPage(Model model, int projectId, @RequestParam(required = false, defaultValue = "0") int groupId) {
 
 		// project
 		XxlApiProject project = xxlApiProjectDao.load(projectId);
@@ -86,6 +87,7 @@ public class XxlApiDocumentController {
 			throw new RuntimeException("操作失败，项目ID非法");
 		}
 		model.addAttribute("projectId", projectId);
+		model.addAttribute("groupId", groupId);
 
 		// groupList
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);

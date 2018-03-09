@@ -40,40 +40,41 @@
 
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">接口分组</label>
+                            <label class="col-sm-1 control-label">URL</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="requestUrl" placeholder="请输入接口URL（相对地址）" maxlength="100" >
+                            </div>
+                            <label class="col-sm-1 control-label">分组</label>
                             <div class="col-sm-4">
                                 <select class="form-control select2" style="width: 100%;" name="groupId">
                                     <option value="0">默认分组</option>
-                                    <#if groupList?exists && groupList?size gt 0>
-                                        <#list groupList as group>
-                                            <option value="${group.id}">${group.name}</option>
-                                        </#list>
-                                    </#if>
+                                <#if groupList?exists && groupList?size gt 0>
+                                    <#list groupList as group>
+                                        <option value="${group.id}" <#if groupId==group.id>selected</#if> >${group.name}</option>
+                                    </#list>
+                                </#if>
                                 </select>
-                            </div>
-                            <label class="col-sm-1 control-label">接口状态</label>
-                            <div class="col-sm-6">
-                                <input type="radio" class="iCheck" name="status" value="0" checked >启用  &nbsp;&nbsp;
-                                <input type="radio" class="iCheck" name="status" value="1" >维护  &nbsp;&nbsp;
-                                <input type="radio" class="iCheck" name="status" value="2" >废弃
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">请求方法</label>
-                            <div class="col-sm-4">
+                            <label class="col-sm-1 control-label">Method</label>
+                            <div class="col-sm-6">
                                 <select class="form-control select2" style="width: 100%;" name="requestMethod">
                                 <#list RequestMethodEnum as item>
                                     <option value="${item}">${item}</option>
                                 </#list>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">接口URL</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="requestUrl" placeholder="请输入接口URL（相对地址）" maxlength="100" >
+                            <label class="col-sm-1 control-label">状态</label>
+                            <div class="col-sm-4">
+                                <input type="radio" class="iCheck" name="status" value="0" checked >启用  &nbsp;&nbsp;
+                                <input type="radio" class="iCheck" name="status" value="1" >维护  &nbsp;&nbsp;
+                                <input type="radio" class="iCheck" name="status" value="2" >废弃
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">接口名称</label>
+                            <label class="col-sm-1 control-label">名称</label>
                             <div class="col-sm-11">
                                 <input type="text" class="form-control" name="name" placeholder="请输入接口名称" maxlength="50" >
                             </div>
@@ -92,7 +93,7 @@
 
                     <div id="requestHeaders_example" style="display: none;" >
                         <div class="form-group requestHeaders_item" >
-                            <label class="col-sm-1 control-label">头部标签</label>
+                            <label class="col-sm-1 control-label">Key</label>
                             <div class="col-sm-4 item">
                                 <select class="form-control select2_tag_new key" >
                                     <option value=""></option>
@@ -101,7 +102,7 @@
                                     </#list>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">头部内容</label>
+                            <label class="col-sm-1 control-label">Value</label>
                             <div class="col-sm-5 item">
                                 <input type="text" class="form-control value">
                             </div>
@@ -124,13 +125,15 @@
 
                     <div id="queryParams_example" style="display: none;" >
                         <div class="form-group queryParams_item" >
+                            <label class="col-sm-1 control-label">参数</label>
                             <div class="col-sm-2 item">
-                                <select class="form-control select2_tag_new notNull" style="width: 100%;">
-                                    <option value="true">必填</option>
-                                    <option value="false">非必填</option>
-                                </select>
+                                <input type="text" class="form-control name">
                             </div>
-                            <label class="col-sm-1 control-label">参数类型</label>
+                            <label class="col-sm-1 control-label">说明</label>
+                            <div class="col-sm-2 item">
+                                <input type="text" class="form-control desc">
+                            </div>
+                            <label class="col-sm-1 control-label">类型</label>
                             <div class="col-sm-2 item">
                                 <select class="form-control select2_tag_new type" style="width: 100%;">
                                     <#list QueryParamTypeEnum as item>
@@ -138,13 +141,11 @@
                                     </#list>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">参数名称</label>
                             <div class="col-sm-2 item">
-                                <input type="text" class="form-control name">
-                            </div>
-                            <label class="col-sm-1 control-label">参数说明</label>
-                            <div class="col-sm-2 item">
-                                <input type="text" class="form-control desc">
+                                <select class="form-control select2_tag_new notNull" style="width: 100%;">
+                                    <option value="true">必填</option>
+                                    <option value="false">非必填</option>
+                                </select>
                             </div>
                             <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
                         </div>
@@ -239,7 +240,7 @@
                     </div>
                     <div class="box-body" >
 
-                        <label class="col-sm-1 control-label">数据类型</label>
+                        <label class="col-sm-2 control-label">数据类型</label>
                         <div class="col-sm-4 item">
                             <select class="form-control" style="width: 100%;" id="responseDatatypeId" name="responseDatatypeId"  >
                             </select>

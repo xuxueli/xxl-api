@@ -90,7 +90,7 @@
                                     <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _projectId="${groupInfo.projectId}" >删除分组</button>
                                     |
                                 </#if>
-                                <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?projectId=${projectId}')" >+新增接口</button>
+                                <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?projectId=${projectId}&groupId=${groupId}')" >+新增接口</button>
                                 &nbsp;&nbsp;
                             </#if>
 

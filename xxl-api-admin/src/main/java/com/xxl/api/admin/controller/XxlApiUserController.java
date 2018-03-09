@@ -132,4 +132,27 @@ public class XxlApiUserController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	@RequestMapping("/updatePwd")
+	@ResponseBody
+	public ReturnT<String> updatePwd(HttpServletRequest request, String password){
+
+		// new password(md5)
+		if (StringUtils.isBlank(password)){
+			return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码不可为空");
+		}
+		if (!(password.length()>=4 && password.length()<=100)) {
+			return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码长度限制为4~50");
+		}
+		String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+
+		// update pwd
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+
+		XxlApiUser existUser = xxlApiUserDao.findByUserName(loginUser.getUserName());
+		existUser.setPassword(md5Password);
+		xxlApiUserDao.update(existUser);
+
+		return ReturnT.SUCCESS;
+	}
+
 }

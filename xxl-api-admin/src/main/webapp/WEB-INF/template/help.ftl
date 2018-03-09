@@ -43,6 +43,5 @@
 	<@netCommon.commonFooter />
 </div>
 <@netCommon.commonScript />
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 </body>
 </html>

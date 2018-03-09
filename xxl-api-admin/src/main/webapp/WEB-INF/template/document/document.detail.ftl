@@ -397,7 +397,6 @@
 
 <@netCommon.commonScript />
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/marked.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/prettify.min.js"></script>

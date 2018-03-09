@@ -36,8 +36,11 @@
 
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-1">业务线：</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
+                                <b>名称：</b> <span style="color: #00a65a;">${apiDataType.name}</span>
+                            </div>
+                            <div class="col-sm-6">
+                                <b>业务线：</b>
                                 <#if apiDataType.bizId == 0>公共
                                 <#else>
                                     <#if bizList?exists && bizList?size gt 0>
@@ -47,12 +50,12 @@
                                     </#if>
                                 </#if>
                             </div>
-                            <label class="col-sm-1">名称：</label>
-                            <div class="col-sm-5">${apiDataType.name}</div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-1">描述：</label>
-                            <div class="col-sm-10">${apiDataType.about}</div>
+                            <div class="col-sm-6">
+                                <b>描述：</b>
+                                ${apiDataType.about}
+                            </div>
                         </div>
 
                     </div>
@@ -76,7 +79,7 @@
                                 <tr>
                                     <td>${field.fieldName}</td>
                                     <td>
-                                        <a href="${request.contextPath}//datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}" target="_blank">
+                                        <a href="${request.contextPath}/datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}" target="_blank">
                                             ${field.fieldDatatype.name}
                                             <#if field.fieldType==1>[]</#if>
                                         </a>

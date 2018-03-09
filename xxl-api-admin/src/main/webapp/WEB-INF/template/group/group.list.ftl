@@ -237,8 +237,6 @@
 </div>
 
 <@netCommon.commonScript />
-<!-- DataTables -->
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
 <script src="${request.contextPath}/static/js/group.list.1.js"></script>
 </body>

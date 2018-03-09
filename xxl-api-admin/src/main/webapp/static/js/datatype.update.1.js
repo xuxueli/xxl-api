@@ -44,7 +44,7 @@ $(function() {
 						},
 						cache: true
 					},
-					placeholder:'请选择',//默认文字提示
+					placeholder:'请选择数据类型',//默认文字提示
 					language: "zh-CN",
 					tags: false,//允许手动添加
 					allowClear: true,//允许清空

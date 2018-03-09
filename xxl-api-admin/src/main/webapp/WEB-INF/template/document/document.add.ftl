@@ -275,7 +275,6 @@
 <script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <script src="${request.contextPath}/static/js/document.add.1.js"></script>
 </body>
 </html>

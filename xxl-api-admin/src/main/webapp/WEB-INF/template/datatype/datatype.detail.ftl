@@ -17,7 +17,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>数据类型详情<small>API管理平台</small></h1>
+            <h1>数据类型详情</h1>
         </section>
 
         <section class="content">

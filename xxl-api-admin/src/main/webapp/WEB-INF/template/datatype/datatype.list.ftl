@@ -19,7 +19,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>数据类型管理<small>API管理平台</small></h1>
+			<h1>数据类型管理</h1>
 		</section>
 
 		<!-- Main content -->

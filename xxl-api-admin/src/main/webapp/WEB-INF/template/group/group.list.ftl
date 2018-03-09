@@ -19,7 +19,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>接口管理<small>API管理平台</small></h1>
+			<h1>接口管理</h1>
 		</section>
 
         <section class="content">
@@ -135,7 +135,7 @@
                                                         <#if document.status==0><i class="fa fa-circle-o text-green"></i>
                                                         <#elseif document.status==1><i class="fa fa-circle-o text-yellow"></i>
                                                         <#else><i class="fa fa-circle-o text-light-gray"></i></#if>
-                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id}" target="_blank" >
+                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id}" >
                                                             <#if document.name?length gt 12>${document.name?substring(0, 12)}<#else>${document.name}</#if>
                                                         </a>
                                                     </td>
@@ -151,7 +151,7 @@
                                                     </td>
                                                     <td class="mailbox-date" >
                                                         <#if hasBizPermission>
-                                                            <button class="btn btn-warning btn-xs update" onclick="window.open('${request.contextPath}/document/updatePage?id=${document.id}')" >编辑</button>
+                                                            <button class="btn btn-warning btn-xs update" onclick="window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >编辑</button>
                                                             <button class="btn btn-danger btn-xs deleteDocument" _id="${document.id}" _name="${document.name}" >删除</button>
                                                         </#if>
                                                     </td>

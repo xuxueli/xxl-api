@@ -16,7 +16,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>使用教程<small>API管理平台</small></h1>
+			<h1>使用教程</h1>
 		</section>
 
 		<!-- Main content -->

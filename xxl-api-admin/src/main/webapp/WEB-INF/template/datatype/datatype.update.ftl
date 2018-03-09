@@ -19,7 +19,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>更新数据类型<small>API管理平台</small></h1>
+            <h1>更新数据类型</h1>
         </section>
 
         <section class="content">

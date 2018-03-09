@@ -59,29 +59,29 @@ public class XxlApiTestController {
 	 */
 	@RequestMapping
 	public String index(Model model,
-			@RequestParam(required = false, defaultValue = "0") int documentId,
-			@RequestParam(required = false, defaultValue = "0") int testId) {
+						int documentId,
+						@RequestParam(required = false, defaultValue = "0") int testId) {
 
 
 		// params
-		XxlApiProject project = null;
-		XxlApiDocument document = null;
+		XxlApiDocument document = document = xxlApiDocumentDao.load(documentId);
+		if (document == null) {
+			throw new RuntimeException("接口ID非法");
+		}
+		XxlApiProject project = xxlApiProjectDao.load(document.getProjectId());
+
 		List<Map<String, String>> requestHeaders = null;
 		List<Map<String, String>> queryParams = null;
 
 		if (testId > 0) {
 			XxlApiTestHistory testHistory = xxlApiTestHistoryDao.load(testId);
-			documentId = testHistory.getDocumentId();
-
-			document = xxlApiDocumentDao.load(documentId);
-			project = xxlApiProjectDao.load(document.getProjectId());
+			if (testHistory == null) {
+				throw new RuntimeException("测试用例ID非法");
+			}
 
 			requestHeaders = (StringUtils.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
 			queryParams = (StringUtils.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
 		} else {
-			document = xxlApiDocumentDao.load(documentId);
-			project = xxlApiProjectDao.load(document.getProjectId());
-
 			requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
 			queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
 		}

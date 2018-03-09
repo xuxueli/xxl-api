@@ -20,7 +20,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>接口详情<small>API管理平台</small></h1>
+			<h1>接口详情</h1>
 		</section>
 
         <section class="content">
@@ -34,7 +34,9 @@
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?projectId=${projectId}&groupId=${document.groupId}'" >返回接口列表</button>
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
+                            <#if hasBizPermission>
+                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
+                            </#if>
                         </div>
                     </div>
 
@@ -302,7 +304,7 @@
                                 <tr>
                                     <td>${testInfo.addTime?datetime}</td>
                                     <td>
-                                        <a href="${request.contextPath}/test?testId=${testInfo.id}" target="_blank" >运行</a>
+                                        <a href="${request.contextPath}/test?documentId=${document.id}&testId=${testInfo.id}" target="_blank" >运行</a>
                                         &nbsp;
                                         <a href="javascript:;" class="deleteTest" _id="${testInfo.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                     </td>

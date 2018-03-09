@@ -231,7 +231,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/detailPage")
-	public String detailPage(Model model, int id) {
+	public String detailPage(HttpServletRequest request, Model model, int id) {
 
 		// document
 		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
@@ -270,6 +270,9 @@ public class XxlApiDocumentController {
 		// 响应数据类型
 		XxlApiDataType responseDatatypeRet = xxlApiDataTypeService.loadDataType(xxlApiDocument.getResponseDatatypeId());
 		model.addAttribute("responseDatatype", responseDatatypeRet);
+
+		// 权限
+		model.addAttribute("hasBizPermission", hasBizPermission(request, project.getBizId()));
 
 		return "document/document.detail";
 	}

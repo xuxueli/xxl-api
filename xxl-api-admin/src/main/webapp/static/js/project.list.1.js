@@ -49,7 +49,7 @@ $(function() {
 								' bizId="'+row.bizId +'" '+
 								'>'+
                             permissionDiv +
-							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + goUrl + '\')" >进入项目</button>  '+
+							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.location.href=\'' + goUrl + '\'" >进入项目</button>  '+
 							'</span>';
 
 						return html;

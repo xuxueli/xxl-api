@@ -9,7 +9,6 @@ CREATE TABLE `xxl_api_biz` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_datatype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL COMMENT '数据类型名称',
@@ -18,7 +17,6 @@ CREATE TABLE `xxl_api_datatype` (
   `owner` varchar(100) DEFAULT NULL COMMENT '负责人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_datatype_fileds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,7 +27,6 @@ CREATE TABLE `xxl_api_datatype_fileds` (
   `field_type` tinyint(4) NOT NULL COMMENT '字段形式：0=默认、1=数组',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54,7 +51,6 @@ CREATE TABLE `xxl_api_document` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `project_id` int(11) NOT NULL COMMENT '项目ID',
@@ -62,7 +58,6 @@ CREATE TABLE `xxl_api_group` (
   `order` int(11) NOT NULL COMMENT '分组排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -72,7 +67,6 @@ CREATE TABLE `xxl_api_mock` (
   `resp_example` text COMMENT 'Response Content',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -85,7 +79,6 @@ CREATE TABLE `xxl_api_project` (
   `biz_id` int(11) NOT NULL DEFAULT '0' COMMENT '业务线ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_test_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -100,27 +93,18 @@ CREATE TABLE `xxl_api_test_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '账号',
   `password` varchar(50) NOT NULL COMMENT '密码',
-  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-管理员',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE `xxl_api_user_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `product_id` int(11) NOT NULL COMMENT '项目ID',
-  `add_time` datetime NOT NULL COMMENT '新增时间',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
+  `permission_biz` varchar(200) DEFAULT NULL COMMENT '业务线权限，多个逗号分隔',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-INSERT INTO `xxl_api_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1');
+INSERT INTO `xxl_api_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', ''),('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', '0', '');
 INSERT INTO `xxl_api_datatype` VALUES
 ('1', 'String', '字符串类型', '0', null),
 ('2', 'Integer', '数字整型', '0', null),

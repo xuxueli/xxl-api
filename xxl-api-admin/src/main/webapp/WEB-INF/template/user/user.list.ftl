@@ -64,7 +64,6 @@
 									<tr>
 										<th>ID</th>
 										<th>账号</th>
-										<th>密码</th>
 										<th>类型</th>
                                         <th>操作</th>
 									</tr>
@@ -167,6 +166,42 @@
 	</div>
 </div>
 
+<!-- 分配业务线权限.模态框 -->
+<div class="modal fade" id="updatePermissionBizModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" >分配项目权限</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form" role="form" >
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <div class="form-group">
+                            <#list bizList as biz>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="permissionBiz" value="${biz.id}" >${biz.bizName}
+                                    </label>
+                                </div>
+                            </#list>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-primary ok" >保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+                            <input type="hidden" name="id"  >
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <@netCommon.commonScript />
 <!-- DataTables -->
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -175,9 +210,6 @@
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<script>
-	userList = eval('('+ '${userList}' +')');
-</script>
 <script src="${request.contextPath}/static/js/user.list.1.js"></script>
 </body>
 </html>

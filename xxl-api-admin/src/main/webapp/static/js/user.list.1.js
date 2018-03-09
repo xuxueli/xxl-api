@@ -22,13 +22,13 @@ $(function() {
         //"scrollX": true,	// X轴滚动条，取消自适应
 		"columns": [
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'userName', "visible" : true, "bSortable": false},
-			{ "data": 'password', "visible" : false, "bSortable": false},
+			{ "data": 'userName', "visible" : true, "bSortable": false, 'width': '40%'},
 			{
 				"data": 'type',
 				"visible" : true,
 				"bSortable": false,
-				"render": function ( data, type, row ) {
+				'width': '30%',
+                "render": function ( data, type, row ) {
 					// 用户类型：0-普通用户、1-管理员
 					var htm = '';
 					if (data == 0) {
@@ -41,18 +41,25 @@ $(function() {
 			},
 			{
 				"data": '操作' ,
-				"width":'15%',
+				"width":'30%',
 				"bSortable": false,
 				"render": function ( data, type, row ) {
 					return function(){
+
+                        var permissionBiz = '';
+                        if (row.type != 1) {
+                            permissionBiz = '<button class="btn btn-warning btn-xs permissionBiz" type="button">分配业务线权限</button>  ';
+                        }
 
 						// html
 						var html = '<p id="'+ row.id +'" '+
 							' userName="'+ row.userName +'" '+
 							' password="'+ row.password +'" '+
 							' type="'+ row.type +'" '+
+                            ' permissionBiz="'+ row.permissionBiz +'" '+
 							'>'+
 							'<button class="btn btn-warning btn-xs update" >编辑</button>  '+
+                            permissionBiz +
 							'<button class="btn btn-danger btn-xs delete" >删除</button>  '+
 							'</p>';
 
@@ -281,5 +288,49 @@ $(function() {
 	$("#updateModal").on('hide.bs.modal', function () {
 		$("#updateModal .form")[0].reset()
 	});
+
+
+    // 分配项目权限
+    $("#user_list").on('click', '.permissionBiz',function() {
+        var id = $(this).parent('p').attr("id");
+        var permissionBiz = $(this).parent('p').attr("permissionBiz");
+        $("#updatePermissionBizModal .form input[name='id']").val( id );
+
+        var permissionBizChoose;
+        if (permissionBiz) {
+            permissionBizChoose = $(permissionBiz.split(","));
+        }
+        $("#updatePermissionBizModal .form input[name='permissionBiz']").each(function () {
+            if ( $.inArray($(this).val(), permissionBizChoose) > -1 ) {
+                $(this).prop("checked",true);
+            } else {
+                $(this).prop("checked",false);
+            }
+        });
+
+        $('#updatePermissionBizModal').modal('show');
+    });
+    $('#updatePermissionBizModal .ok').click(function () {
+        $.post(base_url + "/user/updatePermissionBiz", $("#updatePermissionBizModal .form").serialize(), function(data, status) {
+            if (data.code == 200) {
+                layer.open({
+                    icon: '1',
+                    content: '操作成功' ,
+                    end: function(layero, index){
+                        userListTable.fnDraw(false);
+                        $('#updatePermissionBizModal').modal('hide');
+                    }
+                });
+            } else {
+                layer.open({
+                    icon: '2',
+                    content: (data.msg||'操作失败')
+                });
+            }
+        });
+    });
+    $("#updatePermissionBizModal").on('hide.bs.modal', function () {
+        $("#updatePermissionBizModal .form")[0].reset()
+    });
 
 });

@@ -2,11 +2,11 @@ package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
+import com.xxl.api.admin.core.model.XxlApiBiz;
 import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.core.util.JacksonUtil;
+import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiUserDao;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,27 +32,14 @@ public class XxlApiUserController {
 	@Resource
 	private IXxlApiUserDao xxlApiUserDao;
 	@Resource
-	private LoginService loginService;
+	private IXxlApiBizDao xxlApiBizDao;
 
 	@RequestMapping
     @PermessionLimit(superUser = true)
-	public String index(Model model, HttpServletRequest request) {
+	public String index(Model model) {
 
-		// permission
-		XxlApiUser loginUser = (request.getAttribute(LoginService.LOGIN_IDENTITY)!=null)? (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY) :null;
-		if (loginUser.getType()!=1) {
-			throw new RuntimeException("权限拦截.");
-		}
-
-		List<XxlApiUser> userList = xxlApiUserDao.loadAll();
-		if (CollectionUtils.isEmpty(userList)) {
-			userList = new ArrayList<>();
-		} else {
-			for (XxlApiUser user: userList) {
-				user.setPassword("***");
-			}
-		}
-		model.addAttribute("userList", JacksonUtil.writeValueAsString(userList));
+		List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
+		model.addAttribute("bizList", bizList);
 
 		return "user/user.list";
 	}
@@ -171,6 +157,23 @@ public class XxlApiUserController {
 
 		XxlApiUser existUser = xxlApiUserDao.findByUserName(loginUser.getUserName());
 		existUser.setPassword(md5Password);
+		xxlApiUserDao.update(existUser);
+
+		return ReturnT.SUCCESS;
+	}
+
+	@RequestMapping("/updatePermissionBiz")
+	@ResponseBody
+	@PermessionLimit(superUser = true)
+	public ReturnT<String> updatePermissionBiz(int id,
+													@RequestParam(required = false) String[] permissionBiz){
+
+		String permissionProjectsStr = StringUtils.join(permissionBiz, ",");
+		XxlApiUser existUser = xxlApiUserDao.findById(id);
+		if (existUser == null) {
+			return new ReturnT<String>(ReturnT.FAIL.getCode(), "参数非法");
+		}
+		existUser.setPermissionBiz(permissionProjectsStr);
 		xxlApiUserDao.update(existUser);
 
 		return ReturnT.SUCCESS;

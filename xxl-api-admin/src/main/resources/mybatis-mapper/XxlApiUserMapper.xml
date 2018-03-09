@@ -8,28 +8,24 @@
 		<result column="username" property="userName" />
 	    <result column="password" property="password" />
 	    <result column="type" property="type" />
-	    <result column="realname" property="realName" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
 		t.id,
 		t.username,
 		t.password,
-		t.type,
-		t.realname
+		t.type
 	</sql>
 
 	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiUser" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_api_user (
 			userName,
 			password,
-			`type`,
-			realname
+			`type`
 		) VALUES (
 			#{userName},
 			#{password},
-			#{type},
-			#{realName}
+			#{type}
 		);
 	</insert>
 
@@ -37,8 +33,7 @@
 		UPDATE xxl_api_user
 		SET
 			password = #{password},
-			`type` = #{type},
-			realname = #{realName}
+			`type` = #{type}
 		WHERE id = #{id}
 	</update>
 

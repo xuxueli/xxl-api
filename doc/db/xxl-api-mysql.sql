@@ -1,3 +1,6 @@
+CREATE database if NOT EXISTS `xxl-api` default character set utf8 collate utf8_general_ci;
+use `xxl-api`;
+
 
 CREATE TABLE `xxl_api_biz` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -103,7 +106,6 @@ CREATE TABLE `xxl_api_user` (
   `username` varchar(50) NOT NULL COMMENT '账号',
   `password` varchar(50) NOT NULL COMMENT '密码',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
-  `realname` varchar(50) DEFAULT NULL COMMENT '真实姓名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -117,8 +119,8 @@ CREATE TABLE `xxl_api_user_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `xxl_api_user` VALUES ('1', 'admin', '123456', '1', '管理员');
 
+INSERT INTO `xxl_api_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1');
 INSERT INTO `xxl_api_datatype` VALUES
 ('1', 'String', '字符串类型', '0', null),
 ('2', 'Integer', '数字整型', '0', null),
@@ -129,3 +131,6 @@ INSERT INTO `xxl_api_datatype` VALUES
 ('7', 'Boolean', '布尔类型', '0', null),
 ('8', 'DATE', '日期类型，格式“yyyy-MM-mm”', '0', null),
 ('9', 'DATETIME', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '0', null);
+
+
+COMMIT;

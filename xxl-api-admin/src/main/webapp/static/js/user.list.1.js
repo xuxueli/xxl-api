@@ -22,7 +22,6 @@ $(function() {
 					return htm;
 				}
 			},
-			{ "data": 'realName', "visible" : true, "bSortable": false},
 			{
 				"data": '操作' ,
 				"width":'15%',
@@ -35,7 +34,6 @@ $(function() {
 							' userName="'+ row.userName +'" '+
 							' password="'+ row.password +'" '+
 							' type="'+ row.type +'" '+
-							' realName="'+ (row.realName?row.realName:'') +'" '+
 							'>'+
 							'<button class="btn btn-warning btn-xs update" >编辑</button>  '+
 							'<button class="btn btn-danger btn-xs delete" >删除</button>  '+
@@ -196,7 +194,6 @@ $(function() {
 		$("#updateModal .form input[name='userName']").val($(this).parent('p').attr("userName"));
         $("#updateModal .form input[name='password']").val("");
 		$("#updateModal .form input[name='type']").eq($(this).parent('p').attr("type")).click();
-		$("#updateModal .form input[name='realName']").val($(this).parent('p').attr("realName"));
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');

@@ -2,15 +2,13 @@ package com.xxl.api.admin.controller.interceptor;
 
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.service.IXxlApiUserService;
+import com.xxl.api.admin.service.impl.LoginService;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static com.xxl.api.admin.service.impl.XxlApiUserServiceImpl.LOGIN_IDENTITY_KEY;
 
 /**
  * 权限拦截
@@ -19,7 +17,7 @@ import static com.xxl.api.admin.service.impl.XxlApiUserServiceImpl.LOGIN_IDENTIT
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 
 	@Resource
-	private IXxlApiUserService xxlApiUserService;
+	private LoginService loginService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -40,7 +38,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 
 		// if pass
 		if (needLogin) {
-			XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+			XxlApiUser loginUser = loginService.ifLogin(request);
 			if (loginUser == null) {
 				response.sendRedirect(request.getContextPath() + "/toLogin");	//request.getRequestDispatcher("/toLogin").forward(request, response);
 				return false;
@@ -48,7 +46,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			if (needAdminuser && loginUser.getType()!=1) {
 				throw new RuntimeException("权限拦截");
 			}
-			request.setAttribute(LOGIN_IDENTITY_KEY, loginUser);
+			request.setAttribute(LoginService.LOGIN_IDENTITY, loginUser);
 		}
 
 		return super.preHandle(request, response, handler);

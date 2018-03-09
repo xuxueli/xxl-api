@@ -5,11 +5,12 @@ import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiUserDao;
-import com.xxl.api.admin.service.IXxlApiUserService;
+import com.xxl.api.admin.service.impl.LoginService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,8 +18,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.xxl.api.admin.service.impl.XxlApiUserServiceImpl.LOGIN_IDENTITY_KEY;
 
 /**
  * index controller
@@ -31,14 +30,14 @@ public class XxlApiUserController {
 	@Resource
 	private IXxlApiUserDao xxlApiUserDao;
 	@Resource
-	private IXxlApiUserService xxlApiUserService;
+	private LoginService loginService;
 
 	@RequestMapping
     @PermessionLimit(superUser = true)
 	public String index(Model model, HttpServletRequest request) {
 
 		// permission
-		XxlApiUser loginUser = (request.getAttribute(LOGIN_IDENTITY_KEY)!=null)? (XxlApiUser) request.getAttribute(LOGIN_IDENTITY_KEY) :null;
+		XxlApiUser loginUser = (request.getAttribute(LoginService.LOGIN_IDENTITY)!=null)? (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY) :null;
 		if (loginUser.getType()!=1) {
 			throw new RuntimeException("权限拦截.");
 		}
@@ -74,6 +73,10 @@ public class XxlApiUserController {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "“登录账号”重复，请更换");
 		}
 
+		// passowrd md5
+		String md5Password = DigestUtils.md5DigestAsHex(xxlApiUser.getPassword().getBytes());
+		xxlApiUser.setPassword(md5Password);
+
 		int ret = xxlApiUserDao.add(xxlApiUser);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
@@ -81,7 +84,12 @@ public class XxlApiUserController {
 	@RequestMapping("/update")
 	@ResponseBody
     @PermessionLimit(superUser = true)
-	public ReturnT<String> update(XxlApiUser xxlApiUser) {
+	public ReturnT<String> update(HttpServletRequest request, XxlApiUser xxlApiUser) {
+
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		if (loginUser.getUserName().equals(xxlApiUser.getUserName())) {
+			return new ReturnT<String>(ReturnT.FAIL.getCode(), "禁止操作当前登录账号");
+		}
 
 		// exist
 		XxlApiUser existUser = xxlApiUserDao.findByUserName(xxlApiUser.getUserName());
@@ -91,10 +99,14 @@ public class XxlApiUserController {
 
 		// update param
 		if (StringUtils.isNotBlank(xxlApiUser.getPassword())) {
-			existUser.setPassword(xxlApiUser.getPassword());
+			if (!(xxlApiUser.getPassword().length()>=4 && xxlApiUser.getPassword().length()<=50)) {
+				return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码长度限制为4~50");
+			}
+			// passowrd md5
+			String md5Password = DigestUtils.md5DigestAsHex(xxlApiUser.getPassword().getBytes());
+			existUser.setPassword(md5Password);
 		}
 		existUser.setType(xxlApiUser.getType());
-		existUser.setRealName(xxlApiUser.getRealName());
 
 		int ret = xxlApiUserDao.update(existUser);
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
@@ -111,19 +123,9 @@ public class XxlApiUserController {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，用户ID非法");
 		}
 
-		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
-		if (loginUser == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，系统登录异常");
-		}
-
-		if (delUser.getUserName().equals(loginUser.getUserName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，不可以删除自己的用户信息");
-		}
-
-		// must leave one user
-		List<XxlApiUser> allUser = xxlApiUserDao.loadAll();
-		if (allUser==null || allUser.size()==1) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，系统至少保留一个登录用户");
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		if (loginUser.getUserName().equals(delUser.getUserName())) {
+			return new ReturnT<String>(ReturnT.FAIL.getCode(), "禁止操作当前登录账号");
 		}
 
 		int ret = xxlApiUserDao.delete(id);

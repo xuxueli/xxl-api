@@ -3,7 +3,7 @@ package com.xxl.api.admin.controller;
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.service.IXxlApiUserService;
+import com.xxl.api.admin.service.impl.LoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexController {
 
 	@Resource
-	private IXxlApiUserService xxlApiUserService;
+	private LoginService loginService;
 
 	@RequestMapping("/")
 	@PermessionLimit(limit=false)
 	public String index(Model model, HttpServletRequest request) {
-		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+		XxlApiUser loginUser = loginService.ifLogin(request);
 		if (loginUser == null) {
 			return "redirect:/toLogin";
 		}
@@ -38,7 +38,7 @@ public class IndexController {
 	@RequestMapping("/toLogin")
 	@PermessionLimit(limit=false)
 	public String toLogin(Model model, HttpServletRequest request) {
-		XxlApiUser loginUser = xxlApiUserService.ifLogin(request);
+		XxlApiUser loginUser = loginService.ifLogin(request);
 		if (loginUser != null) {
 			return "redirect:/";
 		}
@@ -56,7 +56,7 @@ public class IndexController {
 		}
 
 		// do login
-		ReturnT<String> loginRet = xxlApiUserService.login(request, response, ifRem, userName, password);
+		ReturnT<String> loginRet = loginService.login(response, userName, password, ifRem);
 		return loginRet;
 	}
 	
@@ -64,8 +64,8 @@ public class IndexController {
 	@ResponseBody
 	@PermessionLimit(limit=false)
 	public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response){
-		ReturnT<String> logoutRet = xxlApiUserService.logout(request, response);
-		return logoutRet;
+		loginService.logout(request, response);
+		return ReturnT.SUCCESS;
 	}
 	
 	@RequestMapping("/help")

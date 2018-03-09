@@ -42,7 +42,6 @@
 										<th>账号</th>
 										<th>密码</th>
 										<th>类型</th>
-										<th>真实姓名</th>
                                         <th>操作</th>
 									</tr>
                                 </thead>
@@ -87,11 +86,6 @@
                             <input type="radio" name="type" value="1" >超级管理员
 						</div>
                     </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
-                    </div>
-
 
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-6">
@@ -127,17 +121,6 @@
                         <div class="col-sm-10">
                             <input type="radio" name="type" value="0" checked >普通用户
                             <input type="radio" name="type" value="1" >超级管理员
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">性别<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="sex" value="0" checked >男
-                            <input type="radio" name="sex" value="1" >女
                         </div>
                     </div>
 

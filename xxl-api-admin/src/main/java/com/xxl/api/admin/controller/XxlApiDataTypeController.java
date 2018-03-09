@@ -1,5 +1,6 @@
 package com.xxl.api.admin.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.ApiDataTypeToCode;
@@ -9,9 +10,8 @@ import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.type.TypeReference;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

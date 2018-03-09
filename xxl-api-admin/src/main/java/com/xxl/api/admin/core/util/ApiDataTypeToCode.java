@@ -2,8 +2,8 @@ package com.xxl.api.admin.core.util;
 
 import com.xxl.api.admin.core.model.XxlApiDataType;
 import com.xxl.api.admin.core.model.XxlApiDataTypeField;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.*;
 

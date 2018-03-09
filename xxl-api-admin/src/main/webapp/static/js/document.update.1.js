@@ -192,7 +192,10 @@ $(function() {
 						});
 					} else {
 						if (value) {
-							ComAlert.show(2, '新增接口失败，请检查"请求头部"数据是否填写完整');
+                            layer.open({
+                                icon: '2',
+                                content: '新增接口失败，请检查"请求头部"数据是否填写完整'
+                            });
 							return;
 						}
 					}
@@ -217,7 +220,10 @@ $(function() {
 						});
 					} else {
 						if (desc) {
-							ComAlert.show(2, '新增接口失败，请检查"请求参数"数据是否填写完整');
+                            layer.open({
+                                icon: '2',
+                                content: '新增接口失败，请检查"请求参数"数据是否填写完整'
+                            });
 							return;
 						}
 					}
@@ -242,7 +248,10 @@ $(function() {
 						});
 					} else {
 						if (desc) {
-							ComAlert.show(2, '新增接口失败，请检查"响应结果参数"数据是否填写完整');
+                            layer.open({
+                                icon: '2',
+                                content: '新增接口失败，请检查"响应结果参数"数据是否填写完整'
+                            });
 							return;
 						}
 					}
@@ -262,14 +271,19 @@ $(function() {
 			$.post(base_url + "/document/update", params, function(data, status) {
 				if (data.code == "200") {
 					$('#addModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "更新成功", function(){
+					layer.open({
+						icon: '1',
+						content: "更新成功" ,
+						end: function(layero, index){
 							var id = $('#ducomentForm input[name=id]').val();
 							window.location.href  = base_url + '/document/detailPage?id=' + id;
-						});
-					}, 315);
+						}
+					});
 				} else {
-					ComAlert.show(2, (data.msg || "更新失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||'更新失败')
+                    });
 				}
 			});
 		}

@@ -48,11 +48,15 @@ $(function(){
         submitHandler : function(form) {
 			$.post(base_url + "/login", $("#loginForm").serialize(), function(data, status) {
 				if (data.code == "200") {
-					ComAlert.show(1, "登陆成功", function(){
-						window.location.href = base_url;
-					});
+                    layer.msg( '登陆成功' );
+                    setTimeout(function(){
+                        window.location.href = base_url;
+                    }, 500);
 				} else {
-					ComAlert.show(2, data.msg);
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||'登陆失败')
+                    });
 				}
 			});
 		}

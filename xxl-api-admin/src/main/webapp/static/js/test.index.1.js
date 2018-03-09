@@ -73,7 +73,10 @@ $(function() {
 		var respType = $('#respType_parent input[name=respType]:checked').val();
 
 		if (!requestUrl) {
-			ComAlert.show(2, '请输入"接口URL"');
+            layer.open({
+                icon: '2',
+                content: '请输入"接口URL"'
+            });
 			return;
 		}
 
@@ -90,7 +93,10 @@ $(function() {
 					});
 				} else {
 					if (value) {
-						ComAlert.show(2, '请检查"请求头部"数据是否填写完整');
+                        layer.open({
+                            icon: '2',
+                            content: '请检查"请求头部"数据是否填写完整'
+                        });
 						return;
 					}
 				}
@@ -111,7 +117,10 @@ $(function() {
 					});
 				} else {
 					if (desc) {
-						ComAlert.show(2, '请检查"请求参数"数据是否填写完整');
+                        layer.open({
+                            icon: '2',
+                            content: '请检查"请求参数"数据是否填写完整'
+                        });
 						return;
 					}
 				}
@@ -139,7 +148,10 @@ $(function() {
 					$('#respContent').JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
 				}
 			} else {
-				ComAlert.show(2, (data.msg || "请求失败") );
+                layer.open({
+                    icon: '2',
+                    content: (data.msg||'请求失败')
+                });
 			}
 		});
 
@@ -156,7 +168,10 @@ $(function() {
 		var respType = $('#respType_parent input[name=respType]:checked').val();
 
 		if (!requestUrl) {
-			ComAlert.show(2, '请输入"接口URL"');
+            layer.open({
+                icon: '2',
+                content: '请输入"接口URL"'
+            });
 			return;
 		}
 
@@ -173,7 +188,10 @@ $(function() {
 					});
 				} else {
 					if (value) {
-						ComAlert.show(2, '请检查"请求头部"数据是否填写完整');
+                        layer.open({
+                            icon: '2',
+                            content: '请检查"请求头部"数据是否填写完整'
+                        });
 						return;
 					}
 				}
@@ -194,7 +212,10 @@ $(function() {
 					});
 				} else {
 					if (desc) {
-						ComAlert.show(2, '请检查"请求参数"数据是否填写完整');
+                        layer.open({
+                            icon: '2',
+                            content: '请检查"请求参数"数据是否填写完整'
+                        });
 						return;
 					}
 				}
@@ -228,9 +249,15 @@ $(function() {
 				if (testId == 0 && data.content>0) {
 					$('#save').attr('testId', data.content);
 				}
-				ComAlert.show(1, (data.msg || "保存成功"));
+                layer.open({
+                    icon: '1',
+                    content: '保存成功'
+                });
 			} else {
-				ComAlert.show(2, (data.msg || "保存失败") );
+                layer.open({
+                    icon: '2',
+                    content: '保存失败'
+                });
 			}
 		});
 	});

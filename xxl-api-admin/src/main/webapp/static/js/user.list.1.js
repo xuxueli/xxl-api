@@ -75,7 +75,14 @@ $(function() {
 	// job operate
 	$("#user_list").on('click', '.delete',function() {
 		var id = $(this).parent('p').attr("id");
-		ComConfirm.show("确认删除该用户?", function(){
+
+        layer.confirm( "确认删除该用户?" , {
+            icon: 3,
+            title: '系统提示' ,
+            btn: [ '确定', '取消' ]
+        }, function(index){
+            layer.close(index);
+
 			$.ajax({
 				type : 'POST',
 				url : base_url + "/user/delete",
@@ -85,11 +92,18 @@ $(function() {
 				dataType : "json",
 				success : function(data){
 					if (data.code == 200) {
-						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
-						});
+                        layer.open({
+                            icon: '1',
+                            content: "删除成功" ,
+                            end: function(layero, index){
+                                window.location.reload();
+                            }
+                        });
 					} else {
-						ComAlert.show(2, (data.msg || "删除失败") );
+                        layer.open({
+                            icon: '2',
+                            content: (data.msg||'删除失败')
+                        });
 					}
 				},
 			});
@@ -150,13 +164,19 @@ $(function() {
         	$.post(base_url + "/user/add",  $("#addModal .form").serialize(), function(data, status) {
     			if (data.code == "200") {
 					$('#addModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "新增成功", function(){
-							window.location.reload();
-						});
-					}, 315);
+
+                    layer.open({
+                        icon: '1',
+                        content: "新增成功" ,
+                        end: function(layero, index){
+                            window.location.reload();
+                        }
+                    });
     			} else {
-					ComAlert.show(2, (data.msg || "新增失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg || "新增失败")
+                    });
     			}
     		});
 		}
@@ -200,13 +220,19 @@ $(function() {
     		$.post(base_url + "/user/update", $("#updateModal .form").serialize(), function(data, status) {
     			if (data.code == "200") {
 					$('#updateModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "更新成功", function(){
-							window.location.reload();
-						});
-					}, 315);
+
+                    layer.open({
+                        icon: '1',
+                        content: "更新成功" ,
+                        end: function(layero, index){
+                            window.location.reload();
+                        }
+                    });
     			} else {
-					ComAlert.show(2, (data.msg || "更新失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg || "更新失败")
+                    });
     			}
     		});
 		}

@@ -42,11 +42,18 @@ $(function() {
 			dataType : "json",
 			success : function(data){
 				if (data.code == 200) {
-					ComAlert.show(1, "Mock数据保存成功", function(){
-						window.location.reload();
-					});
+                    layer.open({
+                        icon: '1',
+                        content: "Mock数据保存成功" ,
+                        end: function(layero, index){
+                            window.location.reload();
+                        }
+                    });
 				} else {
-					ComAlert.show(2, (data.msg || "Mock数据保存失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||"Mock数据保存失败")
+                    });
 				}
 			},
 		});
@@ -58,25 +65,40 @@ $(function() {
 	 */
 	$('.deleteMock').click(function () {
 		var id = $(this).attr('_id');
-		ComConfirm.show("确认删除该Mock数据?", function(){
-			$.ajax({
-				type : 'POST',
-				url : base_url + "/mock/delete",
-				data : {
-					"id" : id
-				},
-				dataType : "json",
-				success : function(data){
-					if (data.code == 200) {
-						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
-						});
-					} else {
-						ComAlert.show(2, (data.msg || "删除失败") );
-					}
-				}
-			});
-		});
+
+        layer.confirm( "确认删除该Mock数据?" , {
+            icon: 3,
+            title: '系统提示' ,
+            btn: [ '确定', '取消' ]
+        }, function(index){
+            layer.close(index);
+
+            $.ajax({
+                type : 'POST',
+                url : base_url + "/mock/delete",
+                data : {
+                    "id" : id
+                },
+                dataType : "json",
+                success : function(data){
+                    if (data.code == 200) {
+                        layer.open({
+                            icon: '1',
+                            content: "删除成功" ,
+                            end: function(layero, index){
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            icon: '2',
+                            content: (data.msg||'删除失败')
+                        });
+                    }
+                }
+            });
+        });
+
 	});
 
 	/**
@@ -102,11 +124,18 @@ $(function() {
 			dataType : "json",
 			success : function(data){
 				if (data.code == 200) {
-					ComAlert.show(1, "Mock数据保存成功", function(){
-						window.location.reload();
-					});
+                    layer.open({
+                        icon: '1',
+                        content: "Mock数据保存成功" ,
+                        end: function(layero, index){
+                            window.location.reload();
+                        }
+                    });
 				} else {
-					ComAlert.show(2, (data.msg || "Mock数据保存失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||"Mock数据保存失败")
+                    });
 				}
 			},
 		});
@@ -118,25 +147,40 @@ $(function() {
 	 */
 	$('.deleteTest').click(function () {
 		var id = $(this).attr('_id');
-		ComConfirm.show("确认删除该Test历史?", function(){
-			$.ajax({
-				type : 'POST',
-				url : base_url + "/test/delete",
-				data : {
-					"id" : id
-				},
-				dataType : "json",
-				success : function(data){
-					if (data.code == 200) {
-						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
-						});
-					} else {
-						ComAlert.show(2, (data.msg || "删除失败") );
-					}
-				}
-			});
-		});
+
+        layer.confirm( "确认删除该Test历史?" , {
+            icon: 3,
+            title: '系统提示' ,
+            btn: [ '确定', '取消' ]
+        }, function(index){
+            layer.close(index);
+
+            $.ajax({
+                type : 'POST',
+                url : base_url + "/test/delete",
+                data : {
+                    "id" : id
+                },
+                dataType : "json",
+                success : function(data){
+                    if (data.code == 200) {
+                        layer.open({
+                            icon: '1',
+                            content: "删除成功" ,
+                            end: function(layero, index){
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            icon: '2',
+                            content: (data.msg||'删除失败')
+                        });
+                    }
+                }
+            });
+        });
+
 	});
 
 });

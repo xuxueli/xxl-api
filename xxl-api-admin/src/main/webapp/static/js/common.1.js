@@ -2,17 +2,32 @@ $(function(){
 
 	// logout
 	$("#logoutBtn").click(function(){
-		ComConfirm.show("确认注销登录?", function(){
-			$.post(base_url + "/logout", function(data, status) {
-				if (data.code == "200") {
-					ComAlert.show(1, "注销成功", function(){
-						window.location.href = base_url + "/";
-					});
-				} else {
-					ComAlert.show(1, data.msg);
-				}
-			});
-		});
+
+        layer.confirm( "确认注销登录?" , {
+            icon: 3,
+            title: '系统提示' ,
+            btn: [ '确定', '取消' ]
+        }, function(index){
+            layer.close(index);
+
+            $.post(base_url + "/logout", function(data, status) {
+                if (data.code == "200") {
+
+                    layer.msg( '注销成功' );
+
+                    setTimeout(function(){
+                        window.location.href = base_url + "/";
+                    }, 500);
+                } else {
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||'注销失败')
+                    });
+                }
+            });
+
+        });
+
 	});
 
 	// slideToTop

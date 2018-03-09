@@ -1,25 +1,34 @@
 package com.xxl.api.admin.dao;
 
 import com.xxl.api.admin.core.model.XxlApiDataType;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by xuxueli on 17/6/3.
  */
+@Component
 public interface IXxlApiDataTypeDao {
 
     public int add(XxlApiDataType xxlApiDataType);
 
     public int update(XxlApiDataType xxlApiDataType);
 
-    public int delete(int id);
+    public int delete(@Param("id") int id);
 
-    public XxlApiDataType load(int id);
+    public XxlApiDataType load(@Param("id") int id);
 
-    public List<XxlApiDataType> pageList(int offset, int pagesize, int bizId, String name);
-    public int pageListCount(int offset, int pagesize, int bizId, String name);
+    public List<XxlApiDataType> pageList(@Param("offset") int offset,
+                                         @Param("pagesize") int pagesize,
+                                         @Param("bizId") int bizId,
+                                         @Param("name") String name);
+    public int pageListCount(@Param("offset") int offset,
+                             @Param("pagesize") int pagesize,
+                             @Param("bizId") int bizId,
+                             @Param("name") String name);
 
-    public XxlApiDataType loadByName(String name);
+    public XxlApiDataType loadByName(@Param("name") String name);
 
 }

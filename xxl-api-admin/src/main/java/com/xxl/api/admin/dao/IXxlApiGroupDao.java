@@ -17,6 +17,6 @@ public interface IXxlApiGroupDao {
     public int delete(@Param("id") int id);
 
     public XxlApiGroup load(@Param("id") int id);
-    public List<XxlApiGroup> loadAll(@Param("productId") int productId);
+    public List<XxlApiGroup> loadAll(@Param("projectId") int projectId);
 
 }

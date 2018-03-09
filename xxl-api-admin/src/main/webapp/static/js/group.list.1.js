@@ -151,7 +151,7 @@ $(function() {
 	 */
 	$("#deleteGroup").click(function(){
 		var id = $(this).attr("_id");
-		var productId = $(this).attr("_productId");
+		var projectId = $(this).attr("_projectId");
 
         layer.confirm( "确认删除该接口分组?" , {
             icon: 3,
@@ -173,7 +173,7 @@ $(function() {
                             icon: '1',
                             content: "删除成功" ,
                             end: function(layero, index){
-                                window.location.href = base_url + '/group?productId=' + productId;
+                                window.location.href = base_url + '/group?projectId=' + projectId;
                             }
                         });
 					} else {
@@ -291,20 +291,5 @@ $(function() {
 
 	});
 
-	/*
-	// 新增-添加参数
-	$("#addModal .addParam").on('click', function () {
-		var html = '<div class="form-group newParam">'+
-				'<label for="lastname" class="col-sm-2 control-label">参数&nbsp;<button class="btn btn-danger btn-xs removeParam" type="button">移除</button></label>'+
-				'<div class="col-sm-4"><input type="text" class="form-control" name="key" placeholder="请输入参数key[将会强转为String]" maxlength="200" /></div>'+
-				'<div class="col-sm-6"><input type="text" class="form-control" name="value" placeholder="请输入参数value[将会强转为String]" maxlength="200" /></div>'+
-			'</div>';
-		$(this).parents('.form-group').parent().append(html);
-		
-		$("#addModal .removeParam").on('click', function () {
-			$(this).parents('.form-group').remove();
-		});
-	});
-	*/
 
 });

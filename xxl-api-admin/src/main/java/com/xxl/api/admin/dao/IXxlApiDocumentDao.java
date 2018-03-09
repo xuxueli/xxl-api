@@ -17,10 +17,10 @@ public interface IXxlApiDocumentDao {
     public int delete(@Param("id") int id);
 
     public XxlApiDocument load(@Param("id") int id);
-    public List<XxlApiDocument> loadAll(@Param("productId") int productId,
+    public List<XxlApiDocument> loadAll(@Param("projectId") int projectId,
                                         @Param("groupId") int groupId);
 
-    public List<XxlApiDocument> loadByGroupId(@Param("id") int id);
+    public List<XxlApiDocument> loadByGroupId(@Param("groupId") int groupId);
 
     List<XxlApiDocument> findByResponseDataTypeId(@Param("responseDatatypeId") int responseDatatypeId);
 

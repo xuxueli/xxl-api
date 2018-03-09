@@ -6,7 +6,7 @@ package com.xxl.api.admin.core.model;
 public class XxlApiGroup {
 
     private int id;
-    private int productId;  // 项目ID
+    private int projectId;  // 项目ID
     private String name;    // 分组名称
     private int order;      // 分组排序
 
@@ -18,12 +18,12 @@ public class XxlApiGroup {
         this.id = id;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getName() {

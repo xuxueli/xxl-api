@@ -31,21 +31,23 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">接口分组</h3>
 
-                            <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" id="addGroup" ><i class="fa fa-plus"></i></button>
-                            </div>
+                            <#if hasBizPermission>
+                                <div class="box-tools">
+                                    <button type="button" class="btn btn-box-tool" id="addGroup" ><i class="fa fa-plus"></i></button>
+                                </div>
+                            </#if>
 
                         </div>
                         <div class="box-body no-padding">
                             <ul class="nav nav-pills nav-stacked">
                                 <li <#if groupId == -1>class="active"</#if> groupId="-1" >
-                                    <a href="${request.contextPath}/group?productId=${productId}&groupId=-1" >
+                                    <a href="${request.contextPath}/group?projectId=${projectId}&groupId=-1" >
                                         <i class="fa fa-inbox"></i>全部
                                         <#--<span class="label label-primary pull-right">12</span>-->
                                     </a>
                                 </li>
                                 <li <#if groupId == 0>class="active"</#if> groupId="0" >
-                                    <a href="${request.contextPath}/group?productId=${productId}&groupId=0" >
+                                    <a href="${request.contextPath}/group?projectId=${projectId}&groupId=0" >
                                         <i class="fa fa-inbox"></i>默认分组
                                         <#--<span class="label label-primary pull-right">12</span>-->
                                     </a>
@@ -53,7 +55,7 @@
                                 <#if groupList?exists && groupList?size gt 0>
                                     <#list groupList as group>
                                         <li <#if groupId == group.id >class="active"</#if> groupId="${group.id}" >
-                                            <a href="${request.contextPath}/group?productId=${productId}&groupId=${group.id}" >
+                                            <a href="${request.contextPath}/group?projectId=${projectId}&groupId=${group.id}" >
                                                 <i class="fa fa-inbox"></i>${group.name}
                                                 <#--<span class="label label-primary pull-right">12</span>-->
                                             </a>
@@ -74,22 +76,24 @@
                         <#--标题栏-->
                         <div class="box-header with-border">
                             <h3 class="box-title">
-                                <#if groupId==-1>全部
-                                <#elseif groupId==0>默认分组
+                                <#if groupId==-1 >全部
+                                <#elseif groupId==0 >默认分组
                                 <#else>
                                     <#if groupInfo?exists>${groupInfo.name}</#if>
                                 </#if>
                             </h3>
 
-                            <#if groupInfo?exists>
+                            <#if hasBizPermission>
+                                <#if groupInfo?exists>
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑分组</button>
+                                    <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _projectId="${groupInfo.projectId}" >删除分组</button>
+                                    |
+                                </#if>
+                                <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?projectId=${projectId}')" >+新增接口</button>
                                 &nbsp;&nbsp;
-                                <button class="btn btn-warning btn-xs" type="button" id="updateGroup" >编辑分组</button>
-                                <button class="btn btn-danger btn-xs" type="button" id="deleteGroup" _id="${groupInfo.id}" _productId="${groupInfo.productId}" >删除分组</button>
-                                |
                             </#if>
-                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/document/addPage?productId=${productId}')" >+新增接口</button>
 
-                            &nbsp;&nbsp;
                             共<#if documentList?exists>${documentList?size}<#else>0</#if>个接口
 
                             <div class="box-tools pull-right">
@@ -195,7 +199,7 @@
 							<button type="submit" class="btn btn-primary"  >保存</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
-                            <input type="hidden" name="productId" value="${productId}" >
+                            <input type="hidden" name="projectId" value="${projectId}" >
 						</div>
 					</div>
 				</form>

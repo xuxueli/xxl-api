@@ -37,7 +37,7 @@ $(function() {
 						}
 
 						// 详情页
-						var goUrl = base_url + '/group?productId='+ row.id;
+						var goUrl = base_url + '/group?projectId='+ row.id;
 
 						// html
 						var html = '<span id="'+ row.id +'" '+

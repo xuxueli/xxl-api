@@ -1,13 +1,12 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiDocument;
-import com.xxl.api.admin.core.model.XxlApiGroup;
-import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.service.impl.LoginService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -33,18 +33,21 @@ public class XxlApiGroupController {
 	private IXxlApiDocumentDao xxlApiDocumentDao;
 
 	@RequestMapping
-	public String index(Model model, int productId, @RequestParam(required = false, defaultValue = "-1")  int groupId) {
+	public String index(HttpServletRequest request,
+						Model model,
+						int projectId,
+						@RequestParam(required = false, defaultValue = "-1")  int groupId) {
 
 		// 项目
-		XxlApiProject xxlApiProject = xxlApiProjectDao.load(productId);
+		XxlApiProject xxlApiProject = xxlApiProjectDao.load(projectId);
 		if (xxlApiProject == null) {
 			throw new RuntimeException("系统异常，项目ID非法");
 		}
-		model.addAttribute("productId", productId);
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("project", xxlApiProject);
 
 		// 分组列表
-		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(productId);
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
 		model.addAttribute("groupList", groupList);
 
 		// 选中分组
@@ -56,25 +59,45 @@ public class XxlApiGroupController {
 				}
 			}
 		}
-		if (groupInfo == null && !(groupId==-1 || groupId==0)) {
-			groupId = -1;	// 合法性校验：全部(-1) | 默认分组(0) | 指定分组(匹配到数据)
+		if (groupId!=0 && groupInfo==null) {
+			groupId = -1;
 		}
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("groupInfo", groupInfo);
 
 		// 分组下的，接口列表
-		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadAll(productId, groupId);
+		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadAll(projectId, groupId);
 		model.addAttribute("documentList", documentList);
+
+		// 权限
+		model.addAttribute("hasBizPermission", hasBizPermission(request, xxlApiProject.getBizId()));
 
 		return "group/group.list";
 	}
 
+	private boolean hasBizPermission(HttpServletRequest request, int bizId){
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		if ( loginUser.getType()==1 ||
+				ArrayUtils.contains(StringUtils.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
+				) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(XxlApiGroup xxlApiGroup) {
+	public ReturnT<String> add(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
 		// valid
 		if (StringUtils.isBlank(xxlApiGroup.getName())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“分组名称”");
+		}
+
+		// 权限校验
+		XxlApiProject xxlApiProject = xxlApiProjectDao.load(xxlApiGroup.getProjectId());
+		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiGroupDao.add(xxlApiGroup);
@@ -83,11 +106,17 @@ public class XxlApiGroupController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(XxlApiGroup xxlApiGroup) {
+	public ReturnT<String> update(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
 		// exist
 		XxlApiGroup existGroup = xxlApiGroupDao.load(xxlApiGroup.getId());
 		if (existGroup == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，分组ID非法");
+		}
+
+		// 权限校验
+		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
+		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		// valid
@@ -101,7 +130,13 @@ public class XxlApiGroupController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	public ReturnT<String> delete(HttpServletRequest request, int id) {
+
+		// 权限校验
+		XxlApiProject xxlApiProject = xxlApiProjectDao.load(id);
+		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// 分组下是否存在接口
 		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadByGroupId(id);

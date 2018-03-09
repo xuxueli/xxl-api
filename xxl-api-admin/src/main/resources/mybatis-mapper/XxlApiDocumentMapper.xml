@@ -127,7 +127,7 @@
 	<select id="loadAll" parameterType="java.util.Map" resultMap="XxlApiDocument">
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_document AS t
-		WHERE t.project_id = #{productId}
+		WHERE t.project_id = #{projectId}
 		<if test="groupId gte 0" >
 			AND t.group_id = #{groupId}
 		</if>

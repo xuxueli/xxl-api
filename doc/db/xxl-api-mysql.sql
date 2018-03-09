@@ -103,8 +103,12 @@ CREATE TABLE `xxl_api_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+INSERT INTO `xxl_api_user` VALUES
+('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', ''),
+('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', '0', '1');
 
-INSERT INTO `xxl_api_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', ''),('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', '0', '');
+INSERT INTO `xxl_api_biz` VALUES ('1', '默认业务线', '1');
+
 INSERT INTO `xxl_api_datatype` VALUES
 ('1', 'String', '字符串类型', '0', null),
 ('2', 'Integer', '数字整型', '0', null),

@@ -44,4 +44,26 @@
 		ORDER BY t.order ASC
 	</select>
 
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiBiz">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_biz AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizName != null and bizName != ''">
+				AND t.biz_name like CONCAT(CONCAT('%', #{bizName}), '%')
+			</if>
+		</trim>
+		ORDER BY t.`order` ASC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_biz AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizName != null and bizName != ''">
+				AND t.biz_name like CONCAT(CONCAT('%', #{bizName}), '%')
+			</if>
+		</trim>
+	</select>
+
 </mapper>

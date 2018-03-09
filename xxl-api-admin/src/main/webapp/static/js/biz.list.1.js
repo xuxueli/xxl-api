@@ -2,14 +2,30 @@ $(function() {
 
 	// init date tables
 	var bizListTable = $("#user_list").dataTable({
-		"data": bizList,
+        "deferRender": true,
+        "processing" : true,
+        "serverSide": true,
+        "ajax": {
+            url: base_url + "/biz/pageList",
+            type:"post",
+            data : function ( d ) {
+                var obj = {};
+                obj.bizName = $('#bizName').val();
+                obj.start = d.start;
+                obj.length = d.length;
+                return obj;
+            }
+        },
+        "searching": false,
+        "ordering": false,
+        //"scrollX": true,	// X轴滚动条，取消自适应
 		"columns": [
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'bizName'},
-			{ "data": 'order'},
+			{ "data": 'bizName', "width":'50%'},
+			{ "data": 'order', "width":'30%'},
 			{
 				"data": '操作' ,
-				"width":'15%',
+				"width":'20%',
 				"bSortable": false,
 				"render": function ( data, type, row ) {
 					return function(){
@@ -54,6 +70,10 @@ $(function() {
 		}
 	});
 
+    $("#search").click(function(){
+        bizListTable.fnDraw();
+    });
+
 	// job operate
 	$("#user_list").on('click', '.delete',function() {
 		var id = $(this).parent('p').attr("id");
@@ -78,7 +98,7 @@ $(function() {
                             icon: '1',
                             content: "删除成功" ,
                             end: function(layero, index){
-                                window.location.reload();
+                                bizListTable.fnDraw(false);
                             }
                         });
                     } else {
@@ -148,7 +168,7 @@ $(function() {
 						icon: '1',
 						content: "新增成功" ,
 						end: function(layero, index){
-							window.location.reload();
+                            bizListTable.fnDraw(false);
 						}
 					});
     			} else {
@@ -224,7 +244,7 @@ $(function() {
                         icon: '1',
                         content: "更新成功" ,
                         end: function(layero, index){
-                            window.location.reload();
+                            bizListTable.fnDraw(false);
                         }
                     });
     			} else {

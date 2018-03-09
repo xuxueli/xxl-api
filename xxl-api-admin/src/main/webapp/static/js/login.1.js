@@ -14,25 +14,21 @@ $(function(){
         rules : {  
         	userName : {  
         		required : true ,
-                minlength: 5,
-                maxlength: 18
+                rangelength: [4, 50]
             },  
             password : {  
             	required : true ,
-                minlength: 5,
-                maxlength: 18
+                rangelength: [4, 50]
             } 
         }, 
         messages : {  
-        	userName : {  
-                required :"请输入登陆账号."  ,
-                minlength:"登陆账号不应低于5位",
-                maxlength:"登陆账号不应超过18位"
+        	userName : {
+                required :"请输入登录账号",
+                rangelength : "登录账号长度限制为4~50"
             },  
             password : {
-            	required :"请输入登陆密码."  ,
-                minlength:"登陆密码不应低于5位",
-                maxlength:"登陆密码不应超过18位"
+                required :"请输入密码",
+                rangelength : "密码长度限制为4~50"
             }
         }, 
 		highlight : function(element) {  

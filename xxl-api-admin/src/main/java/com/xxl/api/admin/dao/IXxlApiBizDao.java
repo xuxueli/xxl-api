@@ -20,4 +20,11 @@ public interface IXxlApiBizDao {
 
     public List<XxlApiBiz> loadAll();
 
+    public List<XxlApiBiz> pageList(@Param("offset") int offset,
+                                    @Param("pagesize") int pagesize,
+                                    @Param("bizName") String bizName);
+    public int pageListCount(@Param("offset") int offset,
+                             @Param("pagesize") int pagesize,
+                             @Param("bizName") String bizName);
+
 }

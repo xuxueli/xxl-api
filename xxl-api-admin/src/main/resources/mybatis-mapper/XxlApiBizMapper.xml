@@ -66,4 +66,10 @@
 		</trim>
 	</select>
 
+	<select id="load" parameterType="java.util.Map" resultMap="XxlApiBiz">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_biz AS t
+		WHERE id = #{id}
+	</select>
+
 </mapper>

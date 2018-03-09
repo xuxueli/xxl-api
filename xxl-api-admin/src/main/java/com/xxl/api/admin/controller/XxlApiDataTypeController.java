@@ -99,6 +99,12 @@ public class XxlApiDataTypeController {
         if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
+
+        XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
+        if (apiBiz == null) {
+            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "业务线ID非法");
+        }
+
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");
@@ -175,6 +181,12 @@ public class XxlApiDataTypeController {
         if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
+
+        XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
+        if (apiBiz == null) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线ID非法");
+        }
+
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null && existsByName.getId()!=apiDataTypeDTO.getId()) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");

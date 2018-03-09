@@ -45,7 +45,6 @@
                             <label class="col-sm-1 control-label">业务线</label>
                             <div class="col-sm-4">
                                 <select class="form-control" name="bizId" >
-                                    <option value="0" >公共</option>
                                     <#if bizList?exists && bizList?size gt 0>
                                         <#list bizList as biz>
                                             <option value="${biz.id}"  >${biz.bizName}</option>
@@ -119,6 +118,7 @@
 <@netCommon.commonScript />
 
 <script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <script src="${request.contextPath}/static/js/datatype.add.1.js"></script>
 </body>
 </html>

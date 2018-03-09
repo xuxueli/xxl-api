@@ -4,6 +4,7 @@ import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiBiz;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
+import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class XxlApiBizController {
     private IXxlApiBizDao xxlApiBizDao;
     @Resource
     private IXxlApiProjectDao xxlApiProjectDao;
+    @Resource
+    private IXxlApiDataTypeDao xxlApiDataTypeDao;
 
     @RequestMapping
     @PermessionLimit(superUser = true)
@@ -85,6 +88,11 @@ public class XxlApiBizController {
         int count = xxlApiProjectDao.pageListCount(0, 10, null, id);
         if (count > 0) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，业务线下存在项目");
+        }
+
+        int dtCount = xxlApiDataTypeDao.pageListCount(0, 10, id, null);
+        if (dtCount > 0) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，业务线下数据类型");
         }
 
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();

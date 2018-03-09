@@ -32,7 +32,6 @@
                         <span class="input-group-addon">业务线</span>
                         <select class="form-control" id="bizId" >
                             <option value="-1" >全部</option>
-                            <option value="0" >公共</option>
                             <#if bizList?exists && bizList?size gt 0>
                             <#list bizList as biz>
                                 <option value="${biz.id}"  >${biz.bizName}</option>
@@ -227,9 +226,26 @@
 <!-- DataTables -->
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script>
+    // 业务线权限
+    var superUser = <#if XXL_API_LOGIN_IDENTITY.type == 1 >true<#else>false</#if>;
+    var permissionBiz = '${XXL_API_LOGIN_IDENTITY.permissionBiz}';
 
+    var permissionBizArr;
+    if (permissionBiz) {
+        permissionBizArr = $(permissionBiz.split(","));
+    };
+    function hasBizPermission(bizId) {
+        if ( superUser || $.inArray( bizId+'', permissionBizArr) > -1 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 <script src="${request.contextPath}/static/js/datatype.list.1.js"></script>
 </body>
 </html>

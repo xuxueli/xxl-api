@@ -110,15 +110,15 @@ INSERT INTO `xxl_api_user` VALUES
 INSERT INTO `xxl_api_biz` VALUES ('1', '默认业务线', '1');
 
 INSERT INTO `xxl_api_datatype` VALUES
-('1', 'String', '字符串类型', '0', null),
-('2', 'Integer', '数字整型', '0', null),
-('3', 'Short', '短整型', '0', null),
-('4', 'Long', '长整型', '0', null),
-('5', 'Float', '单精度浮点数', '0', null),
-('6', 'Double', '双精度浮点数', '0', null),
-('7', 'Boolean', '布尔类型', '0', null),
-('8', 'DATE', '日期类型，格式“yyyy-MM-mm”', '0', null),
-('9', 'DATETIME', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '0', null);
+('1', 'String', '字符串类型', '1', null),
+('2', 'Integer', '数字整型', '1', null),
+('3', 'Short', '短整型', '1', null),
+('4', 'Long', '长整型', '1', null),
+('5', 'Float', '单精度浮点数', '1', null),
+('6', 'Double', '双精度浮点数', '1', null),
+('7', 'Boolean', '布尔类型', '1', null),
+('8', 'DATE', '日期类型，格式“yyyy-MM-mm”', '1', null),
+('9', 'DATETIME', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
 
 
 COMMIT;

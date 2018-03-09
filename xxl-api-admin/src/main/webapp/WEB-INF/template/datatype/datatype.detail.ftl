@@ -41,13 +41,10 @@
                             </div>
                             <div class="col-sm-6">
                                 <b>业务线：</b>
-                                <#if apiDataType.bizId == 0>公共
-                                <#else>
-                                    <#if bizList?exists && bizList?size gt 0>
-                                        <#list bizList as biz>
-                                            <#if biz.id == apiDataType.bizId>${biz.bizName}</#if>
-                                        </#list>
-                                    </#if>
+                                <#if bizList?exists && bizList?size gt 0>
+                                    <#list bizList as biz>
+                                        <#if biz.id == apiDataType.bizId>${biz.bizName}</#if>
+                                    </#list>
                                 </#if>
                             </div>
                         </div>
@@ -95,7 +92,7 @@
                 <#--数据结构展开-->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">数据结构展开</h3>
+                        <h3 class="box-title">数据结构-</h3>
                     </div>
                     <div class="box-body " >
 

@@ -27,4 +27,6 @@ public interface IXxlApiBizDao {
                              @Param("pagesize") int pagesize,
                              @Param("bizName") String bizName);
 
+    public XxlApiBiz load(@Param("id") int id);
+
 }

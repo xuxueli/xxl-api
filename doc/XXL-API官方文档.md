@@ -248,7 +248,7 @@ Mock数据属性说明：
     登录密码：用户的登录密码；
     用户类型：
         普通用户：只允许操作公开项目，或者自己拥有项目权限的私有项目；
-        超级管理员：拥有所有项目的操作权限；
+        管理员：拥有所有项目的操作权限；
     真实姓名：用户的真实姓名；
 
 ### 5.2、更新用户
@@ -305,7 +305,7 @@ Mock数据属性说明：
 ## 七、其他
 
 ### 7.1 项目贡献
-欢迎参与项目贡献！比如提交PR修复一个bug，或者新建 [Issue](https://github.com/xuxueli/xxl-api/issues/) 讨论新特性或者变更。
+欢迎参与项目贡献！比如提交PR修一个bug，或者新建 [Issue](https://github.com/xuxueli/xxl-api/issues/) 讨论新特性或者变更。
 
 ### 7.2 用户接入登记
 更多接入的公司，欢迎在 [登记地址](https://github.com/xuxueli/xxl-api/issues/1 ) 登记，登记仅仅为了产品推广。
@@ -318,7 +318,4 @@ Mock数据属性说明：
 
 ---
 ### 捐赠
-无论金额多少都足够表达您这份心意，非常感谢 ：）    [XXL系列捐赠记录](http://www.xuxueli.com/page/donate.html )
-
-微信：<img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/donate-wechat.png" width="200">
-支付宝：<img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/donate-alipay.jpg" width="200">
+无论捐赠金额多少都足够表达您这份心意，非常感谢 ：）      [前往捐赠](http://www.xuxueli.com/page/donate.html )

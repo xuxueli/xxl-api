@@ -24,4 +24,12 @@ public interface IXxlApiUserDao {
 
     public List<XxlApiUser> loadAll();
 
+    public List<XxlApiUser> pageList(@Param("offset") int offset,
+                                        @Param("pagesize") int pagesize,
+                                        @Param("userName") String userName,
+                                        @Param("type") int type);
+    public int pageListCount(@Param("offset") int offset,
+                             @Param("pagesize") int pagesize,
+                             @Param("userName") String userName,
+                             @Param("type") int type);
 }

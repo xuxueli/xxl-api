@@ -12,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * index controller
@@ -55,16 +58,34 @@ public class XxlApiUserController {
 		return "user/user.list";
 	}
 
+	@RequestMapping("/pageList")
+	@ResponseBody
+	@PermessionLimit(superUser = true)
+	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
+										@RequestParam(required = false, defaultValue = "10") int length,
+										String userName, int type) {
+		// page list
+		List<XxlApiUser> list = xxlApiUserDao.pageList(start, length, userName, type);
+		int list_count = xxlApiUserDao.pageListCount(start, length, userName, type);
+
+		// package result
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("recordsTotal", list_count);		// 总记录数
+		maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
+		maps.put("data", list);  					// 分页列表
+		return maps;
+	}
+
 	@RequestMapping("/add")
 	@ResponseBody
     @PermessionLimit(superUser = true)
 	public ReturnT<String> add(XxlApiUser xxlApiUser) {
 		// valid
 		if (StringUtils.isBlank(xxlApiUser.getUserName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“登录账号”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入登录账号");
 		}
 		if (StringUtils.isBlank(xxlApiUser.getPassword())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“登录密码”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入密码");
 		}
 
 		// valid

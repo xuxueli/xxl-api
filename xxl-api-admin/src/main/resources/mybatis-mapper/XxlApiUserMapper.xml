@@ -60,4 +60,32 @@
 		ORDER BY id DESC
 	</select>
 
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiUser">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="userName != null and userName != ''">
+				AND t.userName like CONCAT(CONCAT('%', #{userName}), '%')
+			</if>
+			<if test="type gte 0" >
+				AND t.`type` = #{type}
+			</if>
+		</trim>
+		ORDER BY id DESC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_user AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="userName != null and userName != ''">
+				AND t.userName like CONCAT(CONCAT('%', #{userName}), '%')
+			</if>
+			<if test="type gte 0" >
+				AND t.`type` = #{type}
+			</if>
+		</trim>
+	</select>
+
 </mapper>

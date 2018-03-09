@@ -43,8 +43,9 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 
 ### 2.1 初始化“调度数据库”
 请下载项目源码并解压，获取 "初始化SQL脚本"，脚本位置：
-
-    /xxl-api/db/xxl-api-mysql.sql
+```
+/xxl-api/doc/db/xxl-api-mysql.sql
+```
 
 ### 2.2 编译源码
 解压源码,按照maven格式将源码导入IDE, 使用maven进行编译即可，源码结构如下图所示：
@@ -53,8 +54,9 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 
 ### 2.3 配置JDBC连接
 在以下项目文件中设置应用的JDBC连接；
-
-    /xxl-api/xxl-api-admin/src/main/resources/xxl-api.properties
+```
+/xxl-api/xxl-api-admin/src/main/resources/xxl-api.properties
+```
 
 ### 2.4 部署
 将应用"xxl-api-admin"部署在容器如Tomcat下之后，启动后访问即可进入以下界面：

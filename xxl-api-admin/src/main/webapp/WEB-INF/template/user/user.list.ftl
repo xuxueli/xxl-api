@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="user_list" class="table table-bordered table-striped">
+                            <table id="user_list" class="table table-bordered table-striped" width="100%" >
                                 <thead>
 									<tr>
 										<th>ID</th>

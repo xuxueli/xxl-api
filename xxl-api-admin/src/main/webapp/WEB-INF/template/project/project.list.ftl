@@ -60,7 +60,7 @@
                     <div class="box">
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="project_list" class="table table-bordered table-striped">
+                            <table id="project_list" class="table table-bordered table-striped" width="100%" >
                                 <thead>
 									<tr>
 										<th>ID</th>

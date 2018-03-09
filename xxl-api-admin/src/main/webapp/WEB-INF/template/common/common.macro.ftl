@@ -99,8 +99,8 @@
         Powered by <b>XXL-API</b> 1.1
 		<div class="pull-right hidden-xs">
             <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;
-                <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>&nbsp;
-                <a href="https://my.oschina.net/xuxueli/blog/873667" target="_blank" >oschina</a>
+                <a href="http://www.xuxueli.com/" target="_blank" >xuxueli</a>&nbsp;
+                <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>
             </strong><!-- All rights reserved. -->
 		</div>
 	</footer>

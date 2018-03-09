@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  	<title>任务调度中心</title>
+  	<title>Api管理平台</title>
   	<#import "/common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />
 </head>
@@ -22,10 +22,10 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="callout callout-info">
-				<h4>简介：XXL-API</h4>
+				<h4>Api管理平台</h4>
 				<br>
 				<p>
-					<a target="_blank" href="https://github.com/xuxueli/xxl-api">github地址</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a target="_blank" href="https://github.com/xuxueli/xxl-api">Github</a>&nbsp;&nbsp;&nbsp;&nbsp;
 					<iframe src="https://ghbtns.com/github-btn.html?user=xuxueli&repo=xxl-api&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px" style="margin-bottom:-5px;"></iframe>
 					<br><br>
 					<a target="_blank" href="http://www.xuxueli.com/page/community.html">社区交流</a>

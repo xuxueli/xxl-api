@@ -1,13 +1,12 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiBiz;
-import com.xxl.api.admin.core.model.XxlApiGroup;
-import com.xxl.api.admin.core.model.XxlApiProject;
+import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.service.impl.LoginService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,15 +64,30 @@ public class XxlApiProjectController {
 		return maps;
 	}
 
+	private boolean hasBizPermission(HttpServletRequest request, int bizId){
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		if ( loginUser.getType()==1 ||
+				ArrayUtils.contains(StringUtils.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
+				) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(XxlApiProject xxlApiProject) {
+	public ReturnT<String> add(HttpServletRequest request, XxlApiProject xxlApiProject) {
 		// valid
 		if (StringUtils.isBlank(xxlApiProject.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“项目名称”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目名称");
 		}
 		if (StringUtils.isBlank(xxlApiProject.getBaseUrlProduct())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“跟地址：线上环境”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入根地址(线上)");
+		}
+
+		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiProjectDao.add(xxlApiProject);
@@ -81,7 +96,7 @@ public class XxlApiProjectController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(XxlApiProject xxlApiProject) {
+	public ReturnT<String> update(HttpServletRequest request, XxlApiProject xxlApiProject) {
 		// exist
 		XxlApiProject existProkect = xxlApiProjectDao.load(xxlApiProject.getId());
 		if (existProkect == null) {
@@ -90,10 +105,14 @@ public class XxlApiProjectController {
 
 		// valid
 		if (StringUtils.isBlank(xxlApiProject.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“项目名称”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目名称");
 		}
 		if (StringUtils.isBlank(xxlApiProject.getBaseUrlProduct())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“跟地址：线上环境”");
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入根地址(线上)");
+		}
+
+		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiProjectDao.update(xxlApiProject);
@@ -102,7 +121,17 @@ public class XxlApiProjectController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	public ReturnT<String> delete(HttpServletRequest request, int id) {
+
+		// exist
+		XxlApiProject existProkect = xxlApiProjectDao.load(id);
+		if (existProkect == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "项目ID非法");
+		}
+
+		if (!hasBizPermission(request, existProkect.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// 项目下是否存在分组
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(id);

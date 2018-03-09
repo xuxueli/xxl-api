@@ -15,12 +15,12 @@ import java.lang.annotation.Target;
 public @interface PermessionLimit {
 	
 	/**
-	 * 登陆拦截 (默认拦截)
+	 * 要求用户登录
 	 */
 	boolean limit() default true;
 
 	/**
-	 * 用户类型：0-普通用户、1-超级管理员 (默认普通用户)
+	 * 要求管理员权限
 	 */
 	boolean superUser() default false;
 

@@ -29,9 +29,12 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
-                        <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}'" >前往修改页面</button>
-                        </div>
+
+                        <#if hasBizPermission>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}'" >前往修改页面</button>
+                            </div>
+                        </#if>
                     </div>
 
                     <div class="box-body">

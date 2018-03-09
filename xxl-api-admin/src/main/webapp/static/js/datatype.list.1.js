@@ -34,13 +34,13 @@ $(function() {
 						var permissionDiv = '';
 						if (hasBizPermission(row.bizId)) {
                             var updateUrl = base_url + '/datatype/updateDataTypePage?dataTypeId='+ row.id;
-                            var detailUrl = base_url + '/datatype/dataTypeDetail?dataTypeId='+ row.id;
 
                             permissionDiv += '<button class="btn btn-warning btn-xs update" type="button" onclick="javascript:window.open(\'' + updateUrl + '\')" >编辑</button>  ';
                             permissionDiv += '<button class="btn btn-danger btn-xs delete" type="button">删除</button>  ';
 						}
 
 						// html
+                        var detailUrl = base_url + '/datatype/dataTypeDetail?dataTypeId='+ row.id;
 						var html = '<span id="'+ row.id +'" >'+
                             permissionDiv +
 							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + detailUrl + '\')" >详情页</button>  '+

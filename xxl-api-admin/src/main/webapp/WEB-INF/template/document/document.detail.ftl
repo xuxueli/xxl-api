@@ -40,7 +40,23 @@
 
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-1">接口分组</label>
+                            <label class="col-sm-1">URL</label>
+                            <div class="col-sm-6">
+                                <select id="projectBaseUrlUpdate" >
+                                <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
+                                    <option value="${project.baseUrlProduct}" >线上环境</option>
+                                </#if>
+                                <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
+                                    <option value="${project.baseUrlPpe}" >预发布环境</option>
+                                </#if>
+                                <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
+                                    <option value="${project.baseUrlQa}" >测试环境</option>
+                                </#if>
+                                </select>
+                                &nbsp;&nbsp;
+                                <span id="projectBaseUrl" >${project.baseUrlProduct}</span><span>${document.requestUrl}</span>
+                            </div>
+                            <label class="col-sm-1">分组</label>
                             <div class="col-sm-4">
                                 <#if 0 == document.groupId>默认分组
                                 <#else>
@@ -51,8 +67,17 @@
                                     </#if>
                                 </#if>
                             </div>
-                            <label class="col-sm-1">接口状态</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1">Method</label>
                             <div class="col-sm-6">
+                                <#list RequestMethodEnum as item>
+                                    <#if item == document.requestMethod>${item}</#if>
+                                </#list>
+                            </div>
+                            <label class="col-sm-1">状态</label>
+                            <div class="col-sm-4">
                                 <#if 0 == document.status>启用
                                 <#elseif 1 == document.status>维护
                                 <#elseif 2 == document.status>废弃
@@ -60,33 +85,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-1">请求方法</label>
-                            <div class="col-sm-4">
-                                <#list RequestMethodEnum as item>
-                                    <#if item == document.requestMethod>${item}</#if>
-                                </#list>
-                            </div>
-                            <label class="col-sm-1">接口URL</label>
-                            <div class="col-sm-6">
-                                <select id="projectBaseUrlUpdate" >
-                                    <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
-                                        <option value="${project.baseUrlProduct}" >线上环境</option>
-                                    </#if>
-                                    <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
-                                        <option value="${project.baseUrlPpe}" >预发布环境</option>
-                                    </#if>
-                                    <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
-                                        <option value="${project.baseUrlQa}" >测试环境</option>
-                                    </#if>
-                                </select>
-                                &nbsp;&nbsp;
-                                <span id="projectBaseUrl" >${project.baseUrlProduct}</span><span>${document.requestUrl}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-1">接口名称</label>
+                            <label class="col-sm-1">名称</label>
                             <div class="col-sm-11">
-                                <a>${document.name}</a>
+                                <span style="color: #00a65a;">${document.name}</span>
                             </div>
                         </div>
                     </div>
@@ -127,21 +128,21 @@
                         <#if queryParamList?exists>
                             <table class="table table-striped">
                                 <tr>
-                                    <th style="width: 25%;" >是否必填</th>
-                                    <th style="width: 25%;" >参数类型</th>
                                     <th style="width: 25%;" >参数名称</th>
                                     <th style="width: 25%;" >参数说明</th>
+                                    <th style="width: 25%;" >数据类型</th>
+                                    <th style="width: 25%;" >是否必填</th>
                                 </tr>
                                 <#list queryParamList as queryParam>
                                     <tr>
+                                        <td>${queryParam.name}</td>
+                                        <td>${queryParam.desc}</td>
+                                        <td>${queryParam.type}</td>
                                         <td>
                                             <#if queryParam.notNull == "true" >必填
                                             <#else>非必填
                                             </#if>
                                         </td>
-                                        <td>${queryParam.type}</td>
-                                        <td>${queryParam.name}</td>
-                                        <td>${queryParam.desc}</td>
                                     </tr>
                                 </#list>
                             </table>

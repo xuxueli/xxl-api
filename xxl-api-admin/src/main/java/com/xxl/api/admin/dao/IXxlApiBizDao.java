@@ -14,7 +14,7 @@ public interface IXxlApiBizDao {
 
     public int add(XxlApiBiz xxlApiBiz);
 
-    public int udpate(XxlApiBiz xxlApiBiz);
+    public int update(XxlApiBiz xxlApiBiz);
 
     public int delete(@Param("id") int id);
 

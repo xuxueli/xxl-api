@@ -146,7 +146,7 @@ $(function() {
                             icon: '1',
                             content: "删除成功" ,
                             end: function(layero, index){
-                                window.location.reload();
+                                projectTable.fnDraw(false);
                             }
                         });
 					} else {
@@ -212,7 +212,7 @@ $(function() {
                         icon: '1',
                         content: "新增成功" ,
                         end: function(layero, index){
-                            window.location.reload();
+                            projectTable.fnDraw(false);
                         }
                     });
     			} else {
@@ -294,7 +294,7 @@ $(function() {
                         icon: '1',
                         content: "更新成功" ,
                         end: function(layero, index){
-                            window.location.reload();
+                            projectTable.fnDraw(false);
                         }
                     });
     			} else {

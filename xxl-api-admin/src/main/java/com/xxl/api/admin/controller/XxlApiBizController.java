@@ -61,7 +61,7 @@ public class XxlApiBizController {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
         }
 
-        int ret = xxlApiBizDao.udpate(xxlApiBiz);
+        int ret = xxlApiBizDao.update(xxlApiBiz);
         return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
     }
 

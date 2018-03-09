@@ -100,7 +100,7 @@ $(function() {
                             icon: '1',
                             content: '删除成功' ,
                             end: function(layero, index){
-                                window.location.reload();
+                                projectTable.fnDraw(false);
                             }
                         });
                     } else {

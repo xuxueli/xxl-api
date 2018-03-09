@@ -74,21 +74,21 @@ public class XxlApiDocumentController {
 	/**
 	 * 新增，API
 	 *
-	 * @param productId
+	 * @param projectId
 	 * @return
 	 */
 	@RequestMapping("/addPage")
-	public String addPage(Model model, int productId) {
+	public String addPage(Model model, int projectId) {
 
 		// project
-		XxlApiProject project = xxlApiProjectDao.load(productId);
+		XxlApiProject project = xxlApiProjectDao.load(projectId);
 		if (project == null) {
 			throw new RuntimeException("操作失败，项目ID非法");
 		}
-		model.addAttribute("productId", productId);
+		model.addAttribute("projectId", projectId);
 
 		// groupList
-		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(productId);
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
 		model.addAttribute("groupList", groupList);
 
 		// enum
@@ -125,7 +125,7 @@ public class XxlApiDocumentController {
 
 		// project
 		int projectId = xxlApiDocument.getProjectId();
-		model.addAttribute("productId", projectId);
+		model.addAttribute("projectId", projectId);
 
 		// groupList
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
@@ -177,7 +177,7 @@ public class XxlApiDocumentController {
 		// project
 		int projectId = xxlApiDocument.getProjectId();
 		XxlApiProject project = xxlApiProjectDao.load(projectId);
-		model.addAttribute("productId", projectId);
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("project", project);
 
 		// groupList

@@ -110,12 +110,11 @@
                                 <table class="table table-hover table-striped" id="documentList" >
                                     <thead>
                                         <tr>
-                                            <th width="4%" ><i class="fa fa-star text-yellow"></i></th>
-                                            <th width="25%" >接口名称</th>
-                                            <th width="25%" >接口URL</th>
+                                            <th width="5%" ><i class="fa fa-star text-yellow"></i></th>
+                                            <th width="35%" >URL</th>
+                                            <th width="30%" >名称</th>
                                             <th width="15%" >分组</th>
-                                            <th width="17%" >更新日期</th>
-                                            <th width="7%" >操作</th>
+                                            <th width="15%" >操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -129,6 +128,9 @@
                                                             </#if>
                                                         </a>
                                                     </td>
+                                                    <td class="mailbox-attachment" title="${document.requestUrl}" >
+                                                        <span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;<#if document.requestUrl?length gt 25>${document.requestUrl?substring(0, 25)}...<#else>${document.requestUrl}</#if>
+                                                    </td>
                                                     <td class="mailbox-name" title="${document.name}" >
                                                         <#if document.status==0><i class="fa fa-circle-o text-green"></i>
                                                         <#elseif document.status==1><i class="fa fa-circle-o text-yellow"></i>
@@ -137,20 +139,21 @@
                                                             <#if document.name?length gt 12>${document.name?substring(0, 12)}<#else>${document.name}</#if>
                                                         </a>
                                                     </td>
-                                                    <td class="mailbox-attachment" title="${document.requestUrl}" >
-                                                        <span class="label label-success">${document.requestMethod}</span>&nbsp;&nbsp;<#if document.requestUrl?length gt 25>${document.requestUrl?substring(0, 25)}...<#else>${document.requestUrl}</#if>
-                                                    </td>
                                                     <td class="mailbox-date">
-                                                        <#if groupList?exists && groupList?size gt 0>
-                                                            <#list groupList as group>
-                                                                <#if group.id == document.groupId >${group.name}</#if>
-                                                            </#list>
+                                                        <#if groupId==0 >默认分组
+                                                        <#else>
+                                                            <#if groupList?exists && groupList?size gt 0>
+                                                                <#list groupList as group>
+                                                                    <#if group.id == document.groupId >${group.name}</#if>
+                                                                </#list>
+                                                            </#if>
                                                         </#if>
                                                     </td>
-                                                    <td class="mailbox-date">${document.updateTime?datetime}</td>
                                                     <td class="mailbox-date" >
-                                                        <a href="${request.contextPath}/document/updatePage?id=${document.id}" target="_blank"  style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" title="修改" ><i class="fa fa-fw fa-wrench"></i></a>
-                                                        <a href="javascript:;" class="deleteDocument" _id="${document.id}" _name="${document.name}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'" title="删除" ><i class="fa fa-fw fa-trash-o"></i></a>
+                                                        <#if hasBizPermission>
+                                                            <button class="btn btn-warning btn-xs update" onclick="window.open('${request.contextPath}/document/updatePage?id=${document.id}')" >编辑</button>
+                                                            <button class="btn btn-danger btn-xs deleteDocument" _id="${document.id}" _name="${document.name}" >删除</button>
+                                                        </#if>
                                                     </td>
                                                 </tr>
                                             </#list>

@@ -26,14 +26,14 @@
 
         <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
-                <input type="hidden" name="projectId" value="${productId}" >
+                <input type="hidden" name="projectId" value="${projectId}" >
 
                 <#--基础信息-->
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?productId=${productId}'" >返回接口列表</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?projectId=${projectId}'" >返回接口列表</button>
                             <button class="btn btn-info btn-xs" type="submit" >保存接口</button>
                         </div>
                     </div>

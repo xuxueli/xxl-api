@@ -13,13 +13,22 @@
          <a href="http://www.gnu.org/licenses/gpl-3.0.html">
              <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" >
          </a>
+         <a href="http://www.xuxueli.com/page/donate.html">
+             <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat-square" >
+          </a>
     </p>    
 </p>
+
 
 ## Introduction
 XXL-API is a simple and easy-to-use API management platform that provides "management", "documentation", "Mock", and "test" functions for the API. Open source code, out-of-the-box.
 
 XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
+
+
+## Documentation
+- [中文文档](http://www.xuxueli.com/xxl-api/)
+
 
 ## Features
 - 1、极致简单：交互简洁，一分钟上手；
@@ -33,8 +42,6 @@ XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 - 10、权限控制：支持以业务线为维度进行用户权限控制，分配权限才允许操作业务线下项目接口和数据类型，否则仅允许查看；
 
-## Documentation
-- [中文文档](http://www.xuxueli.com/xxl-api/)
 
 
 ## Communication
@@ -57,7 +64,8 @@ This product is open source and free, and will continue to provide free communit
 
 产品开源免费，并且将持续提供免费的社区技术支持。个人或企业内部可自由的接入和使用。
 
-## Donate
-No matter how much the donation amount is enough to express your thought, thank you very much ：）     [To donate](http://www.xuxueli.com/page/donate.html )
 
-无论捐赠金额多少都足够表达您这份心意，非常感谢 ：）      [前往捐赠](http://www.xuxueli.com/page/donate.html )
+## Donate
+No matter how much the amount is enough to express your thought, thank you very much ：）     [To donate](http://www.xuxueli.com/page/donate.html )
+
+无论金额多少都足够表达您这份心意，非常感谢 ：）      [前往捐赠](http://www.xuxueli.com/page/donate.html )

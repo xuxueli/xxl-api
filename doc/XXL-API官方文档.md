@@ -102,9 +102,7 @@ API管理中心支持集群部署，提升系统可用性。
 
 
 ## 四、API管理
-在项目管理界面，点击项目右侧的"进入项目"按钮，可进入接口管理界面，如下图所示：
-
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05212801_oPyI.png "在这里输入图片标题")
+在项目管理界面，点击项目右侧的"进入项目"按钮，可进入接口管理界面：
 
 ### 4.1 API分组管理
 
@@ -112,7 +110,7 @@ API管理中心支持集群部署，提升系统可用性。
 
 如下图，点击"左侧接口分组区域"右上角的"+"按钮，可新增AIP接口分组；（点击"全部"将会展示项目中所有分组下的接口；"默认分组"为系统分组，不允许删除；）
 
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05213307_4ekE.png "在这里输入图片标题")
+![输入图片说明](https://static.oschina.net/uploads/img/201803/20210131_cZwH.png "在这里输入图片标题")
 
 ![输入图片说明](https://static.oschina.net/uploads/img/201704/05213136_AbS4.png "在这里输入图片标题")
 
@@ -123,9 +121,7 @@ API管理中心支持集群部署，提升系统可用性。
     
 - 更新API分组
 
-在"左侧接口分组区域"，点击对应的API分组，右侧将会展示该分组下API接口列表；如下图，点击接口列表顶部的"编辑分组"按钮（新增的API分组才会有该功能），可修改API分组信息；
-
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05214001_7QHI.png "在这里输入图片标题")
+在"左侧接口分组区域"，点击对应的API分组，右侧将会展示该分组下API接口列表；点击接口列表顶部的"编辑分组"按钮（新增的API分组才会有该功能），可修改API分组信息；
 
 - 删除API分组
 
@@ -187,18 +183,12 @@ Mock数据属性说明：
     数据类型(MIME)：响应结果类型，如JSON、XML等；
     结果数据：响应结果的数据，如响应结果类型为JSON时可设置响应结果数据为一段JSON数据；
 
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05222204_q9Rw.png "在这里输入图片标题")
-
 ![输入图片说明](https://static.oschina.net/uploads/img/201704/05222214_HLAL.png "在这里输入图片标题")
 
 ![输入图片说明](https://static.oschina.net/uploads/img/201704/05222223_sofA.png "在这里输入图片标题")
 
 - 更新Mock数据
 在"接口详情页"的"Mock数据"模块，点击Mock数据列表右侧的"修改"按钮，可修改Mock数据；
-
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05222232_hgvY.png "在这里输入图片标题")
-
-![输入图片说明](https://static.oschina.net/uploads/img/201704/05222240_MXxC.png "在这里输入图片标题")
 
 - 删除Mock数据
 

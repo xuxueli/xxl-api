@@ -214,7 +214,7 @@ public class XxlApiTestController {
 				finalUrl += entry.getKey() + "=" + entry.getValue() + "&";
 			}
 		}
-		finalUrl = finalUrl.substring(0, finalUrl.length()-2);
+		finalUrl = finalUrl.substring(0, finalUrl.length()-1);
 		return finalUrl;
 	}
 

@@ -112,9 +112,9 @@
                                         <tr>
                                             <th width="5%" ><i class="fa fa-star text-yellow"></i></th>
                                             <th width="35%" >URL</th>
-                                            <th width="30%" >名称</th>
-                                            <th width="15%" >分组</th>
-                                            <th width="15%" >操作</th>
+                                            <th width="25%" >名称</th>
+                                            <th width="17%" >分组</th>
+                                            <th width="18%" >操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -153,6 +153,7 @@
                                                         <#if hasBizPermission>
                                                             <button class="btn btn-warning btn-xs update" onclick="window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >编辑</button>
                                                             <button class="btn btn-danger btn-xs deleteDocument" _id="${document.id}" _name="${document.name}" >删除</button>
+                                                            <button class="btn btn-primary btn-xs update" onclick="window.open('${request.contextPath}/test?documentId=${document.id}');" >测试</button>
                                                         </#if>
                                                     </td>
                                                 </tr>

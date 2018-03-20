@@ -91,7 +91,7 @@ public class LoginService {
                 XxlApiUser dbUser = xxlApiUserDao.findByUserName(cookieUser.getUserName());
                 if (dbUser != null) {
                     if (cookieUser.getPassword().equals(dbUser.getPassword())) {
-                        return cookieUser;
+                        return dbUser;
                     }
                 }
             }

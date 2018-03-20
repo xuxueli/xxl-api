@@ -72,9 +72,9 @@ CREATE TABLE `xxl_api_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '项目名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '项目描述',
-  `base_url_product` varchar(200) NOT NULL COMMENT '跟地址：线上环境',
-  `base_url_ppe` varchar(200) DEFAULT NULL COMMENT '跟地址：预发布环境',
-  `base_url_qa` varchar(200) DEFAULT NULL COMMENT '跟地址：测试环境',
+  `base_url_product` varchar(200) NOT NULL COMMENT '根地址：线上环境',
+  `base_url_ppe` varchar(200) DEFAULT NULL COMMENT '根地址：预发布环境',
+  `base_url_qa` varchar(200) DEFAULT NULL COMMENT '根地址：测试环境',
   `biz_id` int(11) NOT NULL DEFAULT '0' COMMENT '业务线ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

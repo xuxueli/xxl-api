@@ -115,15 +115,15 @@
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(线上)<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入“跟地址：线上环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入根地址(线上)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(预发布)<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入“跟地址：预发布环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入根地址(预发布)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(测试)<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入“跟地址：测试环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入根地址(测试)" maxlength="200" ></div>
                     </div>
 
 					<div class="form-group">
@@ -169,15 +169,15 @@
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(线上)<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入“跟地址：线上环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入根地址(线上)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(预发布)<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入“跟地址：预发布环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入根地址(预发布)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-4 control-label">根地址(测试)<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入“跟地址：测试环境”" maxlength="200" ></div>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入根地址(测试)" maxlength="200" ></div>
                     </div>
 
                     <div class="form-group">

@@ -78,6 +78,7 @@ public class XxlApiTestController {
 			if (testHistory == null) {
 				throw new RuntimeException("测试用例ID非法");
 			}
+			model.addAttribute("testHistory", testHistory);
 
 			requestHeaders = (StringUtils.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
 			queryParams = (StringUtils.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;

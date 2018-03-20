@@ -285,6 +285,7 @@ Mock数据属性说明：
 - 12、登陆Cookie启用HttpOnly；
 - 13、弹框插件改为使用Layui；
 - 14、AdminLTE版本升级；
+- 15、接口测试用例优化，支持存储接口Method与URL数据；
 
 
 ### TODO LIST

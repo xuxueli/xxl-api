@@ -40,13 +40,14 @@
 
                             <label class="col-sm-1 control-label">URL</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100" >
+                                <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100"
+                                       <#if testHistory?exists && testHistory.requestUrl?exists >value="${testHistory.requestUrl}"</#if> >
                             </div>
                             <label class="col-sm-1 control-label">Method</label>
                             <div class="col-sm-2">
                                 <select class="form-control select2" id="requestMethod">
                                 <#list RequestMethodEnum as item>
-                                    <option value="${item}">${item}</option>
+                                    <option value="${item}" <#if testHistory?exists && testHistory.requestMethod==item>selected</#if> >${item}</option>
                                 </#list>
                                 </select>
                             </div>
@@ -54,13 +55,16 @@
                                 <div class="col-sm-2">
                                     <select class="form-control select2" id="projectBaseUrlUpdate" >
                                     <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
-                                        <option value="${project.baseUrlProduct}${document.requestUrl}" >线上环境</option>
+                                        <option value="${project.baseUrlProduct}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlProduct + document.requestUrl)>selected</#if> >线上环境</option>
                                     </#if>
                                     <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
-                                        <option value="${project.baseUrlPpe}${document.requestUrl}" >预发布环境</option>
+                                        <option value="${project.baseUrlPpe}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlPpe + document.requestUrl)>selected</#if> >预发布环境</option>
                                     </#if>
                                     <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
-                                        <option value="${project.baseUrlQa}${document.requestUrl}" >测试环境</option>
+                                        <option value="${project.baseUrlQa}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlQa + document.requestUrl)>selected</#if> >测试环境</option>
                                     </#if>
                                     </select>
                                 </div>

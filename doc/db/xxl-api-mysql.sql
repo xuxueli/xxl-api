@@ -116,8 +116,8 @@ INSERT INTO `xxl_api_datatype` VALUES
 ('5', 'Float', '单精度浮点数', '1', null),
 ('6', 'Double', '双精度浮点数', '1', null),
 ('7', 'Boolean', '布尔类型', '1', null),
-('8', 'DATE', '日期类型，格式“yyyy-MM-mm”', '1', null),
-('9', 'DATETIME', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
+('8', 'Date', '日期类型，格式“yyyy-MM-mm”', '1', null),
+('9', 'DateTime', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
 
 
 COMMIT;

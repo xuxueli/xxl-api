@@ -10,6 +10,7 @@ import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -208,13 +209,14 @@ public class XxlApiTestController {
 	}
 
 	private String markGetUrl(String url, Map<String, String> queryParamMap){
-		String finalUrl = url + "?";
-		if (queryParamMap!=null && !queryParamMap.isEmpty()) {
+		String finalUrl = url;
+		if (MapUtils.isNotEmpty(queryParamMap)) {
+			finalUrl = url + "?";
 			for(Map.Entry<String,String> entry : queryParamMap.entrySet()){
 				finalUrl += entry.getKey() + "=" + entry.getValue() + "&";
 			}
+			finalUrl = finalUrl.substring(0, finalUrl.length()-1);
 		}
-		finalUrl = finalUrl.substring(0, finalUrl.length()-1);
 		return finalUrl;
 	}
 

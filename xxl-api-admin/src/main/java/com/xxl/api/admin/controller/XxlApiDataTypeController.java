@@ -1,16 +1,19 @@
 package com.xxl.api.admin.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
 import com.xxl.api.admin.core.model.*;
+import com.xxl.api.admin.core.util.ApiDataTypeToCode;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.type.TypeReference;
+import com.xxl.api.admin.service.impl.LoginService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +73,16 @@ public class XxlApiDataTypeController {
         return maps;
     }
 
+    private boolean hasBizPermission(HttpServletRequest request, int bizId){
+        XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+        if ( loginUser.getType()==1 ||
+                ArrayUtils.contains(StringUtils.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
+                ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @RequestMapping("/addDataTypePage")
     public String addDataTypePage(Model model) {
@@ -82,7 +96,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/addDataType")
     @ResponseBody
-    public ReturnT<Integer> addDataType(XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public ReturnT<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringUtils.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
@@ -98,6 +112,16 @@ public class XxlApiDataTypeController {
         if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
+
+        if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
+            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+        }
+
+        XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
+        if (apiBiz == null) {
+            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "业务线ID非法");
+        }
+
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");
@@ -141,13 +165,17 @@ public class XxlApiDataTypeController {
     }
 
     @RequestMapping("/updateDataTypePage")
-    public String updateDataTypePage(Model model, int dataTypeId) {
+    public String updateDataTypePage(HttpServletRequest request, Model model, int dataTypeId) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
             throw new RuntimeException("数据类型ID非法");
         }
         model.addAttribute("apiDataType", apiDataType);
+
+        if (!hasBizPermission(request, apiDataType.getBizId())) {
+            throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
+        }
 
         // 业务线列表
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
@@ -158,7 +186,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/updateDataType")
     @ResponseBody
-    public ReturnT<String> updateDataType(XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public ReturnT<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringUtils.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
@@ -174,6 +202,16 @@ public class XxlApiDataTypeController {
         if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
+
+        if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+        }
+
+        XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
+        if (apiBiz == null) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线ID非法");
+        }
+
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null && existsByName.getId()!=apiDataTypeDTO.getId()) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");
@@ -216,7 +254,7 @@ public class XxlApiDataTypeController {
     }
 
     @RequestMapping("/dataTypeDetail")
-    public String dataTypeDetail(Model model, int dataTypeId) {
+    public String dataTypeDetail(HttpServletRequest request, Model model, int dataTypeId) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
@@ -228,12 +266,29 @@ public class XxlApiDataTypeController {
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         model.addAttribute("bizList", bizList);
 
+        // 代码生成
+        String codeContent = ApiDataTypeToCode.parseDataTypeToCode(apiDataType);
+        model.addAttribute("codeContent", codeContent);
+
+        // 权限
+        model.addAttribute("hasBizPermission", hasBizPermission(request, apiDataType.getBizId()));
+
         return "datatype/datatype.detail";
     }
 
     @RequestMapping("/deleteDataType")
     @ResponseBody
-    public ReturnT<String> deleteDataType(int id) {
+    public ReturnT<String> deleteDataType(HttpServletRequest request, int id) {
+
+        XxlApiDataType apiDataType = xxlApiDataTypeDao.load(id);
+        if (apiDataType == null) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型ID非法");
+        }
+
+        if (!hasBizPermission(request, apiDataType.getBizId())) {
+            return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+        }
+
         // 被其他数据类型引用，拒绝删除
         List<XxlApiDataTypeField> list = xxlApiDataTypeFieldDao.findByFieldDatatypeId(id);
         if (CollectionUtils.isNotEmpty(list)) {

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="IXxlApiUserMapper">
+<mapper namespace="com.xxl.api.admin.dao.IXxlApiUserDao">
 	
 	<resultMap id="XxlApiUser" type="com.xxl.api.admin.core.model.XxlApiUser" >
 		<result column="id" property="id" />
 		<result column="username" property="userName" />
 	    <result column="password" property="password" />
 	    <result column="type" property="type" />
-	    <result column="realname" property="realName" />
+		<result column="permission_biz" property="permissionBiz" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -16,7 +16,7 @@
 		t.username,
 		t.password,
 		t.type,
-		t.realname
+		t.permission_biz
 	</sql>
 
 	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiUser" useGeneratedKeys="true" keyProperty="id" >
@@ -24,12 +24,12 @@
 			userName,
 			password,
 			`type`,
-			realname
+			permission_biz
 		) VALUES (
 			#{userName},
 			#{password},
 			#{type},
-			#{realName}
+			#{permissionBiz}
 		);
 	</insert>
 
@@ -38,7 +38,7 @@
 		SET
 			password = #{password},
 			`type` = #{type},
-			realname = #{realName}
+			permission_biz = #{permissionBiz}
 		WHERE id = #{id}
 	</update>
 
@@ -63,6 +63,34 @@
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_user AS t
 		ORDER BY id DESC
+	</select>
+
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiUser">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="userName != null and userName != ''">
+				AND t.userName like CONCAT(CONCAT('%', #{userName}), '%')
+			</if>
+			<if test="type gte 0" >
+				AND t.`type` = #{type}
+			</if>
+		</trim>
+		ORDER BY t.userName ASC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_user AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="userName != null and userName != ''">
+				AND t.userName like CONCAT(CONCAT('%', #{userName}), '%')
+			</if>
+			<if test="type gte 0" >
+				AND t.`type` = #{type}
+			</if>
+		</trim>
 	</select>
 
 </mapper>

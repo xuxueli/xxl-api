@@ -20,22 +20,35 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>业务线管理<small>API管理平台</small></h1>
+			<h1>业务线管理</h1>
 		</section>
 
 		<!-- Main content -->
 	    <section class="content">
+
+            <div class="row">
+
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">业务线名称</span>
+                        <input type="text" class="form-control" id="bizName" autocomplete="on" >
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-block btn-info" id="search">搜索</button>
+                </div>
+                <div class="col-xs-2 pull-right">
+                    <button class="btn btn-block btn-success" type="button" id="add" >+新增业务线</button>
+                </div>
+            </div>
+
 			<div class="row">
 				<div class="col-xs-12">
 
                     <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">业务线列表</h3>
-                            <button class="btn btn-info btn-xs pull-right" id="add" >+新增业务线</button>
-                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="user_list" class="table table-bordered table-striped">
+                            <table id="user_list" class="table table-bordered table-striped" width="100%" >
                                 <thead>
 									<tr>
 										<th>ID</th>
@@ -64,17 +77,17 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-            	<h4 class="modal-title" >新增用户</h4>
+            	<h4 class="modal-title" >新增业务线</h4>
          	</div>
          	<div class="modal-body">
 				<form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">业务线名称<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="bizName" placeholder="请输入“业务线名称”" maxlength="50" ></div>
+                        <label for="lastname" class="col-sm-3 control-label">业务线名称<font color="red">*</font></label>
+                        <div class="col-sm-9"><input type="text" class="form-control" name="bizName" placeholder="请输入“业务线名称”" maxlength="50" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">排序<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="order" placeholder="请输入“排序”" maxlength="5" ></div>
+                        <label for="lastname" class="col-sm-3 control-label">排序<font color="red">*</font></label>
+                        <div class="col-sm-9"><input type="text" class="form-control" name="order" placeholder="请输入“排序”" maxlength="5" ></div>
                     </div>
 
 					<div class="form-group">
@@ -91,20 +104,20 @@
 
 <!-- 更新.模态框 -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-sm2">
 		<div class="modal-content">
 			<div class="modal-header">
-            	<h4 class="modal-title" >更新任务</h4>
+            	<h4 class="modal-title" >更新业务线</h4>
          	</div>
          	<div class="modal-body">
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">业务线名称<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="bizName" placeholder="请输入“业务线名称”" maxlength="50" ></div>
+                        <label for="lastname" class="col-sm-3 control-label">业务线名称<font color="red">*</font></label>
+                        <div class="col-sm-9"><input type="text" class="form-control" name="bizName" placeholder="请输入“业务线名称”" maxlength="50" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">排序<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="order" placeholder="请输入“排序”" maxlength="5" ></div>
+                        <label for="lastname" class="col-sm-3 control-label">排序<font color="red">*</font></label>
+                        <div class="col-sm-9"><input type="text" class="form-control" name="order" placeholder="请输入“排序”" maxlength="5" ></div>
                     </div>
 
                     <div class="form-group">
@@ -125,13 +138,9 @@
 <!-- DataTables -->
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<script>
-    bizList = eval('('+ '${bizList}' +')');
-</script>
 <script src="${request.contextPath}/static/js/biz.list.1.js"></script>
 </body>
 </html>

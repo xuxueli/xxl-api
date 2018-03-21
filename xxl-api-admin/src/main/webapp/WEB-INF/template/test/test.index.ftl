@@ -21,7 +21,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Test接口<small>API管理平台</small></h1>
+            <h1>接口测试</h1>
         </section>
 
         <section class="content">
@@ -30,33 +30,41 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id}'" >返回接口详情页</button>
+                        </div>
                     </div>
 
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-1 control-label">请求方法</label>
+
+                            <label class="col-sm-1 control-label">URL</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100"
+                                       <#if testHistory?exists && testHistory.requestUrl?exists >value="${testHistory.requestUrl}"</#if> >
+                            </div>
+                            <label class="col-sm-1 control-label">Method</label>
                             <div class="col-sm-2">
                                 <select class="form-control select2" id="requestMethod">
                                 <#list RequestMethodEnum as item>
-                                    <option value="${item}">${item}</option>
+                                    <option value="${item}" <#if testHistory?exists && testHistory.requestMethod==item>selected</#if> >${item}</option>
                                 </#list>
                                 </select>
-                            </div>
-                            <label class="col-sm-1 control-label">接口URL</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="requestUrl" placeholder="请输入接口URL" maxlength="100" >
                             </div>
                             <#if project?exists>
                                 <div class="col-sm-2">
                                     <select class="form-control select2" id="projectBaseUrlUpdate" >
                                     <#if project.baseUrlProduct?exists && project.baseUrlProduct!="" >
-                                        <option value="${project.baseUrlProduct}${document.requestUrl}" >线上环境</option>
+                                        <option value="${project.baseUrlProduct}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlProduct + document.requestUrl)>selected</#if> >线上环境</option>
                                     </#if>
                                     <#if project.baseUrlPpe?exists && project.baseUrlPpe!="" >
-                                        <option value="${project.baseUrlPpe}${document.requestUrl}" >预发布环境</option>
+                                        <option value="${project.baseUrlPpe}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlPpe + document.requestUrl)>selected</#if> >预发布环境</option>
                                     </#if>
                                     <#if project.baseUrlQa?exists && project.baseUrlQa!="" >
-                                        <option value="${project.baseUrlQa}${document.requestUrl}" >测试环境</option>
+                                        <option value="${project.baseUrlQa}${document.requestUrl}"
+                                            <#if testHistory?exists && testHistory.requestUrl == (project.baseUrlQa + document.requestUrl)>selected</#if> >测试环境</option>
                                     </#if>
                                     </select>
                                 </div>
@@ -76,7 +84,7 @@
 
                     <div id="requestHeaders_example" style="display: none;" >
                         <div class="form-group requestHeaders_item" >
-                            <label class="col-sm-1 control-label">头部标签</label>
+                            <label class="col-sm-1 control-label">Key</label>
                             <div class="col-sm-4 item">
                                 <select class="form-control select2_tag_new key" >
                                     <option value=""></option>
@@ -85,7 +93,7 @@
                                 </#list>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">头部内容</label>
+                            <label class="col-sm-1 control-label">Value</label>
                             <div class="col-sm-5 item">
                                 <input type="text" class="form-control value">
                             </div>
@@ -99,7 +107,7 @@
                                 <#assign key = item['key'] />
                                 <#assign value = item['value'] />
                                 <div class="form-group requestHeaders_item" >
-                                    <label class="col-sm-1 control-label">头部标签</label>
+                                    <label class="col-sm-1 control-label">Key</label>
                                     <div class="col-sm-4 item">
                                         <select class="form-control select2_tag key" >
                                             <option value=""></option>
@@ -108,7 +116,7 @@
                                             </#list>
                                         </select>
                                     </div>
-                                    <label class="col-sm-1 control-label">头部内容</label>
+                                    <label class="col-sm-1 control-label">Value</label>
                                     <div class="col-sm-5 item">
                                         <input type="text" class="form-control value" value="${value}">
                                     </div>
@@ -130,11 +138,11 @@
 
                     <div id="queryParams_example" style="display: none;" >
                         <div class="form-group queryParams_item" >
-                            <label class="col-sm-1 control-label">参数名称</label>
+                            <label class="col-sm-1 control-label">参数</label>
                             <div class="col-sm-4 item">
                                 <input type="text" class="form-control key">
                             </div>
-                            <label class="col-sm-1 control-label">参数说明</label>
+                            <label class="col-sm-1 control-label">值</label>
                             <div class="col-sm-5 item">
                                 <input type="text" class="form-control value">
                             </div>
@@ -146,11 +154,11 @@
                         <#if queryParams?exists>
                             <#list queryParams as item>
                                 <div class="form-group queryParams_item" >
-                                    <label class="col-sm-1 control-label">参数名称</label>
+                                    <label class="col-sm-1 control-label">参数</label>
                                     <div class="col-sm-4 item">
                                         <input type="text" class="form-control key" value="<#if testId gt 0>${item.key}<#else>${item.name}</#if>" >
                                     </div>
-                                    <label class="col-sm-1 control-label">参数说明</label>
+                                    <label class="col-sm-1 control-label">值</label>
                                     <div class="col-sm-5 item">
                                         <input type="text" class="form-control value" value="<#if testId gt 0>${item.value}<#else></#if>" >
                                     </div>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="XxlApiGroupMapper">
+<mapper namespace="com.xxl.api.admin.dao.IXxlApiGroupDao">
 	
 	<resultMap id="XxlApiGroup" type="com.xxl.api.admin.core.model.XxlApiGroup" >
 		<result column="id" property="id" />
-		<result column="project_id" property="productId" />
+		<result column="project_id" property="projectId" />
 		<result column="name" property="name" />
 	    <result column="order" property="order" />
 	</resultMap>
@@ -23,7 +23,7 @@
 			`name`,
 			`order`
 		) VALUES (
-			#{productId},
+			#{projectId},
 			#{name},
 			#{order}
 		);
@@ -52,7 +52,7 @@
 	<select id="loadAll" parameterType="java.lang.Integer" resultMap="XxlApiGroup">
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_group AS t
-		WHERE t.project_id = #{productId}
+		WHERE t.project_id = #{projectId}
 		ORDER BY t.order ASC
 	</select>
 

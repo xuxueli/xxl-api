@@ -19,7 +19,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>项目管理<small>API管理平台</small></h1>
+			<h1>项目管理</h1>
 		</section>
 
 		<!-- Main content -->
@@ -31,7 +31,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">业务线</span>
                         <select class="form-control" id="bizId">
-                            <option value="0" <#if bizId==0>selected</#if> >默认</option>
+                            <option value="-1" >全部</option>
                             <#if bizList?exists && bizList?size gt 0>
                             <#list bizList as biz>
                                 <option value="${biz.id}" <#if bizId==biz.id>selected</#if> >${biz.bizName}</option>
@@ -60,14 +60,12 @@
                     <div class="box">
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="project_list" class="table table-bordered table-striped">
+                            <table id="project_list" class="table table-bordered table-striped" width="100%" >
                                 <thead>
 									<tr>
 										<th>ID</th>
 										<th>项目名称</th>
 										<th>项目描述</th>
-										<th>访问权限</th>
-										<th>跟地址</th>
                                         <th>操作</th>
 									</tr>
                                 </thead>
@@ -99,41 +97,33 @@
                         <label for="lastname" class="col-sm-4 control-label">业务线<font color="red">*</font></label>
                         <div class="col-sm-8">
                             <select class="form-control" name="bizId" >
-                                <option value="0" >默认</option>
-                            <#if bizList?exists && bizList?size gt 0>
-                                <#list bizList as biz>
-                                    <option value="${biz.id}" >${biz.bizName}</option>
-                                </#list>
-                            </#if>
+                                <#if bizList?exists && bizList?size gt 0>
+                                    <#list bizList as biz>
+                                        <option value="${biz.id}" >${biz.bizName}</option>
+                                    </#list>
+                                </#if>
                             </select>
                         </div>
                     </div>
 					<div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">项目名称<font color="red">*</font></label>
+                        <label for="lastname" class="col-sm-4 control-label">名称<font color="red">*</font></label>
                         <div class="col-sm-8"><input type="text" class="form-control" name="name" placeholder="请输入“项目名称”" maxlength="50" ></div>
 					</div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">项目描述<font color="black">*</font></label>
+                        <label for="lastname" class="col-sm-4 control-label">描述<font color="black">*</font></label>
                         <div class="col-sm-8"><input type="text" class="form-control" name="desc" placeholder="请输入“项目描述”" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">访问权限<font color="red">*</font></label>
-                        <div class="col-sm-8">
-                            <input type="radio" name="permission" value="0" checked >公开  &nbsp;&nbsp;
-                            <input type="radio" name="permission" value="1" >私有
-						</div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(线上)<font color="red">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入根地址(线上)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：线上环境<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入“跟地址：线上环境”" maxlength="200" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(预发布)<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入根地址(预发布)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：预发布环境<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入“跟地址：预发布环境”" maxlength="200" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：测试环境<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入“跟地址：测试环境”" maxlength="200" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(测试)<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入根地址(测试)" maxlength="200" ></div>
                     </div>
 
 					<div class="form-group">
@@ -150,10 +140,10 @@
 
 <!-- 更新.模态框 -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-            	<h4 class="modal-title" >更新任务</h4>
+            	<h4 class="modal-title" >更新项目</h4>
          	</div>
          	<div class="modal-body">
                 <form class="form-horizontal form" role="form" >
@@ -161,41 +151,33 @@
                         <label for="lastname" class="col-sm-4 control-label">业务线<font color="red">*</font></label>
                         <div class="col-sm-8">
                             <select class="form-control" name="bizId" >
-                                <option value="0" >默认</option>
-                            <#if bizList?exists && bizList?size gt 0>
-                                <#list bizList as biz>
-                                    <option value="${biz.id}" >${biz.bizName}</option>
-                                </#list>
-                            </#if>
+                                <#if bizList?exists && bizList?size gt 0>
+                                    <#list bizList as biz>
+                                        <option value="${biz.id}" >${biz.bizName}</option>
+                                    </#list>
+                                </#if>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">项目名称<font color="red">*</font></label>
+                        <label for="lastname" class="col-sm-4 control-label">名称<font color="red">*</font></label>
                         <div class="col-sm-8"><input type="text" class="form-control" name="name" placeholder="请输入“项目名称”" maxlength="50" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">项目描述<font color="black">*</font></label>
+                        <label for="lastname" class="col-sm-4 control-label">描述<font color="black">*</font></label>
                         <div class="col-sm-8"><input type="text" class="form-control" name="desc" placeholder="请输入“项目描述”" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">访问权限<font color="red">*</font></label>
-                        <div class="col-sm-8">
-                            <input type="radio" name="permission" value="0" checked >公开  &nbsp;&nbsp;
-                            <input type="radio" name="permission" value="1" >私有
-                        </div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(线上)<font color="red">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入根地址(线上)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：线上环境<font color="red">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlProduct" placeholder="请输入“跟地址：线上环境”" maxlength="200" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(预发布)<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入根地址(预发布)" maxlength="200" ></div>
                     </div>
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：预发布环境<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlPpe" placeholder="请输入“跟地址：预发布环境”" maxlength="200" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-4 control-label">跟地址：测试环境<font color="black">*</font></label>
-                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入“跟地址：测试环境”" maxlength="200" ></div>
+                        <label for="lastname" class="col-sm-4 control-label">根地址(测试)<font color="black">*</font></label>
+                        <div class="col-sm-8"><input type="text" class="form-control" name="baseUrlQa" placeholder="请输入根地址(测试)" maxlength="200" ></div>
                     </div>
 
                     <div class="form-group">
@@ -216,10 +198,25 @@
 <!-- DataTables -->
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
+<script>
+    // 业务线权限
+    var superUser = <#if XXL_API_LOGIN_IDENTITY.type == 1 >true<#else>false</#if>;
+    var permissionBiz = '${XXL_API_LOGIN_IDENTITY.permissionBiz}';
 
+    var permissionBizArr;
+    if (permissionBiz) {
+        permissionBizArr = $(permissionBiz.split(","));
+    };
+    function hasBizPermission(bizId) {
+        if ( superUser || $.inArray( bizId+'', permissionBizArr) > -1 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 <script src="${request.contextPath}/static/js/project.list.1.js"></script>
 </body>
 </html>

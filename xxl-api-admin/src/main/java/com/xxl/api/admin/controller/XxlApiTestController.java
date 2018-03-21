@@ -9,8 +9,9 @@ import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -59,29 +60,30 @@ public class XxlApiTestController {
 	 */
 	@RequestMapping
 	public String index(Model model,
-			@RequestParam(required = false, defaultValue = "0") int documentId,
-			@RequestParam(required = false, defaultValue = "0") int testId) {
+						int documentId,
+						@RequestParam(required = false, defaultValue = "0") int testId) {
 
 
 		// params
-		XxlApiProject project = null;
-		XxlApiDocument document = null;
+		XxlApiDocument document = document = xxlApiDocumentDao.load(documentId);
+		if (document == null) {
+			throw new RuntimeException("接口ID非法");
+		}
+		XxlApiProject project = xxlApiProjectDao.load(document.getProjectId());
+
 		List<Map<String, String>> requestHeaders = null;
 		List<Map<String, String>> queryParams = null;
 
 		if (testId > 0) {
 			XxlApiTestHistory testHistory = xxlApiTestHistoryDao.load(testId);
-			documentId = testHistory.getDocumentId();
-
-			document = xxlApiDocumentDao.load(documentId);
-			project = xxlApiProjectDao.load(document.getProjectId());
+			if (testHistory == null) {
+				throw new RuntimeException("测试用例ID非法");
+			}
+			model.addAttribute("testHistory", testHistory);
 
 			requestHeaders = (StringUtils.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
 			queryParams = (StringUtils.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
 		} else {
-			document = xxlApiDocumentDao.load(documentId);
-			project = xxlApiProjectDao.load(document.getProjectId());
-
 			requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
 			queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
 		}
@@ -207,13 +209,14 @@ public class XxlApiTestController {
 	}
 
 	private String markGetUrl(String url, Map<String, String> queryParamMap){
-		String finalUrl = url + "?";
-		if (queryParamMap!=null && !queryParamMap.isEmpty()) {
+		String finalUrl = url;
+		if (MapUtils.isNotEmpty(queryParamMap)) {
+			finalUrl = url + "?";
 			for(Map.Entry<String,String> entry : queryParamMap.entrySet()){
 				finalUrl += entry.getKey() + "=" + entry.getValue() + "&";
 			}
+			finalUrl = finalUrl.substring(0, finalUrl.length()-1);
 		}
-		finalUrl = finalUrl.substring(0, finalUrl.length()-1);
 		return finalUrl;
 	}
 

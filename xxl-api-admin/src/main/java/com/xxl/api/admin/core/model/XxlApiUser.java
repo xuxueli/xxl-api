@@ -5,11 +5,11 @@ package com.xxl.api.admin.core.model;
  */
 public class XxlApiUser {
 
-    private int id;             // 用户ID
-    private String userName;    // 账号
-    private String password;    // 密码
-    private int type;           // 用户类型：0-普通用户、1-超级管理员
-    private String realName;    // 真实姓名
+    private int id;                 // 用户ID
+    private String userName;        // 账号
+    private String password;        // 密码
+    private int type;               // 用户类型：0-普通用户、1-管理员
+    private String permissionBiz;  // 业务线权限，多个逗号分隔
 
     public int getId() {
         return id;
@@ -43,12 +43,11 @@ public class XxlApiUser {
         this.type = type;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getPermissionBiz() {
+        return permissionBiz;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setPermissionBiz(String permissionBiz) {
+        this.permissionBiz = permissionBiz;
     }
-
 }

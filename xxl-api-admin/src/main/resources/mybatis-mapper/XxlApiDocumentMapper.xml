@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="XxlApiDocumentMapper">
+<mapper namespace="com.xxl.api.admin.dao.IXxlApiDocumentDao">
 	
 	<resultMap id="XxlApiDocument" type="com.xxl.api.admin.core.model.XxlApiDocument" >
 		<result column="id" property="id" />
@@ -127,7 +127,7 @@
 	<select id="loadAll" parameterType="java.util.Map" resultMap="XxlApiDocument">
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_document AS t
-		WHERE t.project_id = #{productId}
+		WHERE t.project_id = #{projectId}
 		<if test="groupId gte 0" >
 			AND t.group_id = #{groupId}
 		</if>

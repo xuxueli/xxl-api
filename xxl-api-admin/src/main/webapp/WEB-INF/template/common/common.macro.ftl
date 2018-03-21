@@ -44,9 +44,13 @@
     <script src="${request.contextPath}/static/plugins/pace/pace.min.js"></script>
     <#-- jquery cookie -->
 	<script src="${request.contextPath}/static/plugins/jquery/jquery.cookie.js"></script>
+	<#-- jquery validate -->
+	<script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
+
+	<#-- layer -->
+	<script src="${request.contextPath}/static/plugins/layer/layer.js"></script>
 
 	<#-- common -->
-    <script src="${request.contextPath}/static/js/xxl.alert.1.js"></script>
     <script src="${request.contextPath}/static/js/common.1.js"></script>
     <script>var base_url = '${request.contextPath}';</script>
 
@@ -62,15 +66,47 @@
 			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><span class="sr-only">切换导航</span></a>
           	<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
-					<li class="dropdown user user-menu">
-	                    <a href=";" id="logoutBtn" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      		<span class="hidden-xs">注销</span>
-	                    </a>
+					<li class="dropdown">
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            欢迎 ${Request["XXL_API_LOGIN_IDENTITY"].userName}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li id="updatePwd" ><a href="javascript:">修改密码</a></li>
+                            <li id="logoutBtn" ><a href="javascript:">注销</a></li>
+                        </ul>
 					</li>
 				</ul>
 			</div>
 		</nav>
 	</header>
+
+	<!-- 修改密码.模态框 -->
+	<div class="modal fade" id="updatePwdModal" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" >修改密码</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal form" role="form" >
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">新密码<font color="red">*</font></label>
+							<div class="col-sm-10"><input type="text" class="form-control" name="password" placeholder="请输入新密码" maxlength="100" ></div>
+						</div>
+						<hr>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+								<button type="submit" class="btn btn-primary"  >保存</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </#macro>
 
 <#macro commonLeft pageName >
@@ -80,7 +116,7 @@
 		<section class="sidebar">
 			<!-- sidebar menu: : style can be found in sidebar.less -->
 			<ul class="sidebar-menu">
-				<li class="header">常用模块</li>
+				<li class="header">导航</li>
 				<li class="nav-click <#if pageName == "projectList">active</#if>" ><a href="${request.contextPath}/project"><i class="fa fa-circle-o text-red"></i> <span>项目管理</span></a></li>
                 <li class="nav-click <#if pageName == "datatype">active</#if>" ><a href="${request.contextPath}/datatype"><i class="fa fa-circle-o text-red"></i> <span>数据类型管理</span></a></li>
 				<#if XXL_API_LOGIN_IDENTITY.type == 1>
@@ -96,11 +132,11 @@
 
 <#macro commonFooter >
 	<footer class="main-footer">
-        Powered by <b>XXL-API</b> 1.1
+        Powered by <b>XXL-API</b> 1.1.1-SNAPSHOT
 		<div class="pull-right hidden-xs">
             <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;
-                <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>&nbsp;
-                <a href="https://my.oschina.net/xuxueli/blog/873667" target="_blank" >oschina</a>
+                <a href="http://www.xuxueli.com/" target="_blank" >xuxueli</a>&nbsp;
+                <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>
             </strong><!-- All rights reserved. -->
 		</div>
 	</footer>

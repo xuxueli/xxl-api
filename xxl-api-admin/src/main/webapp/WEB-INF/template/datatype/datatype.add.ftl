@@ -19,7 +19,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>新增数据类型<small>API管理平台</small></h1>
+			<h1>新增数据类型</h1>
 		</section>
 
         <section class="content">
@@ -37,20 +37,20 @@
 
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="col-sm-1 control-label">名称</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="name" placeholder="请输入数据类型名称" maxlength="100" >
+                            </div>
+
                             <label class="col-sm-1 control-label">业务线</label>
                             <div class="col-sm-4">
                                 <select class="form-control" name="bizId" >
-                                    <option value="0" >公共</option>
                                     <#if bizList?exists && bizList?size gt 0>
                                         <#list bizList as biz>
                                             <option value="${biz.id}"  >${biz.bizName}</option>
                                         </#list>
                                     </#if>
                                 </select>
-                            </div>
-                            <label class="col-sm-1 control-label">名称</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" name="name" placeholder="请输入数据类型名称" maxlength="100" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -74,25 +74,29 @@
 
                     <div id="queryParams_example" style="display: none;" >
                         <div class="form-group queryParams_item" >
-                            <label class="col-sm-1 control-label">字段名称</label>
+
+                            <label class="col-sm-1 control-label">名称</label>
                             <div class="col-sm-2 item">
                                 <input type="text" class="form-control fieldName">
                             </div>
-                            <label class="col-sm-1 control-label">数据类型</label>
+
+                            <label class="col-sm-1 control-label">描述</label>
                             <div class="col-sm-2 item">
+                                <input type="text" class="form-control fieldAbout">
+                            </div>
+
+                            <div class="col-sm-3 item">
                                 <select class="form-control select2_tag_new fieldDatatypeId" style="width: 100%;">
                                 </select>
                             </div>
+
                             <div class="col-sm-2 item">
                                 <select class="form-control select2_tag_new fieldType" style="width: 100%;">
                                     <option value="0">默认</option>
                                     <option value="1">数组</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">描述</label>
-                            <div class="col-sm-2 item">
-                                <input type="text" class="form-control fieldAbout">
-                            </div>
+
                             <button type="button" class="col-sm-1 btn btn-box-tool delete" ><i class="fa fa-fw fa-close"></i></button>
                         </div>
                     </div>

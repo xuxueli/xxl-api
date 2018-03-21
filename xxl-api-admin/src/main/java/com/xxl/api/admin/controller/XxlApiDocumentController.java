@@ -5,14 +5,18 @@ import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.*;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import com.xxl.api.admin.service.impl.LoginService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,13 +40,31 @@ public class XxlApiDocumentController {
 	private IXxlApiDataTypeService xxlApiDataTypeService;
 
 
+	private boolean hasBizPermission(HttpServletRequest request, int bizId){
+		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		if ( loginUser.getType()==1 ||
+				ArrayUtils.contains(StringUtils.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
+				) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
 	@RequestMapping("/markStar")
 	@ResponseBody
-	public ReturnT<String> markStar(int id, int starLevel) {
+	public ReturnT<String> markStar(HttpServletRequest request, int id, int starLevel) {
 
 		XxlApiDocument document = xxlApiDocumentDao.load(id);
 		if (document == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "操作失败，接口ID非法");
+		}
+
+		// 权限
+		XxlApiProject apiProject = xxlApiProjectDao.load(document.getProjectId());
+		if (!hasBizPermission(request, apiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		document.setStarLevel(starLevel);
@@ -53,7 +75,18 @@ public class XxlApiDocumentController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	public ReturnT<String> delete(HttpServletRequest request, int id) {
+
+		XxlApiDocument document = xxlApiDocumentDao.load(id);
+		if (document == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "操作失败，接口ID非法");
+		}
+
+		// 权限
+		XxlApiProject apiProject = xxlApiProjectDao.load(document.getProjectId());
+		if (!hasBizPermission(request, apiProject.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// 存在Test记录，拒绝删除
 		List<XxlApiTestHistory> historyList = xxlApiTestHistoryDao.loadByDocumentId(id);
@@ -74,21 +107,28 @@ public class XxlApiDocumentController {
 	/**
 	 * 新增，API
 	 *
-	 * @param productId
+	 * @param projectId
 	 * @return
 	 */
 	@RequestMapping("/addPage")
-	public String addPage(Model model, int productId) {
+	public String addPage(HttpServletRequest request, Model model, int projectId, @RequestParam(required = false, defaultValue = "0") int groupId) {
 
 		// project
-		XxlApiProject project = xxlApiProjectDao.load(productId);
+		XxlApiProject project = xxlApiProjectDao.load(projectId);
 		if (project == null) {
 			throw new RuntimeException("操作失败，项目ID非法");
 		}
-		model.addAttribute("productId", productId);
+		model.addAttribute("projectId", projectId);
+		model.addAttribute("groupId", groupId);
+
+
+		// 权限
+		if (!hasBizPermission(request, project.getBizId())) {
+			throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// groupList
-		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(productId);
+		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
 		model.addAttribute("groupList", groupList);
 
 		// enum
@@ -101,7 +141,19 @@ public class XxlApiDocumentController {
 	}
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<Integer> add(XxlApiDocument xxlApiDocument) {
+	public ReturnT<Integer> add(HttpServletRequest request, XxlApiDocument xxlApiDocument) {
+
+		XxlApiProject project = xxlApiProjectDao.load(xxlApiDocument.getProjectId());
+		if (project == null) {
+			return new ReturnT<Integer>(ReturnT.FAIL_CODE, "操作失败，项目ID非法");
+		}
+
+		// 权限
+		if (!hasBizPermission(request, project.getBizId())) {
+			return new ReturnT<Integer>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+		}
+
+
 		int ret = xxlApiDocumentDao.add(xxlApiDocument);
 		return (ret>0)?new ReturnT<Integer>(xxlApiDocument.getId()):new ReturnT<Integer>(ReturnT.FAIL_CODE, null);
 	}
@@ -111,7 +163,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/updatePage")
-	public String updatePage(Model model, int id) {
+	public String updatePage(HttpServletRequest request, Model model, int id) {
 
 		// document
 		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
@@ -125,7 +177,14 @@ public class XxlApiDocumentController {
 
 		// project
 		int projectId = xxlApiDocument.getProjectId();
-		model.addAttribute("productId", projectId);
+		model.addAttribute("projectId", projectId);
+
+
+		// 权限
+		XxlApiProject project = xxlApiProjectDao.load(xxlApiDocument.getProjectId());
+		if (!hasBizPermission(request, project.getBizId())) {
+			throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// groupList
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(projectId);
@@ -145,10 +204,20 @@ public class XxlApiDocumentController {
 	}
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(XxlApiDocument xxlApiDocument) {
+	public ReturnT<String> update(HttpServletRequest request, XxlApiDocument xxlApiDocument) {
+
+		XxlApiDocument oldVo = xxlApiDocumentDao.load(xxlApiDocument.getId());
+		if (oldVo == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "操作失败，接口ID非法");
+		}
+
+		// 权限
+		XxlApiProject project = xxlApiProjectDao.load(oldVo.getProjectId());
+		if (!hasBizPermission(request, project.getBizId())) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+		}
 
 		// fill not-change val
-		XxlApiDocument oldVo = xxlApiDocumentDao.load(xxlApiDocument.getId());
 		xxlApiDocument.setProjectId(oldVo.getProjectId());
 		xxlApiDocument.setStarLevel(oldVo.getStarLevel());
 		xxlApiDocument.setAddTime(oldVo.getAddTime());
@@ -162,7 +231,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/detailPage")
-	public String detailPage(Model model, int id) {
+	public String detailPage(HttpServletRequest request, Model model, int id) {
 
 		// document
 		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
@@ -177,7 +246,7 @@ public class XxlApiDocumentController {
 		// project
 		int projectId = xxlApiDocument.getProjectId();
 		XxlApiProject project = xxlApiProjectDao.load(projectId);
-		model.addAttribute("productId", projectId);
+		model.addAttribute("projectId", projectId);
 		model.addAttribute("project", project);
 
 		// groupList
@@ -201,6 +270,9 @@ public class XxlApiDocumentController {
 		// 响应数据类型
 		XxlApiDataType responseDatatypeRet = xxlApiDataTypeService.loadDataType(xxlApiDocument.getResponseDatatypeId());
 		model.addAttribute("responseDatatype", responseDatatypeRet);
+
+		// 权限
+		model.addAttribute("hasBizPermission", hasBizPermission(request, project.getBizId()));
 
 		return "document/document.detail";
 	}

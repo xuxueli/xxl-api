@@ -1,3 +1,6 @@
+CREATE database if NOT EXISTS `xxl-api` default character set utf8 collate utf8_general_ci;
+use `xxl-api`;
+
 
 CREATE TABLE `xxl_api_biz` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -5,7 +8,6 @@ CREATE TABLE `xxl_api_biz` (
   `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_datatype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -16,7 +18,6 @@ CREATE TABLE `xxl_api_datatype` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_datatype_fileds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_datatype_id` int(11) NOT NULL COMMENT '所属，数据类型ID',
@@ -26,7 +27,6 @@ CREATE TABLE `xxl_api_datatype_fileds` (
   `field_type` tinyint(4) NOT NULL COMMENT '字段形式：0=默认、1=数组',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,7 +51,6 @@ CREATE TABLE `xxl_api_document` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `project_id` int(11) NOT NULL COMMENT '项目ID',
@@ -59,7 +58,6 @@ CREATE TABLE `xxl_api_group` (
   `order` int(11) NOT NULL COMMENT '分组排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -70,19 +68,16 @@ CREATE TABLE `xxl_api_mock` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL COMMENT '项目名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '项目描述',
-  `permission` tinyint(4) NOT NULL DEFAULT '0' COMMENT '访问权限：0-公开、1-私有',
-  `base_url_product` varchar(200) NOT NULL COMMENT '跟地址：线上环境',
-  `base_url_ppe` varchar(200) DEFAULT NULL COMMENT '跟地址：预发布环境',
-  `base_url_qa` varchar(200) DEFAULT NULL COMMENT '跟地址：测试环境',
+  `base_url_product` varchar(200) NOT NULL COMMENT '根地址：线上环境',
+  `base_url_ppe` varchar(200) DEFAULT NULL COMMENT '根地址：预发布环境',
+  `base_url_qa` varchar(200) DEFAULT NULL COMMENT '根地址：测试环境',
   `biz_id` int(11) NOT NULL DEFAULT '0' COMMENT '业务线ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `xxl_api_test_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -97,35 +92,32 @@ CREATE TABLE `xxl_api_test_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `xxl_api_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '账号',
   `password` varchar(50) NOT NULL COMMENT '密码',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
-  `realname` varchar(50) DEFAULT NULL COMMENT '真实姓名',
+  `permission_biz` varchar(200) DEFAULT NULL COMMENT '业务线权限，多个逗号分隔',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `xxl_api_user_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `product_id` int(11) NOT NULL COMMENT '项目ID',
-  `add_time` datetime NOT NULL COMMENT '新增时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `xxl_api_user` VALUES
+('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', ''),
+('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', '0', '1');
 
-
-INSERT INTO `xxl_api_user` VALUES ('1', 'admin', '123456', '1', '管理员');
+INSERT INTO `xxl_api_biz` VALUES ('1', '默认业务线', '1');
 
 INSERT INTO `xxl_api_datatype` VALUES
-('1', 'String', '字符串类型', '0', null),
-('2', 'Integer', '数字整型', '0', null),
-('3', 'Short', '短整型', '0', null),
-('4', 'Long', '长整型', '0', null),
-('5', 'Float', '单精度浮点数', '0', null),
-('6', 'Double', '双精度浮点数', '0', null),
-('7', 'Boolean', '布尔类型', '0', null),
-('8', 'DATE', '日期类型，格式“yyyy-MM-mm”', '0', null),
-('9', 'DATETIME', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '0', null);
+('1', 'String', '字符串类型', '1', null),
+('2', 'Integer', '数字整型', '1', null),
+('3', 'Short', '短整型', '1', null),
+('4', 'Long', '长整型', '1', null),
+('5', 'Float', '单精度浮点数', '1', null),
+('6', 'Double', '双精度浮点数', '1', null),
+('7', 'Boolean', '布尔类型', '1', null),
+('8', 'Date', '日期类型，格式“yyyy-MM-mm”', '1', null),
+('9', 'DateTime', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
+
+
+COMMIT;

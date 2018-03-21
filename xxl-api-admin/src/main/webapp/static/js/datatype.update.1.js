@@ -44,7 +44,7 @@ $(function() {
 						},
 						cache: true
 					},
-					placeholder:'请选择',//默认文字提示
+					placeholder:'请选择数据类型',//默认文字提示
 					language: "zh-CN",
 					tags: false,//允许手动添加
 					allowClear: true,//允许清空
@@ -137,17 +137,26 @@ $(function() {
 					// valid
 					if (!fieldName) {
 						ifError = true;
-						ComAlert.show(2, '字段名称不可为空');
+                        layer.open({
+                            icon: '2',
+                            content: '字段名称不可为空'
+                        });
 						return;
 					}
 					if (!fieldAbout) {
 						ifError = true;
-						ComAlert.show(2, '字段描述不可为空');
+                        layer.open({
+                            icon: '2',
+                            content: '字段描述不可为空'
+                        });
 						return;
 					}
 					if (!fieldDatatypeId) {
 						ifError = true;
-						ComAlert.show(2, '字段数据类型不可为空');
+                        layer.open({
+                            icon: '2',
+                            content: '字段数据类型不可为空'
+                        });
 						return;
 					}
 
@@ -175,13 +184,18 @@ $(function() {
 			$.post(base_url + "/datatype/updateDataType", data, function(data, status) {
 				if (data.code == "200") {
 					$('#addModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "更新成功", function(){
+					layer.open({
+						icon: '1',
+						content: "更新成功" ,
+						end: function(layero, index){
 							window.location.href  = base_url + '/datatype/dataTypeDetail?dataTypeId=' + $("#datatypeForm input[name=id]").val();
-						});
-					}, 315);
+						}
+					});
 				} else {
-					ComAlert.show(2, (data.msg || "更新失败") );
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||'更新失败')
+                    });
 				}
 			});
 		}

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="XxlApiProjectMapper">
+<mapper namespace="com.xxl.api.admin.dao.IXxlApiProjectDao">
 	
 	<resultMap id="XxlApiProject" type="com.xxl.api.admin.core.model.XxlApiProject" >
 		<result column="id" property="id" />
 		<result column="name" property="name" />
 	    <result column="desc" property="desc" />
-	    <result column="permission" property="permission" />
 	    <result column="base_url_product" property="baseUrlProduct" />
 		<result column="base_url_ppe" property="baseUrlPpe" />
 		<result column="base_url_qa" property="baseUrlQa" />
@@ -18,7 +17,6 @@
 		t.id,
 		t.name,
 		t.desc,
-		t.permission,
 		t.base_url_product,
 		t.base_url_ppe,
 		t.base_url_qa,
@@ -29,7 +27,6 @@
 		INSERT INTO xxl_api_project (
 			`name`,
 			`desc`,
-			permission,
 			base_url_product,
 			base_url_ppe,
 			base_url_qa,
@@ -37,7 +34,6 @@
 		) VALUES (
 			#{name},
 			#{desc},
-			#{permission},
 			#{baseUrlProduct},
 			#{baseUrlPpe},
 			#{baseUrlQa},
@@ -50,7 +46,6 @@
 		SET
 			`name` = #{name},
 			`desc` = #{desc},
-			permission = #{permission},
 			base_url_product = #{baseUrlProduct},
 			base_url_ppe = #{baseUrlPpe},
 			base_url_qa = #{baseUrlQa},

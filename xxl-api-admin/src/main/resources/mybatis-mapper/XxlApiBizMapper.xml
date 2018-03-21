@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="XxlApiBizMapper">
+<mapper namespace="com.xxl.api.admin.dao.IXxlApiBizDao">
 	
 	<resultMap id="XxlApiBiz" type="com.xxl.api.admin.core.model.XxlApiBiz" >
 		<result column="id" property="id" />
@@ -42,6 +42,34 @@
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_biz AS t
 		ORDER BY t.order ASC
+	</select>
+
+	<select id="pageList" parameterType="java.util.Map" resultMap="XxlApiBiz">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_biz AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizName != null and bizName != ''">
+				AND t.biz_name like CONCAT(CONCAT('%', #{bizName}), '%')
+			</if>
+		</trim>
+		ORDER BY t.`order` ASC
+		LIMIT #{offset}, #{pagesize}
+	</select>
+
+	<select id="pageListCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(1)
+		FROM xxl_api_biz AS t
+		<trim prefix="WHERE" prefixOverrides="AND | OR" >
+			<if test="bizName != null and bizName != ''">
+				AND t.biz_name like CONCAT(CONCAT('%', #{bizName}), '%')
+			</if>
+		</trim>
+	</select>
+
+	<select id="load" parameterType="java.util.Map" resultMap="XxlApiBiz">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_biz AS t
+		WHERE id = #{id}
 	</select>
 
 </mapper>

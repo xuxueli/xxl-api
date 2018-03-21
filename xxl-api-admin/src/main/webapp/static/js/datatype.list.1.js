@@ -30,13 +30,19 @@ $(function() {
 				"render": function ( data, type, row ) {
 					return function(){
 
-						var updateUrl = base_url + '/datatype/updateDataTypePage?dataTypeId='+ row.id;
-						var detailUrl = base_url + '/datatype/dataTypeDetail?dataTypeId='+ row.id;
+
+						var permissionDiv = '';
+						if (hasBizPermission(row.bizId)) {
+                            var updateUrl = base_url + '/datatype/updateDataTypePage?dataTypeId='+ row.id;
+
+                            permissionDiv += '<button class="btn btn-warning btn-xs update" type="button" onclick="javascript:window.open(\'' + updateUrl + '\')" >编辑</button>  ';
+                            permissionDiv += '<button class="btn btn-danger btn-xs delete" type="button">删除</button>  ';
+						}
 
 						// html
+                        var detailUrl = base_url + '/datatype/dataTypeDetail?dataTypeId='+ row.id;
 						var html = '<span id="'+ row.id +'" >'+
-							'<button class="btn btn-warning btn-xs update" type="button" onclick="javascript:window.open(\'' + updateUrl + '\')" >编辑</button>  '+
-							'<button class="btn btn-danger btn-xs delete" type="button">删除</button>'+
+                            permissionDiv +
 							'<button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open(\'' + detailUrl + '\')" >详情页</button>  '+
 							'</span>';
 
@@ -78,26 +84,41 @@ $(function() {
 	// job operate
 	$("#project_list").on('click', '.delete',function() {
 		var id = $(this).parent('span').attr("id");
-		ComConfirm.show("确认删除该数据类型?", function(){
-			$.ajax({
-				type : 'POST',
-				url : base_url + "/datatype/deleteDataType",
-				data : {
-					"id" : id
-				},
-				dataType : "json",
-				success : function(data){
-					if (data.code == 200) {
-						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
-						});
-					} else {
-						ComAlert.show(2, (data.msg || "删除失败") );
-					}
-				},
-			});
-		});
-	});
 
+
+        layer.confirm( "确认删除该数据类型?" , {
+            icon: 3,
+            title: '系统提示' ,
+            btn: [ '确定', '取消' ]
+        }, function(index){
+            layer.close(index);
+
+            $.ajax({
+                type : 'POST',
+                url : base_url + "/datatype/deleteDataType",
+                data : {
+                    "id" : id
+                },
+                dataType : "json",
+                success : function(data){
+                    if (data.code == 200) {
+                        layer.open({
+                            icon: '1',
+                            content: '删除成功' ,
+                            end: function(layero, index){
+                                projectTable.fnDraw(false);
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            icon: '2',
+                            content: (data.msg||'删除失败')
+                        });
+                    }
+                },
+            });
+        });
+
+	});
 
 });

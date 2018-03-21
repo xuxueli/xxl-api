@@ -1,23 +1,27 @@
 package com.xxl.api.admin.dao;
 
 import com.xxl.api.admin.core.model.XxlApiDocument;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by xuxueli on 17/3/31.
  */
+@Component
 public interface IXxlApiDocumentDao {
 
     public int add(XxlApiDocument xxlApiDocument);
     public int update(XxlApiDocument xxlApiDocument);
-    public int delete(int id);
+    public int delete(@Param("id") int id);
 
-    public XxlApiDocument load(int id);
-    public List<XxlApiDocument> loadAll(int productId, int groupId);
+    public XxlApiDocument load(@Param("id") int id);
+    public List<XxlApiDocument> loadAll(@Param("projectId") int projectId,
+                                        @Param("groupId") int groupId);
 
-    public List<XxlApiDocument> loadByGroupId(int id);
+    public List<XxlApiDocument> loadByGroupId(@Param("groupId") int groupId);
 
-    List<XxlApiDocument> findByResponseDataTypeId(int responseDatatypeId);
+    List<XxlApiDocument> findByResponseDataTypeId(@Param("responseDatatypeId") int responseDatatypeId);
 
 }

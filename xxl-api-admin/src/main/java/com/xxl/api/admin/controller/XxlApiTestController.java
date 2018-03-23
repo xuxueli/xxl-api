@@ -215,7 +215,7 @@ public class XxlApiTestController {
 			for(Map.Entry<String,String> entry : queryParamMap.entrySet()){
 				finalUrl += entry.getKey() + "=" + entry.getValue() + "&";
 			}
-			finalUrl = finalUrl.substring(0, finalUrl.length()-1);
+			finalUrl = finalUrl.substring(0, finalUrl.length()-1);	// 后缀处理，去除 ？ 或 & 符号
 		}
 		return finalUrl;
 	}

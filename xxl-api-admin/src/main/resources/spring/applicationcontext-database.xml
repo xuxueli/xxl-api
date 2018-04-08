@@ -25,7 +25,7 @@
 	    <property name="user" value="${xxl.api.db.user}" />
 	    <property name="password" value="${xxl.api.db.password}" />
 	    <property name="initialPoolSize" value="3" />  
-	    <property name="minPoolSize" value="5" />  
+	    <property name="minPoolSize" value="2" />
 	    <property name="maxPoolSize" value="10" />  
 	    <property name="maxIdleTime" value="60" />
 	    <property name="acquireRetryDelay" value="1000" />
@@ -38,13 +38,15 @@
 		<property name="mapperLocations" value="classpath:mybatis-mapper/*.xml"/>
 	</bean>
 
+
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 		<property name="basePackage" value="com.xxl.api.admin.dao" />
 	</bean>
 
 	<!-- ********************************* part 2 :for tx ********************************* -->
-        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
       

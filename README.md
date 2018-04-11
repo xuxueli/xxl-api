@@ -21,9 +21,9 @@
 
 
 ## Introduction
-XXL-API is a simple and easy-to-use API management platform that provides "management", "documentation", "Mock", and "test" functions for the API. Open source code, out-of-the-box.
+XXL-API is a powerful and easy-to-use API management platform that provides "management", "documentation", "Mock", and "test" functions for the API. Open source code, out-of-the-box.
 
-XXL-API是一个简洁易用API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
+XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
 
 
 ## Documentation

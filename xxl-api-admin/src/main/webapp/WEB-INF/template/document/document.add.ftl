@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
 	<@netCommon.commonStyle />
     <link rel="stylesheet" href="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.css">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
@@ -171,8 +172,9 @@
                                 <#list ResponseContentType as item>
                                     <input type="radio" class="iCheck" name="successRespType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
                                 </#list>
+                                <button type="button" class="btn btn-box-tool pull-right" id="successRespExample_2json" >JSON格式化</button>
                                 <br>
-                                <textarea name="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" ></textarea>
+                                <textarea name="successRespExample" id="successRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" ></textarea>
                             </div>
                         </div>
                         <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 365px;">
@@ -181,8 +183,9 @@
                                 <#list ResponseContentType as item>
                                     <input type="radio" class="iCheck" name="failRespType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
                                 </#list>
+                                <button type="button" class="btn btn-box-tool pull-right" id="failRespExample_2json" >JSON格式化</button>
                                 <br>
-                                <textarea name="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" ></textarea>
+                                <textarea name="failRespExample" id="failRespExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -276,6 +279,7 @@
 <script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
 <script src="${request.contextPath}/static/js/document.add.1.js"></script>
 </body>
 </html>

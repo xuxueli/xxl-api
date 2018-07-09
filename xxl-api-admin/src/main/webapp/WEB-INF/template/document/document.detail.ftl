@@ -7,6 +7,7 @@
 	<@netCommon.commonStyle />
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
     <link rel="stylesheet" href="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.css">
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
@@ -166,14 +167,14 @@
                             <div class="box-body">
                                 ${document.successRespType}
                                 <br>
-                                <pre name="successRespExample" style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</pre>
+                                <pre name="successRespExample" <#if "JSON"==document.successRespType >class="jsonViewPre"</#if> style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.successRespExample}</pre>
                             </div>
                         </div>
                         <div class="chart tab-pane" id="fail_resp" style="position: relative; height: 100%;">
                             <div class="box-body">
                                 ${document.failRespType}
                                 <br>
-                                <pre name="failRespExample" style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
+                                <pre name="failRespExample" <#if "JSON"==document.successRespType >class="jsonViewPre"</#if> style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;margin-top: 15px;" >${document.failRespExample}</pre>
                             </div>
                         </div>
                     </div>
@@ -403,6 +404,7 @@
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/main/editormd.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/marked.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/prettify.min.js"></script>
+<script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
 <script src="${request.contextPath}/static/js/document.detail.1.js"></script>
 </body>
 </html>

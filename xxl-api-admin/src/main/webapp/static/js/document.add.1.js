@@ -288,4 +288,36 @@ $(function() {
 	});
 
 
+    // JSON 格式化并校验
+    $('#successRespExample_2json').click(function () {
+        try {
+            var jsonStr = $('#successRespExample').val();
+            var json = $.parseJSON(jsonStr);
+            //$('#successRespExample').JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
+
+            var prettyJson = JSON.stringify(json, undefined, 4);
+            $('#successRespExample').val(prettyJson);
+        } catch (e) {
+            layer.open({
+                icon: '2',
+                content: "JSON格式化失败:" + e
+            });
+        }
+    });
+    $('#failRespExample_2json').click(function () {
+        try {
+            var jsonStr = $('#failRespExample').val();
+            var json = $.parseJSON(jsonStr);
+
+            var prettyJson = JSON.stringify(json, undefined, 4);
+            $('#failRespExample').val(prettyJson);
+        } catch (e) {
+            layer.open({
+                icon: '2',
+                content: "JSON格式化失败:" + e
+            });
+        }
+    });
+
+
 });

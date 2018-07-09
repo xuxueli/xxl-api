@@ -183,4 +183,19 @@ $(function() {
 
 	});
 
+
+    /**
+     * json pre view
+     */
+    $('.jsonViewPre').each(function () {
+
+        try {
+            var jsonStr = $(this).text();
+            var json = $.parseJSON(jsonStr);
+            $(this).JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
+        } catch (e) {
+            console.log('jsonViewDiv parse json view error,' + e );
+        }
+    });
+
 });

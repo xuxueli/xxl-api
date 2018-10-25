@@ -2,6 +2,7 @@ package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
+import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.service.impl.LoginService;
@@ -33,6 +34,8 @@ public class XxlApiProjectController {
 	private IXxlApiGroupDao xxlApiGroupDao;
 	@Resource
 	private IXxlApiBizDao xxlApiBizDao;
+	@Resource
+	private IXxlApiDocumentDao xxlApiDocumentDao;
 
 	@RequestMapping
 	public String index(Model model, @RequestParam(required = false, defaultValue = "0") int bizId) {
@@ -137,6 +140,12 @@ public class XxlApiProjectController {
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(id);
 		if (CollectionUtils.isNotEmpty(groupList)) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "该项目下存在分组信息，拒绝删除");
+		}
+
+		// 项目下是否存在接口
+		List<XxlApiDocument> documents = xxlApiDocumentDao.loadAll(id, -1);
+		if (CollectionUtils.isNotEmpty(documents)) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "该项目下存在接口信息，拒绝删除");
 		}
 
 		int ret = xxlApiProjectDao.delete(id);

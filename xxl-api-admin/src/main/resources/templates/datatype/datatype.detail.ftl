@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>API管理平台</title>
-    <link rel="shortcut icon" href="${request.contextPath}/favicon.ico" type="image/x-icon" />
-    <#import "/common/common.macro.ftl" as netCommon>
+    <link rel="shortcut icon" href="${request.contextPath}/static/favicon.ico" type="image/x-icon" />
+    <#import "../common/common.macro.ftl" as netCommon>
     <@netCommon.commonStyle />
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
+<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && cookieMap["adminlte_settings"]?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
 <div class="wrapper">
     <!-- header -->
 <@netCommon.commonHeader />

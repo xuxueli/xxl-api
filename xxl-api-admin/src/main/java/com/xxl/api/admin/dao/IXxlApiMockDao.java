@@ -1,15 +1,15 @@
 package com.xxl.api.admin.dao;
 
 import com.xxl.api.admin.core.model.XxlApiMock;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by xuxueli on 17/4/1.
  */
-@Component
+@Mapper
 public interface IXxlApiMockDao {
 
     public int add(XxlApiMock xxlApiMock);

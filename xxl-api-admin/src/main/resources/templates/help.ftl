@@ -2,10 +2,10 @@
 <html>
 <head>
   	<title>Api管理平台</title>
-  	<#import "/common/common.macro.ftl" as netCommon>
+  	<#import "common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if> ">
+<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && cookieMap["adminlte_settings"]?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if> ">
 <div class="wrapper">
 	<!-- header -->
 	<@netCommon.commonHeader />

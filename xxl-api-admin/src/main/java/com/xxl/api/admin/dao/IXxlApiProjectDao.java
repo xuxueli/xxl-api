@@ -1,15 +1,15 @@
 package com.xxl.api.admin.dao;
 
 import com.xxl.api.admin.core.model.XxlApiProject;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by xuxueli on 17/3/30.
  */
-@Component
+@Mapper
 public interface IXxlApiProjectDao {
 
     public int add(XxlApiProject xxlApiProject);

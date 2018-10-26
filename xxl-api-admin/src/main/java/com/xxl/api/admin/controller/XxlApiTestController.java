@@ -45,7 +45,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/test")
 public class XxlApiTestController {
-	private Logger logger = LoggerFactory.getLogger(XxlApiTestController.class);
+	private static Logger logger = LoggerFactory.getLogger(XxlApiTestController.class);
 
 	@Resource
 	private IXxlApiDocumentDao xxlApiDocumentDao;
@@ -259,7 +259,7 @@ public class XxlApiTestController {
 				try {
 					httpClient.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			}
 		}

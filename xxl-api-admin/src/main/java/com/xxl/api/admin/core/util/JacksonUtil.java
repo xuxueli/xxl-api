@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,6 +21,8 @@ import java.util.Map;
  * @author xuxueli 2015-9-25 18:02:56
  */
 public class JacksonUtil {
+	private static Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
+
     private final static ObjectMapper objectMapper = new ObjectMapper();
     public static ObjectMapper getInstance() {
         return objectMapper;
@@ -35,11 +39,11 @@ public class JacksonUtil {
     	try {
 			return getInstance().writeValueAsString(obj);
 		} catch (JsonGenerationException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
         return null;
     }
@@ -56,11 +60,11 @@ public class JacksonUtil {
     	try {
 			return getInstance().readValue(jsonStr, clazz);
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
     	return null;
     }
@@ -68,11 +72,11 @@ public class JacksonUtil {
     	try {
 			return getInstance().readValue(jsonStr, typeReference);		// new TypeReference<T>() { }
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
     	return null;
     }
@@ -86,7 +90,7 @@ public class JacksonUtil {
 			System.out.println(json);
 			System.out.println(readValue(json, Map.class));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 }

@@ -203,7 +203,7 @@
 <script>
     // 业务线权限
     var superUser = <#if XXL_API_LOGIN_IDENTITY.type == 1 >true<#else>false</#if>;
-    var permissionBiz = '${XXL_API_LOGIN_IDENTITY.permissionBiz}';
+    var permissionBiz = '${XXL_API_LOGIN_IDENTITY.permissionBiz!""}';
 
     var permissionBizArr;
     if (permissionBiz) {

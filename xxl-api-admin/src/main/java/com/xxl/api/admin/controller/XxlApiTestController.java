@@ -6,6 +6,7 @@ import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiProject;
 import com.xxl.api.admin.core.model.XxlApiTestHistory;
 import com.xxl.api.admin.core.util.JacksonUtil;
+import com.xxl.api.admin.core.util.ThrowableUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
@@ -240,7 +241,7 @@ public class XxlApiTestController {
 					responseContent = EntityUtils.toString(entity, "UTF-8");
 				} else {
 					responseContent = "请求状态异常：" + response.getStatusLine().getStatusCode();
-					if (statusCode == 302) {
+					if (statusCode==302 && response.getFirstHeader("Location")!=null) {
 						responseContent += "；Redirect地址：" + response.getFirstHeader("Location").getValue();
 					}
 
@@ -249,8 +250,7 @@ public class XxlApiTestController {
 			}
 			logger.info("http statusCode error, statusCode:" + response.getStatusLine().getStatusCode());
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			responseContent = "请求异常：" + e.getMessage();
+			responseContent = "请求异常：" + ThrowableUtil.toString(e);
 		} finally{
 			if (remoteRequest!=null) {
 				remoteRequest.releaseConnection();

@@ -24,7 +24,6 @@
 
         <section class="content">
             <form class="form-horizontal" id="datatypeForm" >
-                <input type="hidden" name="projectId" value="${productId}" >
 
                 <#--基础信息-->
                 <div class="box box-primary">

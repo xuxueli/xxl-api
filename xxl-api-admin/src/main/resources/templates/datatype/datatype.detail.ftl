@@ -22,8 +22,6 @@
 
         <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
-                <input type="hidden" name="id" value="${document.id}" >
-                <input type="hidden" name="projectId" value="${document.projectId}" >
 
                 <#--基础信息-->
                 <div class="box box-primary">
@@ -142,77 +140,6 @@
 <@netCommon.commonFooter />
 </div>
 
-<!-- 新增-分组.模态框 -->
-<div class="modal fade" id="addMockModal" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" >新增Mock数据</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal form" role="form" >
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            响应数据类型(MIME)：
-                        <#list ResponseContentType as item>
-                            <input type="radio" class="iCheck" name="respType" value="${item}" <#if item_index==0>checked</#if> >${item}  &nbsp;&nbsp;
-                        </#list>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <textarea name="respExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-6">
-                            <button type="button" class="btn btn-primary save"  >保存</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <input type="hidden" name="documentId" value="${document.id}" >
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 更新-分组.模态框 -->
-<div class="modal fade" id="updateMockModal" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" >更新Mock数据</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal form" role="form" >
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            响应数据类型(MIME)：
-                        <#list ResponseContentType as item>
-                            <input type="radio" class="iCheck" name="respType" value="${item}" >${item}  &nbsp;&nbsp;
-                        </#list>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <textarea name="respExample" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" ></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-6">
-                            <button type="button" class="btn btn-primary save"  >保存</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <input type="hidden" name="documentId" value="${document.id}" >
-
-                            <input type="hidden" name="id" >
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <@netCommon.commonScript />
 </body>

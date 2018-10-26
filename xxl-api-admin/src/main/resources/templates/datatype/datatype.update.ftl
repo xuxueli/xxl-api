@@ -88,9 +88,6 @@
 
                             <div class="col-sm-3 item">
                                 <select class="form-control select2_tag_new fieldDatatypeId" style="width: 100%;">
-                                <#list QueryParamTypeEnum as item>
-                                    <option value="${item}">${item}</option>
-                                </#list>
                                 </select>
                             </div>
 

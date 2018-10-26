@@ -2,6 +2,7 @@ package com.xxl.api.admin.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
+import com.xxl.api.admin.core.consistant.RequestConfig;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.ApiDataTypeToCode;
 import com.xxl.api.admin.core.util.JacksonUtil;

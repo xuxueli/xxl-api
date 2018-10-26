@@ -132,8 +132,14 @@ public class XxlApiGroupController {
 	@ResponseBody
 	public ReturnT<String> delete(HttpServletRequest request, int id) {
 
+		// exist
+		XxlApiGroup existGroup = xxlApiGroupDao.load(id);
+		if (existGroup == null) {
+			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，分组ID非法");
+		}
+
 		// 权限校验
-		XxlApiProject xxlApiProject = xxlApiProjectDao.load(id);
+		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
 		}

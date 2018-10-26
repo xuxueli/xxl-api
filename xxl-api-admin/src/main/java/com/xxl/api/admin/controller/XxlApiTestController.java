@@ -241,7 +241,7 @@ public class XxlApiTestController {
 				} else {
 					responseContent = "请求状态异常：" + response.getStatusLine().getStatusCode();
 					if (statusCode == 302) {
-						responseContent += "；Redirect地址：" + response.getHeaders("Location");
+						responseContent += "；Redirect地址：" + response.getFirstHeader("Location").getValue();
 					}
 
 				}

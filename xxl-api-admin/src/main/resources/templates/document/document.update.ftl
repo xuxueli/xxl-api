@@ -122,7 +122,7 @@
                                     <label class="col-sm-1 control-label">Key</label>
                                     <div class="col-sm-4 item">
                                         <select class="form-control select2_tag key" >
-                                            <option value="" <#if key==null>selected</#if> ></option>
+                                            <option value="" <#if key?exists>selected</#if> ></option>
                                             <#list requestHeadersEnum as item>
                                                 <option value="${item}" <#if key==item>selected</#if> >${item}</option>
                                             </#list>

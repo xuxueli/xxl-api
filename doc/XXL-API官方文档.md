@@ -299,8 +299,9 @@ Mock数据属性说明：
 - 6、接口在线测试功能对于响应状态码为302的请求未能正确展示“Location”问题修复；
 
 ### 8.4 版本 V1.1.2 特性[迭代中]
-- 1、【ING】API导出为PDF；
-- 2、【ING】支持swagger、postman等格式接口数据导入；
+- 1、Docker基础镜像切换，精简镜像；
+- 2、【ING】API导出为PDF；
+- 3、【ING】支持swagger、postman等格式接口数据导入；
 
 ### TODO LIST
 - 1、请求参数，除常规form之外，支持选择RequestBody方式，传递Json、XML和文本等数据；

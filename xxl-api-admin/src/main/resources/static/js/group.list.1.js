@@ -192,9 +192,9 @@ $(function() {
 	 * 关键字搜索
 	 */
 	$("#searchUrl").bind('input porpertychange',function(){
-		var searchUrl = $("#searchUrl").val();
+		var searchUrl = $("#searchUrl").val().toLowerCase();
 		$('#documentList').find('tbody tr').each(function(){
-			var requestUrl = $(this).attr('requestUrl');
+			var requestUrl = $(this).attr('requestUrl').toLowerCase();
 			if (searchUrl) {
 				if (requestUrl.indexOf(searchUrl) != -1) {
 					$(this).show();

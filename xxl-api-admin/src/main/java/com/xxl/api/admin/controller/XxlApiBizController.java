@@ -3,10 +3,10 @@ package com.xxl.api.admin.controller;
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiBiz;
+import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +60,7 @@ public class XxlApiBizController {
     @ResponseBody
     @PermessionLimit(superUser = true)
     public ReturnT<String> add(XxlApiBiz xxlApiBiz) {
-        if (StringUtils.isBlank(xxlApiBiz.getBizName())) {
+        if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
         }
 
@@ -72,7 +72,7 @@ public class XxlApiBizController {
     @ResponseBody
     @PermessionLimit(superUser = true)
     public ReturnT<String> update(XxlApiBiz xxlApiBiz) {
-        if (StringUtils.isBlank(xxlApiBiz.getBizName())) {
+        if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
         }
 

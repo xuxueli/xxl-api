@@ -26,8 +26,6 @@
 		<mybatis-spring-boot-starter.version>1.3.4</mybatis-spring-boot-starter.version>
 		<mysql-connector-java.version>5.1.47</mysql-connector-java.version>
 
-		<commons-lang3.version>3.9</commons-lang3.version>
-
 		<httpclient.version>4.5.8</httpclient.version>
 	</properties>
 

@@ -4,10 +4,10 @@ import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiBiz;
 import com.xxl.api.admin.core.model.XxlApiUser;
+import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiUserDao;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -67,10 +67,10 @@ public class XxlApiUserController {
     @PermessionLimit(superUser = true)
 	public ReturnT<String> add(XxlApiUser xxlApiUser) {
 		// valid
-		if (StringUtils.isBlank(xxlApiUser.getUserName())) {
+		if (StringTool.isBlank(xxlApiUser.getUserName())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入登录账号");
 		}
-		if (StringUtils.isBlank(xxlApiUser.getPassword())) {
+		if (StringTool.isBlank(xxlApiUser.getPassword())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入密码");
 		}
 
@@ -105,7 +105,7 @@ public class XxlApiUserController {
 		}
 
 		// update param
-		if (StringUtils.isNotBlank(xxlApiUser.getPassword())) {
+		if (StringTool.isNotBlank(xxlApiUser.getPassword())) {
 			if (!(xxlApiUser.getPassword().length()>=4 && xxlApiUser.getPassword().length()<=50)) {
 				return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码长度限制为4~50");
 			}
@@ -144,7 +144,7 @@ public class XxlApiUserController {
 	public ReturnT<String> updatePwd(HttpServletRequest request, String password){
 
 		// new password(md5)
-		if (StringUtils.isBlank(password)){
+		if (StringTool.isBlank(password)){
 			return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码不可为空");
 		}
 		if (!(password.length()>=4 && password.length()<=100)) {
@@ -168,7 +168,7 @@ public class XxlApiUserController {
 	public ReturnT<String> updatePermissionBiz(int id,
 													@RequestParam(required = false) String[] permissionBiz){
 
-		String permissionProjectsStr = StringUtils.join(permissionBiz, ",");
+		String permissionProjectsStr = StringTool.join(permissionBiz, ",");
 		XxlApiUser existUser = xxlApiUserDao.findById(id);
 		if (existUser == null) {
 			return new ReturnT<String>(ReturnT.FAIL.getCode(), "参数非法");

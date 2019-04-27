@@ -6,11 +6,11 @@ import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiProject;
 import com.xxl.api.admin.core.model.XxlApiTestHistory;
 import com.xxl.api.admin.core.util.JacksonUtil;
+import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.core.util.ThrowableUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -80,11 +80,11 @@ public class XxlApiTestController {
 			}
 			model.addAttribute("testHistory", testHistory);
 
-			requestHeaders = (StringUtils.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
-			queryParams = (StringUtils.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
+			requestHeaders = (StringTool.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
+			queryParams = (StringTool.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
 		} else {
-			requestHeaders = (StringUtils.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
-			queryParams = (StringUtils.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
+			requestHeaders = (StringTool.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
+			queryParams = (StringTool.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
 		}
 
 		model.addAttribute("document", document);
@@ -138,13 +138,13 @@ public class XxlApiTestController {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "响应数据类型(MIME)非法");
 		}
 
-		if (StringUtils.isBlank(xxlApiTestHistory.getRequestUrl())) {
+		if (StringTool.isBlank(xxlApiTestHistory.getRequestUrl())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入接口URL");
 		}
 
 		// request headers
 		Map<String, String> requestHeaderMap = null;
-		List<Map<String, String>> requestHeaders = (StringUtils.isNotBlank(xxlApiTestHistory.getRequestHeaders()))? JacksonUtil.readValue(xxlApiTestHistory.getRequestHeaders(), List.class):null;
+		List<Map<String, String>> requestHeaders = (StringTool.isNotBlank(xxlApiTestHistory.getRequestHeaders()))? JacksonUtil.readValue(xxlApiTestHistory.getRequestHeaders(), List.class):null;
 		if (requestHeaders!=null && requestHeaders.size()>0) {
 			requestHeaderMap = new HashMap<String, String>();
 			for (Map<String, String> item: requestHeaders) {
@@ -154,7 +154,7 @@ public class XxlApiTestController {
 
 		// query param
 		Map<String, String> queryParamMap = null;
-		List<Map<String, String>> queryParams = (StringUtils.isNotBlank(xxlApiTestHistory.getQueryParams()))? JacksonUtil.readValue(xxlApiTestHistory.getQueryParams(), List.class):null;
+		List<Map<String, String>> queryParams = (StringTool.isNotBlank(xxlApiTestHistory.getQueryParams()))? JacksonUtil.readValue(xxlApiTestHistory.getQueryParams(), List.class):null;
 		if (queryParams!=null && queryParams.size()>0) {
 			queryParamMap = new HashMap<String, String>();
 			for (Map<String, String> item: queryParams) {

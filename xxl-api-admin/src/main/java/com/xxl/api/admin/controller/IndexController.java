@@ -3,8 +3,8 @@ package com.xxl.api.admin.controller;
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
+import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +51,7 @@ public class IndexController {
 	public ReturnT<String> loginDo(HttpServletRequest request, HttpServletResponse response, String ifRemember, String userName, String password){
 		// param
 		boolean ifRem = false;
-		if (StringUtils.isNotBlank(ifRemember) && "on".equals(ifRemember)) {
+		if (StringTool.isNotBlank(ifRemember) && "on".equals(ifRemember)) {
 			ifRem = true;
 		}
 

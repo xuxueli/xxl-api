@@ -1,6 +1,6 @@
 package com.xxl.api.admin.controller.interceptor;
 
-import org.apache.commons.lang3.ArrayUtils;
+import com.xxl.api.admin.core.util.tool.ArrayTool;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,7 +21,7 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		if (modelAndView!=null && ArrayUtils.isNotEmpty(request.getCookies())) {
+		if (modelAndView!=null && ArrayTool.isNotEmpty(request.getCookies())) {
 			HashMap<String, Cookie> cookieMap = new HashMap<String, Cookie>();
 			for (Cookie ck : request.getCookies()) {
 				cookieMap.put(ck.getName(), ck);

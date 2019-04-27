@@ -4,15 +4,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.ApiDataTypeToCode;
+import com.xxl.api.admin.core.util.tool.ArrayTool;
 import com.xxl.api.admin.core.util.JacksonUtil;
+import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +75,7 @@ public class XxlApiDataTypeController {
     private boolean hasBizPermission(HttpServletRequest request, int bizId){
         XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
         if ( loginUser.getType()==1 ||
-                ArrayUtils.contains(StringUtils.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
+                ArrayTool.contains(StringTool.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
                 ) {
             return true;
         } else {
@@ -97,7 +97,7 @@ public class XxlApiDataTypeController {
     @ResponseBody
     public ReturnT<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
-        if (StringUtils.isNotBlank(fieldTypeJson)) {
+        if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
             if (fieldList!=null && fieldList.size()>0) {
                 apiDataTypeDTO.setFieldList(fieldList);
@@ -105,10 +105,10 @@ public class XxlApiDataTypeController {
         }
 
         // valid datatype
-        if (StringUtils.isBlank(apiDataTypeDTO.getName())) {
+        if (StringTool.isBlank(apiDataTypeDTO.getName())) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型名称不可为空");
         }
-        if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
+        if (StringTool.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
 
@@ -129,7 +129,7 @@ public class XxlApiDataTypeController {
         if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 // valid
-                if (StringUtils.isBlank(field.getFieldName())) {
+                if (StringTool.isBlank(field.getFieldName())) {
                     return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段名称不可为空");
                 }
 
@@ -187,7 +187,7 @@ public class XxlApiDataTypeController {
     @ResponseBody
     public ReturnT<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
-        if (StringUtils.isNotBlank(fieldTypeJson)) {
+        if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
             if (fieldList!=null && fieldList.size()>0) {
                 apiDataTypeDTO.setFieldList(fieldList);
@@ -195,10 +195,10 @@ public class XxlApiDataTypeController {
         }
 
         // valid datatype
-        if (StringUtils.isBlank(apiDataTypeDTO.getName())) {
+        if (StringTool.isBlank(apiDataTypeDTO.getName())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型名称不可为空");
         }
-        if (StringUtils.isBlank(apiDataTypeDTO.getAbout())) {
+        if (StringTool.isBlank(apiDataTypeDTO.getAbout())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
         }
 
@@ -219,7 +219,7 @@ public class XxlApiDataTypeController {
         if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 // valid
-                if (StringUtils.isBlank(field.getFieldName())) {
+                if (StringTool.isBlank(field.getFieldName())) {
                     return new ReturnT<String>(ReturnT.FAIL_CODE, "字段名称不可为空");
                 }
 

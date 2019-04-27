@@ -31,7 +31,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id?c}'" >返回接口详情页</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id}'" >返回接口详情页</button>
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@
                         <h3 class="box-title">响应结果</h3>
                         <div class="box-tools pull-right">
                             <#if document?exists>
-                                <button class="btn btn-default btn-xs" type="button" id="save" testId="${testId}" documentId="${document.id?c}" >保存</button>
+                                <button class="btn btn-default btn-xs" type="button" id="save" testId="${testId}" documentId="${document.id}" >保存</button>
                             </#if>
                             <button class="btn btn-info btn-xs" type="button" id="run" >运行</button>
                         </div>

@@ -27,7 +27,7 @@
 
         <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
-                <input type="hidden" name="id" value="${document.id?c}" >
+                <input type="hidden" name="id" value="${document.id}" >
                 <input type="hidden" name="projectId" value="${document.projectId}" >
 
                 <#--基础信息-->
@@ -36,7 +36,7 @@
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?projectId=${projectId}'" >返回接口列表</button>
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id?c}'" >接口详情页</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id}'" >接口详情页</button>
                             <button class="btn btn-info btn-xs" type="submit" >更新接口</button>
                         </div>
                     </div>

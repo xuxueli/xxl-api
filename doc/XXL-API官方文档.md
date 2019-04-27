@@ -33,11 +33,9 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 - [社区交流](http://www.xuxueli.com/page/community.html)
 
 ### 1.4 环境
-- Servlet/JSP Spec：3.0/2.2
-- JDK：1.7+
-- Tomcat：7+/Jetty8+
-- Mysql：5.6+
 - Maven：3+
+- JDK：1.7+
+- Mysql：5.6+
 
 
 ## 二、快速部署

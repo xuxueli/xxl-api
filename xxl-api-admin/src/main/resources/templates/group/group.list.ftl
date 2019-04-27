@@ -122,7 +122,7 @@
                                             <#list documentList as document>
                                                 <tr requestUrl="${document.requestUrl}" >
                                                     <td class="mailbox-star">
-                                                        <a href="#" class="markStar" _starLevel="${document.starLevel}" _id="${document.id}" >
+                                                        <a href="#" class="markStar" _starLevel="${document.starLevel}" _id="${document.id?c}" >
                                                             <#if document.starLevel == 1><i class="fa fa-star text-yellow"></i>
                                                             <#else><i class="fa fa-star-o text-yellow"></i>
                                                             </#if>
@@ -135,7 +135,7 @@
                                                         <#if document.status==0><i class="fa fa-circle-o text-green"></i>
                                                         <#elseif document.status==1><i class="fa fa-circle-o text-yellow"></i>
                                                         <#else><i class="fa fa-circle-o text-light-gray"></i></#if>
-                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id}" >
+                                                        <a href="${request.contextPath}/document/detailPage?id=${document.id?c}" >
                                                             <#if document.name?length gt 12>${document.name?substring(0, 12)}<#else>${document.name}</#if>
                                                         </a>
                                                     </td>
@@ -151,9 +151,9 @@
                                                     </td>
                                                     <td class="mailbox-date" >
                                                         <#if hasBizPermission>
-                                                            <button class="btn btn-warning btn-xs update" onclick="window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >编辑</button>
-                                                            <button class="btn btn-danger btn-xs deleteDocument" _id="${document.id}" _name="${document.name}" >删除</button>
-                                                            <button class="btn btn-primary btn-xs update" onclick="window.open('${request.contextPath}/test?documentId=${document.id}');" >测试</button>
+                                                            <button class="btn btn-warning btn-xs update" onclick="window.location.href='${request.contextPath}/document/updatePage?id=${document.id?c}'" >编辑</button>
+                                                            <button class="btn btn-danger btn-xs deleteDocument" _id="${document.id?c}" _name="${document.name}" >删除</button>
+                                                            <button class="btn btn-primary btn-xs update" onclick="window.open('${request.contextPath}/test?documentId=${document.id?c}');" >测试</button>
                                                         </#if>
                                                     </td>
                                                 </tr>

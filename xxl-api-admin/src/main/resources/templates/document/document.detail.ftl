@@ -26,7 +26,7 @@
 
         <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
-                <input type="hidden" name="id" value="${document.id}" >
+                <input type="hidden" name="id" value="${document.id?c}" >
                 <input type="hidden" name="projectId" value="${document.projectId}" >
 
                 <#--基础信息-->
@@ -36,7 +36,7 @@
                         <div class="box-tools pull-right">
                             <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/group?projectId=${projectId}&groupId=${document.groupId}'" >返回接口列表</button>
                             <#if hasBizPermission>
-                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id}'" >修改接口</button>
+                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/updatePage?id=${document.id?c}'" >修改接口</button>
                             </#if>
                         </div>
                     </div>
@@ -292,7 +292,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Test历史</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/test?documentId=${document.id}');" >+ 接口测试</button>
+                            <button class="btn btn-info btn-xs" type="button" onclick="javascript:window.open('${request.contextPath}/test?documentId=${document.id?c}');" >+ 接口测试</button>
                         </div>
                     </div>
                     <div class="box-body no-padding" >
@@ -305,7 +305,7 @@
                                 <tr>
                                     <td>${testInfo.addTime?datetime}</td>
                                     <td>
-                                        <a href="${request.contextPath}/test?documentId=${document.id}&testId=${testInfo.id}" target="_blank" >运行</a>
+                                        <a href="${request.contextPath}/test?documentId=${document.id?c}&testId=${testInfo.id}" target="_blank" >运行</a>
                                         &nbsp;
                                         <a href="javascript:;" class="deleteTest" _id="${testInfo.id}" style="color:gray;" onmouseover="this.style.cssText='color:silver;'" onmouseout="this.style.cssText='color:gray;'"><i class="fa fa-fw fa-trash-o"></i>删除</a>
                                     </td>
@@ -352,7 +352,7 @@
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="button" class="btn btn-primary save"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <input type="hidden" name="documentId" value="${document.id}" >
+                            <input type="hidden" name="documentId" value="${document.id?c}" >
                         </div>
                     </div>
                 </form>
@@ -387,7 +387,7 @@
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="button" class="btn btn-primary save"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <input type="hidden" name="documentId" value="${document.id}" >
+                            <input type="hidden" name="documentId" value="${document.id?c}" >
 
                             <input type="hidden" name="id" >
                         </div>

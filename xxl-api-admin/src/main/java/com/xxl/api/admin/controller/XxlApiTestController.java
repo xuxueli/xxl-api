@@ -10,8 +10,6 @@ import com.xxl.api.admin.core.util.ThrowableUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -147,7 +145,7 @@ public class XxlApiTestController {
 		// request headers
 		Map<String, String> requestHeaderMap = null;
 		List<Map<String, String>> requestHeaders = (StringUtils.isNotBlank(xxlApiTestHistory.getRequestHeaders()))? JacksonUtil.readValue(xxlApiTestHistory.getRequestHeaders(), List.class):null;
-		if (CollectionUtils.isNotEmpty(requestHeaders)) {
+		if (requestHeaders!=null && requestHeaders.size()>0) {
 			requestHeaderMap = new HashMap<String, String>();
 			for (Map<String, String> item: requestHeaders) {
 				requestHeaderMap.put(item.get("key"), item.get("value"));
@@ -157,7 +155,7 @@ public class XxlApiTestController {
 		// query param
 		Map<String, String> queryParamMap = null;
 		List<Map<String, String>> queryParams = (StringUtils.isNotBlank(xxlApiTestHistory.getQueryParams()))? JacksonUtil.readValue(xxlApiTestHistory.getQueryParams(), List.class):null;
-		if (CollectionUtils.isNotEmpty(queryParams)) {
+		if (queryParams!=null && queryParams.size()>0) {
 			queryParamMap = new HashMap<String, String>();
 			for (Map<String, String> item: queryParams) {
 				queryParamMap.put(item.get("key"), item.get("value"));
@@ -211,7 +209,7 @@ public class XxlApiTestController {
 
 	private String markGetUrl(String url, Map<String, String> queryParamMap){
 		String finalUrl = url;
-		if (MapUtils.isNotEmpty(queryParamMap)) {
+		if (queryParamMap!=null && queryParamMap.size()>0) {
 			finalUrl = url + "?";
 			for(Map.Entry<String,String> entry : queryParamMap.entrySet()){
 				finalUrl += entry.getKey() + "=" + entry.getValue() + "&";

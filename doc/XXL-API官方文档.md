@@ -300,8 +300,11 @@ Mock数据属性说明：
 
 ### 8.4 版本 V1.1.2 特性[迭代中]
 - 1、Docker基础镜像切换，精简镜像；
-- 2、【ING】API导出为PDF；
-- 3、【ING】支持swagger、postman等格式接口数据导入；
+- 2、freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
+- 3、升级依赖版本，如springboot、mybatis、httpclient等；
+- 4、精简项目，移除依赖commons-collections4；
+- 5、【ING】API导出为PDF；
+- 6、【ING】支持swagger、postman等格式接口数据导入；
 
 ### TODO LIST
 - 1、请求参数，除常规form之外，支持选择RequestBody方式，传递Json、XML和文本等数据；

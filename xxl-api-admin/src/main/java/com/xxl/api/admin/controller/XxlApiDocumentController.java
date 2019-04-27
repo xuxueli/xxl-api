@@ -6,7 +6,6 @@ import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.*;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -90,13 +89,13 @@ public class XxlApiDocumentController {
 
 		// 存在Test记录，拒绝删除
 		List<XxlApiTestHistory> historyList = xxlApiTestHistoryDao.loadByDocumentId(id);
-		if (CollectionUtils.isNotEmpty(historyList)) {
+		if (historyList!=null && historyList.size()>0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，该接口下存在Test记录，不允许删除");
 		}
 
 		// 存在Mock记录，拒绝删除
 		List<XxlApiMock> mockList = xxlApiMockDao.loadAll(id);
-		if (CollectionUtils.isNotEmpty(mockList)) {
+		if (mockList!=null && mockList.size()>0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，该接口下存在Mock记录，不允许删除");
 		}
 

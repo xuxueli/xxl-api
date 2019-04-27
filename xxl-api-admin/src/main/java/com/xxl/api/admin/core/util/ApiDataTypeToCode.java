@@ -2,7 +2,6 @@ package com.xxl.api.admin.core.util;
 
 import com.xxl.api.admin.core.model.XxlApiDataType;
 import com.xxl.api.admin.core.model.XxlApiDataTypeField;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.*;
@@ -62,7 +61,7 @@ public class ApiDataTypeToCode {
 
         // import
         Set<String> importSet = new HashSet<String>();
-        if (CollectionUtils.isNotEmpty(apiDataTypeDTO.getFieldList())) {
+        if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 String fieldTypeImportItem = field.getFieldDatatype().getName();
 
@@ -92,7 +91,7 @@ public class ApiDataTypeToCode {
         sb.append("\r\n\r\n");
 
         // field
-        if (CollectionUtils.isNotEmpty(apiDataTypeDTO.getFieldList())) {
+        if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 String fieldTypeItem = matchJavaType(field.getFieldDatatype().getName());
                 String fieldNameItem = field.getFieldName();
@@ -106,7 +105,7 @@ public class ApiDataTypeToCode {
         }
 
         // get set
-        if (CollectionUtils.isNotEmpty(apiDataTypeDTO.getFieldList())) {
+        if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 String fieldTypeItem = matchJavaType(field.getFieldDatatype().getName());
                 String fieldNameItem = field.getFieldName();

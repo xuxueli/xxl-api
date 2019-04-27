@@ -5,7 +5,6 @@ import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiGroupDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.service.impl.LoginService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -52,7 +51,7 @@ public class XxlApiGroupController {
 
 		// 选中分组
 		XxlApiGroup groupInfo = null;
-		if (CollectionUtils.isNotEmpty(groupList)) {
+		if (groupList!=null && groupList.size()>0) {
 			for (XxlApiGroup groupItem: groupList) {
 				if (groupId == groupItem.getId()) {
 					groupInfo = groupItem;
@@ -146,7 +145,7 @@ public class XxlApiGroupController {
 
 		// 分组下是否存在接口
 		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadByGroupId(id);
-		if (CollectionUtils.isNotEmpty(documentList)) {
+		if (documentList!=null && documentList.size()>0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，分组下存在接口，不允许强制删除");
 		}
 

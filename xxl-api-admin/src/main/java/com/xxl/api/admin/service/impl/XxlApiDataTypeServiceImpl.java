@@ -6,7 +6,6 @@ import com.xxl.api.admin.core.model.XxlApiDataTypeField;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class XxlApiDataTypeServiceImpl implements IXxlApiDataTypeService {
 		List<XxlApiDataTypeField> fieldList = xxlApiDataTypeFieldDao.findByParentDatatypeId(dataType.getId());
 		dataType.setFieldList(fieldList);
 		// parse field list
-		if (CollectionUtils.isNotEmpty(dataType.getFieldList()) && maxRelateLevel>0) {
+		if (dataType.getFieldList()!=null && dataType.getFieldList().size()>0 && maxRelateLevel>0) {
 			for (XxlApiDataTypeField field: dataType.getFieldList()) {
 				XxlApiDataType fieldDataType = xxlApiDataTypeDao.load(field.getFieldDatatypeId());
 				fieldDataType = fillFileDataType(fieldDataType, --maxRelateLevel);

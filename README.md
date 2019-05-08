@@ -29,6 +29,8 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 ## Documentation
 - [中文文档](http://www.xuxueli.com/xxl-api/)
 
+## Communication    
+- [社区交流](http://www.xuxueli.com/page/community.html)
 
 ## Features
 - 1、极致简单：交互简洁，一分钟上手；
@@ -42,11 +44,6 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 - 10、权限控制：支持以业务线为维度进行用户权限控制，分配权限才允许操作业务线下项目接口和数据类型，否则仅允许查看；
 
-
-
-## Communication
-
-- [社区交流](http://www.xuxueli.com/page/community.html)
 
 ## Contributing
 Contributions are welcome! Open a pull request to fix a bug, or open an [Issue](https://github.com/xuxueli/xxl-api/issues/) to discuss a new feature or change.

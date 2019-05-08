@@ -4,7 +4,10 @@
 ### 1.1 概述
 XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
 
-### 1.2 特性
+### 1.2 社区交流    
+- [社区交流](http://www.xuxueli.com/page/community.html)
+
+### 1.3 特性
 - 1、极致简单：交互简洁，一分钟上手；
 - 2、项目隔离：API以项目为维度进行拆分隔离；
 - 3、分组管理：单个项目内的API支持自定义分组进行管理；
@@ -16,7 +19,7 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 - 10、权限控制：支持以业务线为维度进行用户权限控制，分配权限才允许操作业务线下项目接口和数据类型，否则仅允许查看；
 
-### 1.3 下载
+### 1.4 下载
 
 #### 文档地址
 
@@ -29,10 +32,8 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 [https://github.com/xuxueli/xxl-api](https://github.com/xuxueli/xxl-api) | [Download](https://github.com/xuxueli/xxl-api/releases)  
 [http://gitee.com/xuxueli0323/xxl-api](http://gitee.com/xuxueli0323/xxl-api) | [Download](http://gitee.com/xuxueli0323/xxl-api/releases)
 
-#### 技术交流
-- [社区交流](http://www.xuxueli.com/page/community.html)
 
-### 1.4 环境
+### 1.5 环境
 - Maven：3+
 - JDK：1.7+
 - Mysql：5.6+

@@ -53,7 +53,7 @@ public class XxlApiDataTypeServiceImpl implements IXxlApiDataTypeService {
 		if (dataType.getFieldList()!=null && dataType.getFieldList().size()>0 && maxRelateLevel>0) {
 			for (XxlApiDataTypeField field: dataType.getFieldList()) {
 				XxlApiDataType fieldDataType = xxlApiDataTypeDao.load(field.getFieldDatatypeId());
-				fieldDataType = fillFileDataType(fieldDataType, --maxRelateLevel);
+				fieldDataType = fillFileDataType(fieldDataType, maxRelateLevel -1);
 				field.setFieldDatatype(fieldDataType);
 			}
 		}

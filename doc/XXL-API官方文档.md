@@ -5,7 +5,7 @@
 XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
 
 ### 1.2 社区交流    
-- [社区交流](http://www.xuxueli.com/page/community.html)
+- [社区交流](https://www.xuxueli.com/page/community.html)
 
 ### 1.3 特性
 - 1、极致简单：交互简洁，一分钟上手；
@@ -23,7 +23,7 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 
 #### 文档地址
 
-- [中文文档](http://www.xuxueli.com/xxl-api/)
+- [中文文档](https://www.xuxueli.com/xxl-api/)
 
 #### 源码仓库地址
 
@@ -348,4 +348,4 @@ Mock数据属性说明：
 
 ---
 ### 捐赠
-无论金额多少都足够表达您这份心意，非常感谢 ：）      [前往捐赠](http://www.xuxueli.com/page/donate.html )
+无论金额多少都足够表达您这份心意，非常感谢 ：）      [前往捐赠](https://www.xuxueli.com/page/donate.html )

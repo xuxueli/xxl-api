@@ -75,13 +75,13 @@ API管理中心支持集群部署，提升系统可用性。
 
 系统中API以项目为单位进行管理，因此首先需要管理项目；项目管理界面如下图所示；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img01.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img01.png "在这里输入图片标题")
 
 
 ### 3.1 新建项目
 进入项目管理界面，点击右侧"+新增项目"按钮可新建项目，如下图所示：
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img02.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img02.png "在这里输入图片标题")
 
 项目属性说明：
     
@@ -109,9 +109,9 @@ API管理中心支持集群部署，提升系统可用性。
 
 如下图，点击"左侧接口分组区域"右上角的"+"按钮，可新增AIP接口分组；（点击"全部"将会展示项目中所有分组下的接口；"默认分组"为系统分组，不允许删除；）
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img03.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img03.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img04.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img04.png "在这里输入图片标题")
 
 接口分组属性说明：
 
@@ -133,14 +133,14 @@ API管理中心支持集群部署，提升系统可用性。
 如下图，在API接口管理界面，点击接口列表顶部的"新增接口"按钮，可进入新增接口界面；
 在新增接口界面，如下图所示，可以设置接口的API状态、请求方法、请求URL、请求头部、请求参数、响应结果、响应结果格式、响应结果参数、API备注等等信息；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img05.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img05.png "在这里输入图片标题")
 
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img06.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img06.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img07.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img07.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img08.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img08.png "在这里输入图片标题")
 
 API属性说明：
 
@@ -182,9 +182,9 @@ Mock数据属性说明：
     数据类型(MIME)：响应结果类型，如JSON、XML等；
     结果数据：响应结果的数据，如响应结果类型为JSON时可设置响应结果数据为一段JSON数据；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img09.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img09.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img10.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img10.png "在这里输入图片标题")
 
 - 更新Mock数据
 在"接口详情页"的"Mock数据"模块，点击Mock数据列表右侧的"修改"按钮，可修改Mock数据；
@@ -198,7 +198,7 @@ Mock数据属性说明：
 在"接口详情页"的"Mock数据"模块，点击Mock数据列表右侧的"运行"按钮，可运行Mock数据；
 系统将会为每一条Mock数据生成一个唯一的Mock连接，访问该连接将会按照设置的数据类型如JSON返回对应格式的Mock数据，如下图所示；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img11.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img11.png "在这里输入图片标题")
 
 
 ### 4.4 API-测试
@@ -208,9 +208,9 @@ Mock数据属性说明：
 该界面将会自动初始化接口URL（测试界面支持选择运行环境，将会自动生成不同环境的完整URL连接）和参数等信息。
 只需要填写测试的参数值，点击下方"运行"按钮，即可发起一次接口请求，请求结果将会在下方显示出来：
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img12.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img12.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img13.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img13.png "在这里输入图片标题")
 
 - 保存Test历史
 
@@ -229,9 +229,9 @@ Mock数据属性说明：
 
 数据结构属性支持嵌套引用，也支持被复用。
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img14.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img14.png "在这里输入图片标题")
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img15.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img15.png "在这里输入图片标题")
 
 
 ## 六、用户管理
@@ -246,7 +246,7 @@ Mock数据属性说明：
 
 系统初始化时，默认提供了两个示例用户：admin（管理员）、user（普通用户），密码默认为 123456；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img16.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img16.png "在这里输入图片标题")
 
 
 ## 七、业务线管理
@@ -256,7 +256,7 @@ Mock数据属性说明：
 
 系统初始化时，默认一个业务线 "默认业务线"，可以根据情况调整；
 
-![输入图片说明](https://raw.githubusercontent.com/xuxueli/xxl-api/master/doc/images/doc-img17.png "在这里输入图片标题")
+![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img17.png "在这里输入图片标题")
 
 
 ## 八、版本更新日志

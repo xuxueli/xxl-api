@@ -447,7 +447,13 @@
             transfer.select();
             document.execCommand('Copy', false, null);
             $('#copy_text').remove();
-            console.log("copy success content:", finalUrl)
+            layer.open({
+                icon: '1',
+                content: "复制mock链接地址成功",
+                end: function (layer, index) {
+                    console.log("copy success content:", finalUrl)
+                }
+            });
         }
     };
 </script>

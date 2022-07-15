@@ -18,15 +18,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.test.skip>true</maven.test.skip>
 
-		<spring-boot.version>1.5.20.RELEASE</spring-boot.version>
-		<mybatis-spring-boot-starter.version>1.3.4</mybatis-spring-boot-starter.version>
-		<mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+		<spring-boot.version>2.6.6</spring-boot.version>
+		<mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
+		<mysql-connector-java.version>8.0.28</mysql-connector-java.version>
 
-		<httpclient.version>4.5.8</httpclient.version>
+		<httpclient.version>4.5.13</httpclient.version>
 	</properties>
 
 

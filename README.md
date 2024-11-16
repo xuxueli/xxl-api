@@ -7,15 +7,24 @@
         <a href="https://www.xuxueli.com/xxl-api/"><strong>-- Home Page --</strong></a>
         <br>
         <br>
-         <a href="https://github.com/xuxueli/xxl-api/releases">
-             <img src="https://img.shields.io/github/release/xuxueli/xxl-api.svg" >
-         </a>
-         <a href="http://www.gnu.org/licenses/gpl-3.0.html">
-             <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" >
-         </a>
-         <a href="https://www.xuxueli.com/page/donate.html">
-             <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat-square" >
-          </a>
+        <a href="https://github.com/xuxueli/xxl-api/actions">
+            <img src="https://github.com/xuxueli/xxl-api/workflows/Java%20CI/badge.svg" >
+        </a>
+        <a href="https://github.com/xuxueli/xxl-api/releases">
+         <img src="https://img.shields.io/github/release/xuxueli/xxl-api.svg" >
+        </a>
+        <a href="https://github.com/xuxueli/xxl-api/">
+            <img src="https://img.shields.io/github/stars/xuxueli/xxl-api" >
+        </a>
+        <a href="https://hub.docker.com/r/xuxueli/xxl-api-admin/">
+            <img src="https://img.shields.io/docker/pulls/xuxueli/xxl-api-admin" >
+        </a>
+        <a href="http://www.gnu.org/licenses/gpl-3.0.html">
+         <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" >
+        </a>
+        <a href="https://www.xuxueli.com/page/donate.html">
+           <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat" >
+        </a>
     </p>    
 </p>
 

@@ -1,5 +1,12 @@
 ## 《API管理平台XXL-API》
 
+[![Actions Status](https://github.com/xuxueli/xxl-api/workflows/Java%20CI/badge.svg)](https://github.com/xuxueli/xxl-api/actions)
+[![GitHub release](https://img.shields.io/github/release/xuxueli/xxl-api.svg)](https://github.com/xuxueli/xxl-api/releases)
+[![GitHub stars](https://img.shields.io/github/stars/xuxueli/xxl-api)](https://github.com/xuxueli/xxl-api/)
+[![Docker Status](https://img.shields.io/docker/pulls/xuxueli/xxl-api-admin)](https://hub.docker.com/r/xuxueli/xxl-api-admin/)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![donate](https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat)](https://www.xuxueli.com/page/donate.html)
+
 [TOCM]
 
 [TOC]

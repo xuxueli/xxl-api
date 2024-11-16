@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.xuxueli</groupId>
 		<artifactId>xxl-api</artifactId>
-		<version>1.1.2-SNAPSHOT</version>
+		<version>1.2.0</version>
 	</parent>
 	<artifactId>xxl-api-admin</artifactId>
 	<packaging>jar</packaging>
@@ -34,14 +34,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- devtools -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>provided</scope>
-			<optional>true</optional>
-		</dependency>
-
 
 		<!-- freemarker-starter -->
 		<dependency>
@@ -49,26 +41,46 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
-
-		<!-- mybatis-starter：mybatis + mybatis-spring + tomcat-jdbc（default） -->
+		<!-- mybatis-starter：mybatis + mybatis-spring + hikari（default） -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
-
 		<!-- mysql -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector-java.version}</version>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${mysql-connector-j.version}</version>
 		</dependency>
 
 		<!-- httpclient -->
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
 			<version>${httpclient.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.core5</groupId>
+			<artifactId>httpcore5</artifactId>
+			<version>${httpcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.core5</groupId>
+			<artifactId>httpcore5-h2</artifactId>
+			<version>${httpcore.version}</version>
+		</dependency>
+
+		<!-- xxl-tool -->
+		<dependency>
+			<groupId>com.xuxueli</groupId>
+			<artifactId>xxl-tool</artifactId>
+			<version>${xxl-tool.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -87,18 +99,18 @@
 						</goals>
 					</execution>
 				</executions>
-				<!-- devtools -->
-				<configuration>
+				<!--<configuration>
 					<fork>true</fork>
-				</configuration>
+				</configuration>-->
 			</plugin>
+
 			<!-- docker -->
-			<plugin>
-				<groupId>com.spotify</groupId>
+			<!--<plugin>
+				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.13</version>
+				<version>${docker-maven-plugin.version}</version>
 				<configuration>
-					<!-- made of '[a-z0-9-_.]' -->
+					&lt;!&ndash; made of '[a-z0-9-_.]' &ndash;&gt;
 					<imageName>${project.artifactId}:${project.version}</imageName>
 					<dockerDirectory>${project.basedir}</dockerDirectory>
 					<resources>
@@ -109,7 +121,8 @@
 						</resource>
 					</resources>
 				</configuration>
-			</plugin>
+			</plugin>-->
+
 		</plugins>
 	</build>
 

@@ -1,7 +1,7 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.controller.annotation.PermessionLimit;
-import com.xxl.api.admin.core.consistant.RequestConfig;
+import com.xxl.api.admin.core.consistant.RequestConst;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiMock;
@@ -75,7 +75,7 @@ public class XxlApiMockController {
 			throw new RuntimeException("Mock数据ID非法");
 		}
 
-		RequestConfig.ResponseContentType contentType = RequestConfig.ResponseContentType.match(xxlApiMock.getRespType());
+		RequestConst.ResponseContentType contentType = RequestConst.ResponseContentType.match(xxlApiMock.getRespType());
 		if (contentType == null) {
 			throw new RuntimeException("Mock数据响应数据类型(MIME)非法");
 		}

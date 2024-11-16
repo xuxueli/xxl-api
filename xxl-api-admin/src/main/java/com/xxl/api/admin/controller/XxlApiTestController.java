@@ -1,25 +1,26 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.consistant.RequestConfig;
+import com.xxl.api.admin.core.consistant.RequestConst;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;
 import com.xxl.api.admin.core.model.XxlApiProject;
 import com.xxl.api.admin.core.model.XxlApiTestHistory;
-import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.core.util.ThrowableUtil;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.dao.IXxlApiProjectDao;
 import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import com.xxl.tool.gson.GsonTool;
+import org.apache.hc.client5.http.classic.methods.*;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author xuxueli 2017-04-04 18:10:54
@@ -80,11 +82,11 @@ public class XxlApiTestController {
 			}
 			model.addAttribute("testHistory", testHistory);
 
-			requestHeaders = (StringTool.isNotBlank(testHistory.getRequestHeaders()))? JacksonUtil.readValue(testHistory.getRequestHeaders(), List.class):null;
-			queryParams = (StringTool.isNotBlank(testHistory.getQueryParams()))? JacksonUtil.readValue(testHistory.getQueryParams(), List.class):null;
+			requestHeaders = (StringTool.isNotBlank(testHistory.getRequestHeaders()))? GsonTool.fromJson(testHistory.getRequestHeaders(), List.class):null;
+			queryParams = (StringTool.isNotBlank(testHistory.getQueryParams()))? GsonTool.fromJson(testHistory.getQueryParams(), List.class):null;
 		} else {
-			requestHeaders = (StringTool.isNotBlank(document.getRequestHeaders()))? JacksonUtil.readValue(document.getRequestHeaders(), List.class):null;
-			queryParams = (StringTool.isNotBlank(document.getQueryParams()))? JacksonUtil.readValue(document.getQueryParams(), List.class):null;
+			requestHeaders = (StringTool.isNotBlank(document.getRequestHeaders()))? GsonTool.fromJson(document.getRequestHeaders(), List.class):null;
+			queryParams = (StringTool.isNotBlank(document.getQueryParams()))? GsonTool.fromJson(document.getQueryParams(), List.class):null;
 		}
 
 		model.addAttribute("document", document);
@@ -95,10 +97,10 @@ public class XxlApiTestController {
         model.addAttribute("testId", testId);
 
 		// enum
-		model.addAttribute("RequestMethodEnum", RequestConfig.RequestMethodEnum.values());
-		model.addAttribute("requestHeadersEnum", RequestConfig.requestHeadersEnum);
-		model.addAttribute("QueryParamTypeEnum", RequestConfig.QueryParamTypeEnum.values());
-		model.addAttribute("ResponseContentType", RequestConfig.ResponseContentType.values());
+		model.addAttribute("RequestMethodEnum", RequestConst.RequestMethodEnum.values());
+		model.addAttribute("requestHeadersEnum", RequestConst.requestHeadersEnum);
+		model.addAttribute("QueryParamTypeEnum", RequestConst.QueryParamTypeEnum.values());
+		model.addAttribute("ResponseContentType", RequestConst.ResponseContentType.values());
 
 		return "test/test.index";
 	}
@@ -133,7 +135,7 @@ public class XxlApiTestController {
 	public ReturnT<String> run(XxlApiTestHistory xxlApiTestHistory, HttpServletRequest request, HttpServletResponse response) {
 
 		// valid
-		RequestConfig.ResponseContentType contentType = RequestConfig.ResponseContentType.match(xxlApiTestHistory.getRespType());
+		RequestConst.ResponseContentType contentType = RequestConst.ResponseContentType.match(xxlApiTestHistory.getRespType());
 		if (contentType == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "响应数据类型(MIME)非法");
 		}
@@ -144,7 +146,9 @@ public class XxlApiTestController {
 
 		// request headers
 		Map<String, String> requestHeaderMap = null;
-		List<Map<String, String>> requestHeaders = (StringTool.isNotBlank(xxlApiTestHistory.getRequestHeaders()))? JacksonUtil.readValue(xxlApiTestHistory.getRequestHeaders(), List.class):null;
+		List<Map<String, String>> requestHeaders = StringTool.isNotBlank(xxlApiTestHistory.getRequestHeaders())?
+				GsonTool.fromJson(xxlApiTestHistory.getRequestHeaders(), List.class)
+				:null;
 		if (requestHeaders!=null && requestHeaders.size()>0) {
 			requestHeaderMap = new HashMap<String, String>();
 			for (Map<String, String> item: requestHeaders) {
@@ -154,7 +158,9 @@ public class XxlApiTestController {
 
 		// query param
 		Map<String, String> queryParamMap = null;
-		List<Map<String, String>> queryParams = (StringTool.isNotBlank(xxlApiTestHistory.getQueryParams()))? JacksonUtil.readValue(xxlApiTestHistory.getQueryParams(), List.class):null;
+		List<Map<String, String>> queryParams = StringTool.isNotBlank(xxlApiTestHistory.getQueryParams())?
+				GsonTool.fromJson(xxlApiTestHistory.getQueryParams(), List.class)
+				:null;
 		if (queryParams!=null && queryParams.size()>0) {
 			queryParamMap = new HashMap<String, String>();
 			for (Map<String, String> item: queryParams) {
@@ -163,8 +169,8 @@ public class XxlApiTestController {
 		}
 
 		// invoke 1/3
-		HttpRequestBase remoteRequest = null;
-		if (RequestConfig.RequestMethodEnum.POST.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		HttpUriRequestBase remoteRequest = null;
+		if (RequestConst.RequestMethodEnum.POST.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			HttpPost httpPost = new HttpPost(xxlApiTestHistory.getRequestUrl());
 			// query params
 			if (queryParamMap != null && !queryParamMap.isEmpty()) {
@@ -172,24 +178,20 @@ public class XxlApiTestController {
 				for(Map.Entry<String,String> entry : queryParamMap.entrySet()){
 					formParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 				}
-				try {
-					httpPost.setEntity(new UrlEncodedFormEntity(formParams, "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					logger.error(e.getMessage(), e);
-				}
+				httpPost.setEntity(new UrlEncodedFormEntity(formParams, StandardCharsets.UTF_8));	// "UTF-8"
 			}
 			remoteRequest = httpPost;
-		} else if (RequestConfig.RequestMethodEnum.GET.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.GET.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpGet(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
-		} else if (RequestConfig.RequestMethodEnum.PUT.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.PUT.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpPut(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
-		} else if (RequestConfig.RequestMethodEnum.DELETE.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.DELETE.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpDelete(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
-		} else if (RequestConfig.RequestMethodEnum.HEAD.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.HEAD.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpHead(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
-		} else if (RequestConfig.RequestMethodEnum.OPTIONS.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.OPTIONS.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpOptions(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
-		} else if (RequestConfig.RequestMethodEnum.PATCH.name().equals(xxlApiTestHistory.getRequestMethod())) {
+		} else if (RequestConst.RequestMethodEnum.PATCH.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpPatch(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
 		} else {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "请求方法非法");
@@ -219,26 +221,30 @@ public class XxlApiTestController {
 		return finalUrl;
 	}
 
-	private String remoteCall(HttpRequestBase remoteRequest){
+	private String remoteCall(HttpUriRequestBase remoteRequest){
 		// remote test
 		String responseContent = null;
 
 		CloseableHttpClient httpClient = null;
 		try{
-			org.apache.http.client.config.RequestConfig requestConfig = org.apache.http.client.config.RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
+			RequestConfig requestConfig = RequestConfig
+					.custom()
+					.setConnectionRequestTimeout(5000, TimeUnit.MILLISECONDS)
+					.setResponseTimeout(5000, TimeUnit.MILLISECONDS)
+					.build();
 			remoteRequest.setConfig(requestConfig);
 
 			httpClient = HttpClients.custom().disableAutomaticRetries().build();
 
 			// parse response
-			HttpResponse response = httpClient.execute(remoteRequest);
+			CloseableHttpResponse response = httpClient.execute(remoteRequest);
 			HttpEntity entity = response.getEntity();
 			if (null != entity) {
-				int statusCode = response.getStatusLine().getStatusCode();
+				int statusCode = response.getCode();
 				if (statusCode == 200) {
 					responseContent = EntityUtils.toString(entity, "UTF-8");
 				} else {
-					responseContent = "请求状态异常：" + response.getStatusLine().getStatusCode();
+					responseContent = "请求状态异常：" + response.getCode();
 					if (statusCode==302 && response.getFirstHeader("Location")!=null) {
 						responseContent += "；Redirect地址：" + response.getFirstHeader("Location").getValue();
 					}
@@ -246,13 +252,10 @@ public class XxlApiTestController {
 				}
 				EntityUtils.consume(entity);
 			}
-			logger.info("http statusCode error, statusCode:" + response.getStatusLine().getStatusCode());
+			logger.info("http statusCode error, statusCode:" + response.getCode());
 		} catch (Exception e) {
 			responseContent = "请求异常：" + ThrowableUtil.toString(e);
 		} finally{
-			if (remoteRequest!=null) {
-				remoteRequest.releaseConnection();
-			}
 			if (httpClient!=null) {
 				try {
 					httpClient.close();

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by xuxueli on 17/4/1.
  */
-public class RequestConfig {
+public class RequestConst {
 
     /**
      * Request Method

@@ -1,5 +1,9 @@
-CREATE database if NOT EXISTS `xxl-api` default character set utf8 collate utf8_general_ci;
-use `xxl-api`;
+#
+# XXL-API
+# Copyright (c) 2017-present, xuxueli.
+
+CREATE database if NOT EXISTS `xxl_api` default character set utf8mb4 collate utf8mb4_unicode_ci;
+use `xxl_api`;
 
 
 CREATE TABLE `xxl_api_biz` (
@@ -7,7 +11,7 @@ CREATE TABLE `xxl_api_biz` (
   `biz_name` varchar(50) NOT NULL COMMENT '业务线名称',
   `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_datatype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -16,7 +20,7 @@ CREATE TABLE `xxl_api_datatype` (
   `biz_id` int(11) NOT NULL COMMENT '业务线ID，为0表示公共',
   `owner` varchar(100) DEFAULT NULL COMMENT '负责人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_datatype_fileds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,7 +30,7 @@ CREATE TABLE `xxl_api_datatype_fileds` (
   `field_datatype_id` int(11) NOT NULL COMMENT '字段数据类型ID',
   `field_type` tinyint(4) NOT NULL COMMENT '字段形式：0=默认、1=数组',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,7 +53,7 @@ CREATE TABLE `xxl_api_document` (
   `add_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -57,7 +61,7 @@ CREATE TABLE `xxl_api_group` (
   `name` varchar(255) NOT NULL COMMENT '分组名称',
   `order` int(11) NOT NULL COMMENT '分组排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_mock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -66,7 +70,7 @@ CREATE TABLE `xxl_api_mock` (
   `resp_type` varchar(50) NOT NULL COMMENT 'Response Content-type：如JSON、XML、HTML、TEXT、JSONP',
   `resp_example` text COMMENT 'Response Content',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,7 +81,7 @@ CREATE TABLE `xxl_api_project` (
   `base_url_qa` varchar(200) DEFAULT NULL COMMENT '根地址：测试环境',
   `biz_id` int(11) NOT NULL DEFAULT '0' COMMENT '业务线ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_test_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -90,7 +94,7 @@ CREATE TABLE `xxl_api_test_history` (
   `query_params` text COMMENT 'Query String Parameters：VO-JSON格式字符串',
   `resp_type` varchar(50) DEFAULT NULL COMMENT 'Response Content-type：如JSON',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `xxl_api_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -99,8 +103,10 @@ CREATE TABLE `xxl_api_user` (
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
   `permission_biz` varchar(200) DEFAULT NULL COMMENT '业务线权限，多个逗号分隔',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+## —————————————————————— for default data ——————————————————
 
 INSERT INTO `xxl_api_user` VALUES
 ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1', ''),
@@ -109,15 +115,15 @@ INSERT INTO `xxl_api_user` VALUES
 INSERT INTO `xxl_api_biz` VALUES ('1', '默认业务线', '1');
 
 INSERT INTO `xxl_api_datatype` VALUES
-('1', 'String', '字符串类型', '1', null),
-('2', 'Integer', '数字整型', '1', null),
-('3', 'Short', '短整型', '1', null),
-('4', 'Long', '长整型', '1', null),
-('5', 'Float', '单精度浮点数', '1', null),
-('6', 'Double', '双精度浮点数', '1', null),
-('7', 'Boolean', '布尔类型', '1', null),
-('8', 'Date', '日期类型，格式“yyyy-MM-mm”', '1', null),
-('9', 'DateTime', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
+    ('1', 'String', '字符串类型', '1', null),
+    ('2', 'Integer', '数字整型', '1', null),
+    ('3', 'Short', '短整型', '1', null),
+    ('4', 'Long', '长整型', '1', null),
+    ('5', 'Float', '单精度浮点数', '1', null),
+    ('6', 'Double', '双精度浮点数', '1', null),
+    ('7', 'Boolean', '布尔类型', '1', null),
+    ('8', 'Date', '日期类型，格式“yyyy-MM-mm”', '1', null),
+    ('9', 'DateTime', '日期类型，格式“yyyy-MM-mm HH:mm:ss”', '1', null);
 
 
 COMMIT;

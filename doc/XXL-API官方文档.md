@@ -49,7 +49,7 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 ### 2.1 初始化“API数据库”
 请下载项目源码并解压，获取 "初始化SQL脚本"，脚本位置：
 ```
-/xxl-api/doc/db/xxl-api-mysql.sql
+/xxl-api/doc/db/tables_xxl_api.sql
 ```
 
 ### 2.2 编译源码
@@ -302,11 +302,13 @@ Mock数据属性说明：
 - 5、接口分组删除问题修复；
 - 6、接口在线测试功能对于响应状态码为302的请求未能正确展示“Location”问题修复；
 
-### 8.4 版本 V1.1.2 特性[迭代中]
-- 1、Docker基础镜像切换，精简镜像；
-- 2、freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
-- 3、升级依赖版本，如springboot、mybatis、httpclient等；
-- 4、精简项目，移除依赖如commons-collections4、commons-lang3；
+### 8.4 版本 V1.2.0 特性[2024-11-16]
+- 1、【优化】Docker基础镜像切换，精简镜像；
+- 2、【优化】freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
+- 3、【升级】升级依赖版本，如springboot、mybatis、httpclient等；
+- 4、【优化】精简项目，移除依赖如commons-collections4、commons-lang3；
+
+### 8.5 版本 V1.2.1 特性[迭代中]
 - 5、【ING】API导出为PDF；
 - 6、【ING】支持swagger、postman等格式接口数据导入；
 

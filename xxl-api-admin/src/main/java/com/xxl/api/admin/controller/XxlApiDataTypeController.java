@@ -1,11 +1,9 @@
 package com.xxl.api.admin.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.xxl.api.admin.core.consistant.FieldTypeEnum;
 import com.xxl.api.admin.core.model.*;
 import com.xxl.api.admin.core.util.ApiDataTypeToCode;
 import com.xxl.api.admin.core.util.tool.ArrayTool;
-import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.dao.IXxlApiBizDao;
 import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
@@ -13,6 +11,7 @@ import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
 import com.xxl.api.admin.dao.IXxlApiDocumentDao;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.tool.gson.GsonTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,7 +97,7 @@ public class XxlApiDataTypeController {
     public ReturnT<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
-            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
+            List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
             if (fieldList!=null && fieldList.size()>0) {
                 apiDataTypeDTO.setFieldList(fieldList);
             }
@@ -188,7 +187,7 @@ public class XxlApiDataTypeController {
     public ReturnT<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
-            List<XxlApiDataTypeField> fieldList = JacksonUtil.readValueRefer(fieldTypeJson, new TypeReference<List<XxlApiDataTypeField>>() { });
+            List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
             if (fieldList!=null && fieldList.size()>0) {
                 apiDataTypeDTO.setFieldList(fieldList);
             }

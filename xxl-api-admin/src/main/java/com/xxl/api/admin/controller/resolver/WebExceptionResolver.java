@@ -1,7 +1,7 @@
 package com.xxl.api.admin.controller.resolver;
 
 import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.util.JacksonUtil;
+import com.xxl.tool.gson.GsonTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -43,7 +43,7 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
 		if (isJson) {
 			try {
 				response.setContentType("application/json;charset=utf-8");
-				response.getWriter().print(JacksonUtil.writeValueAsString(errorResult));
+				response.getWriter().print(GsonTool.toJson(errorResult));
 			} catch (IOException e) {
 				logger.error(e.getMessage(), e);
 			}

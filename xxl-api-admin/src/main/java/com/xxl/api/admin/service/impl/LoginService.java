@@ -3,8 +3,8 @@ package com.xxl.api.admin.service.impl;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.core.util.CookieUtil;
-import com.xxl.api.admin.core.util.JacksonUtil;
 import com.xxl.api.admin.dao.IXxlApiUserDao;
+import com.xxl.tool.gson.GsonTool;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.DigestUtils;
 
@@ -25,7 +25,7 @@ public class LoginService {
     private IXxlApiUserDao xxlApiUserDao;
 
     private String makeToken(XxlApiUser xxlApiUser){
-        String tokenJson = JacksonUtil.writeValueAsString(xxlApiUser);
+        String tokenJson = GsonTool.toJson(xxlApiUser);
         String tokenHex = new BigInteger(tokenJson.getBytes()).toString(16);
         return tokenHex;
     }
@@ -33,7 +33,7 @@ public class LoginService {
         XxlApiUser xxlApiUser = null;
         if (tokenHex != null) {
             String tokenJson = new String(new BigInteger(tokenHex, 16).toByteArray());      // username_password(md5)
-            xxlApiUser = JacksonUtil.readValue(tokenJson, XxlApiUser.class);
+            xxlApiUser = GsonTool.fromJson(tokenJson, XxlApiUser.class);
         }
         return xxlApiUser;
     }

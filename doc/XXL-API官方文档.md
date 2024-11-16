@@ -9,7 +9,7 @@
 ### 1.1 概述
 XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档"、"Mock"和"测试"等功能。现已开放源代码，开箱即用。
 
-### 1.2 社区交流    
+### 1.2 社区交流
 - [社区交流](https://www.xuxueli.com/page/community.html)
 
 ### 1.3 特性
@@ -23,6 +23,7 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 - 8、Mock：支持为API定义Mock数据并制定数据响应格式，从而快速提供Mock接口，加快开发进度；
 - 9、在线测试：支持在线对API进行测试并保存测试数据，提供接口测试效率；
 - 10、权限控制：支持以业务线为维度进行用户权限控制，分配权限才允许操作业务线下项目接口和数据类型，否则仅允许查看；
+- 11、容器化：提供官方docker镜像，并实时更新推送dockerhub，进一步实现产品开箱即用；
 
 ### 1.4 下载
 
@@ -77,18 +78,24 @@ API管理中心支持集群部署，提升系统可用性。
 集群部署时，保持各项目JDBC配置一致即可；
 
 ### 2.6 Docker镜像构建
-除通过原始方式部署外，可以通过以下命令快速构建项目，并启动运行； 
+除通过原始方式部署外，可以通过以下命令快速构建项目，并启动运行；
+
+- 下载镜像
+
 ```
-# package
-mvn clean package
+// Docker地址：https://hub.docker.com/r/xuxueli/xxl-api-admin/     (建议指定版本号)
+docker pull xuxueli/xxl-api-admin
+```
 
-# build image
-docker build -t xxl-api-admin ./xxl-api-admin
+- 创建容器并运行
 
+```
 /**
-* 自定义 mysql 等配置，可通过 "PARAMS" 指定，参数格式 PARAMS="--key=value  --key2=value2" ；
+* 如需自定义 mysql 等配置，可通过 "-e PARAMS" 指定，参数格式 PARAMS="--key=value  --key2=value2" ；
+* 配置项参考文件：/xxl-api/xxl-api-admin/src/main/resources/application.properties
+* 如需自定义 JVM内存参数 等配置，可通过 "-e JAVA_OPTS" 指定，参数格式 JAVA_OPTS="-Xmx512m" ；
 */
-docker run --name xxl-api-admin -p 8080:8080 -v /tmp:/data/applogs -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_api?Unicode=true&characterEncoding=UTF-8" -d xxl-api-admin
+docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_api?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai" -p 8080:8080 -v /tmp:/data/applogs --name xxl-api-admin  -d xuxueli/xxl-api-admin:{指定版本}
 ```
 
 
@@ -105,7 +112,7 @@ docker run --name xxl-api-admin -p 8080:8080 -v /tmp:/data/applogs -e PARAMS="--
 ![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img02.png "在这里输入图片标题")
 
 项目属性说明：
-    
+
     业务线：所属业务线
     项目名称：项目的名称；
     项目描述：项目的描述信息；
@@ -138,7 +145,7 @@ docker run --name xxl-api-admin -p 8080:8080 -v /tmp:/data/applogs -e PARAMS="--
 
     分组名称：分组的名称
     分组排序：分组的排序顺序，数字类型，值越小越靠前；
-    
+
 - 更新API分组
 
 在"左侧接口分组区域"，点击对应的API分组，右侧将会展示该分组下API接口列表；点击接口列表顶部的"编辑分组"按钮（新增的API分组才会有该功能），可修改API分组信息；
@@ -196,7 +203,7 @@ API属性说明：
 ### 4.3 API-Mock
 
 - 新增Mock数据
-在API接口管理界面，点击接口名称，进入"接口详情页"，在接口详情页的"Mock数据"模块右上角点击"+Mock数据"按钮，可新增Mock数据；
+  在API接口管理界面，点击接口名称，进入"接口详情页"，在接口详情页的"Mock数据"模块右上角点击"+Mock数据"按钮，可新增Mock数据；
 
 Mock数据属性说明：
 
@@ -208,7 +215,7 @@ Mock数据属性说明：
 ![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img10.png "在这里输入图片标题")
 
 - 更新Mock数据
-在"接口详情页"的"Mock数据"模块，点击Mock数据列表右侧的"修改"按钮，可修改Mock数据；
+  在"接口详情页"的"Mock数据"模块，点击Mock数据列表右侧的"修改"按钮，可修改Mock数据；
 
 - 删除Mock数据
 
@@ -225,9 +232,9 @@ Mock数据属性说明：
 ### 4.4 API-测试
 
 - API-测试
-进入"接口详情页"，点击"Test历史"模块右上角的"+接口测试"按钮，可进入"接口测试界面"，
-该界面将会自动初始化接口URL（测试界面支持选择运行环境，将会自动生成不同环境的完整URL连接）和参数等信息。
-只需要填写测试的参数值，点击下方"运行"按钮，即可发起一次接口请求，请求结果将会在下方显示出来：
+  进入"接口详情页"，点击"Test历史"模块右上角的"+接口测试"按钮，可进入"接口测试界面"，
+  该界面将会自动初始化接口URL（测试界面支持选择运行环境，将会自动生成不同环境的完整URL连接）和参数等信息。
+  只需要填写测试的参数值，点击下方"运行"按钮，即可发起一次接口请求，请求结果将会在下方显示出来：
 
 ![输入图片说明](https://www.xuxueli.com/doc/static/xxl-api/images/doc-img12.png "在这里输入图片标题")
 
@@ -300,7 +307,7 @@ Mock数据属性说明：
 - 5、接口新增属性 "响应数据类型" 属性，通过绑定 "数据类型" 格式化描述接口响应数据结构；
 - 6、项目内API搜索关键字改为URL，更加贴合用户需求；
 - 7、新增在线修改密码功能；
-- 8、登陆Token与用户密码均进行md5加密，提升系统安全性； 
+- 8、登陆Token与用户密码均进行md5加密，提升系统安全性；
 - 9、项目maven依赖升级；
 - 10、UI交互优化，列表自适应性优化；
 - 11、底层代码重构；
@@ -313,19 +320,20 @@ Mock数据属性说明：
 ### 8.3 版本 V1.1.1 特性[2018-10-26]
 - 1、接口"成功/失败响应结果"支持JSON格式化校验与展示，方便数据查看；
 - 2、项目迁移至 springboot 版本；
-- 3、docker支持：提供 Dockerfile 方便快速构建docker镜像； 
+- 3、docker支持：提供 Dockerfile 方便快速构建docker镜像；
 - 4、项目下存在接口时拒绝删除，防止数据误删除；
 - 5、接口分组删除问题修复；
 - 6、接口在线测试功能对于响应状态码为302的请求未能正确展示“Location”问题修复；
 
 ### 8.4 版本 V1.2.0 特性[2024-11-16]
-- 1、【优化】Docker基础镜像切换，精简镜像；
-- 2、【修复】数据类型循环处理逻辑优化，修复超5层循环处理空值问题；
-- 3、【修复】序列化组件兼容性问题处理；
-- 4、【优化】freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
-- 5、【升级】升级依赖版本，如springboot、mybatis、httpclient等；
-- 6、【优化】精简项目，移除依赖如commons-collections4、commons-lang3；
-
+- 1、【新增】容器化：提供官方docker镜像，并实时更新推送dockerhub，进一步实现产品开箱即用；
+- 2、【优化】Docker基础镜像切换，精简镜像；降低资源消耗、提升部署效率；
+- 3、【优化】精简项目，移除依赖如commons-collections4、commons-lang3；
+- 4、【优化】登录页默认填充密码移除，提升安全性；
+- 5、【修复】数据类型循环处理逻辑优化，修复超5层循环处理空值问题；
+- 6、【修复】序列化组件兼容性问题处理；
+- 7、【修复】freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
+- 8、【升级】升级依赖版本，如springboot、mybatis、httpclient等；
 
 ### 8.5 版本 V1.2.1 特性[迭代中]
 - 5、【ING】API导出为PDF；

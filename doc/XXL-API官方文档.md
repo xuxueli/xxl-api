@@ -319,9 +319,11 @@ Mock数据属性说明：
 
 ### 8.4 版本 V1.2.0 特性[2024-11-16]
 - 1、【优化】Docker基础镜像切换，精简镜像；
-- 2、【优化】freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
-- 3、【升级】升级依赖版本，如springboot、mybatis、httpclient等；
-- 4、【优化】精简项目，移除依赖如commons-collections4、commons-lang3；
+- 2、【修复】数据类型循环处理逻辑优化，修复超5层循环处理空值问题；
+- 3、【优化】freemarker对数字默认加千分位问题修复，解决日志ID被分隔导致查看日志失败问题；
+- 4、【升级】升级依赖版本，如springboot、mybatis、httpclient等；
+- 5、【优化】精简项目，移除依赖如commons-collections4、commons-lang3；
+
 
 ### 8.5 版本 V1.2.1 特性[迭代中]
 - 5、【ING】API导出为PDF；

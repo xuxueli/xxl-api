@@ -15,11 +15,11 @@
 			<div class="login-box-body">
 				<p class="login-box-msg">API管理平台</p>
 				<div class="form-group has-feedback">
-	            	<input type="text" name="userName" class="form-control" placeholder="请输入登陆账号" value="admin" maxlength="50" >
+	            	<input type="text" name="userName" class="form-control" placeholder="请输入登陆账号" maxlength="50" >
 	            	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
 	          	<div class="form-group has-feedback">
-	            	<input type="password" name="password" class="form-control" placeholder="请输入登陆密码" value="123456" maxlength="50" >
+	            	<input type="password" name="password" class="form-control" placeholder="请输入登陆密码" maxlength="50" >
 	            	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	          	</div>
 				<div class="row">

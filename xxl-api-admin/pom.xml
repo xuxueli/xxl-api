@@ -106,7 +106,7 @@
 
 			<!-- docker -->
 			<!--<plugin>
-				<groupId>io.fabric8</groupId>
+				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>

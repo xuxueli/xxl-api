@@ -40,8 +40,8 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 
 ### 1.5 环境
 - Maven：3+
-- JDK：1.7+
-- Mysql：5.6+
+- JDK：1.8+
+- Mysql：8.0+
 
 
 ## 二、快速部署
@@ -64,7 +64,7 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 ### 2.3 配置JDBC连接
 在以下项目文件中设置应用的JDBC连接；
 ```
-/xxl-api/xxl-api-admin/src/main/resources/xxl-api.properties
+/xxl-api/xxl-api-admin/src/main/resources/application.properties
 ```
 
 ### 2.4 部署
@@ -74,6 +74,21 @@ XXL-API 是一个强大易用的API管理平台，提供API的"管理"、"文档
 API管理中心支持集群部署，提升系统可用性。
 
 集群部署时，保持各项目JDBC配置一致即可；
+
+### 2.6 Docker镜像构建
+除通过原始方式部署外，可以通过以下命令快速构建项目，并启动运行； 
+```
+# package
+mvn clean package
+
+# build image
+docker build -t xxl-api-admin ./xxl-api-admin
+
+/**
+* 自定义 mysql 等配置，可通过 "PARAMS" 指定，参数格式 PARAMS="--key=value  --key2=value2" ；
+*/
+docker run --name xxl-api-admin -p 8080:8080 -v /tmp:/data/applogs -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_api?Unicode=true&characterEncoding=UTF-8" -d xxl-api-admin
+```
 
 
 ## 三、项目管理

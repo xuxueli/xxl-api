@@ -1,6 +1,6 @@
-package com.xxl.api.admin.controller.interceptor;
+package com.xxl.api.admin.web.interceptor;
 
-import com.xxl.api.admin.controller.annotation.PermessionLimit;
+import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.service.impl.LoginService;
 import org.springframework.stereotype.Component;

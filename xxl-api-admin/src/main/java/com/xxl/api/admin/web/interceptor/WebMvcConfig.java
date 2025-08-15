@@ -1,4 +1,4 @@
-package com.xxl.api.admin.controller.interceptor;
+package com.xxl.api.admin.web.interceptor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

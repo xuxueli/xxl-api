@@ -1,12 +1,15 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.controller.annotation.PermessionLimit;
+import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.core.util.tool.StringTool;
 import com.xxl.api.admin.service.impl.LoginService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * index controller
@@ -71,6 +78,24 @@ public class IndexController {
 	@RequestMapping("/help")
 	public String help() {
 		return "help";
+	}
+
+
+	@RequestMapping(value = "/errorpage")
+	public ModelAndView errorPage(HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+
+		String exceptionMsg = "HTTP Status Code: "+response.getStatus();
+
+		mv.addObject("exceptionMsg", exceptionMsg);
+		mv.setViewName("common/common.errorpage");
+		return mv;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
 }

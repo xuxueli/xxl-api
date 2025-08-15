@@ -1,7 +1,8 @@
-package com.xxl.api.admin.controller.resolver;
+package com.xxl.api.admin.web.error;
 
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.tool.gson.GsonTool;
+import com.xxl.tool.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,31 +28,32 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
 			HttpServletResponse response, Object handler, Exception ex) {
 		logger.error("WebExceptionResolver:{}", ex);
 
-		// if json
+		// parse isJson
 		boolean isJson = false;
-		HandlerMethod method = (HandlerMethod)handler;
-		ResponseBody responseBody = method.getMethodAnnotation(ResponseBody.class);
-		if (responseBody != null) {
-			isJson = true;
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod method = (HandlerMethod)handler;
+			isJson = method.getMethodAnnotation(ResponseBody.class)!=null;
 		}
 
-		// error result
-		ReturnT<String> errorResult = new ReturnT<String>(ReturnT.FAIL.getCode(), ex.toString().replaceAll("\n", "<br/>"));
-
-		// response
+		// process error
 		ModelAndView mv = new ModelAndView();
 		if (isJson) {
 			try {
-				response.setContentType("application/json;charset=utf-8");
-				response.getWriter().print(GsonTool.toJson(errorResult));
+				// errorMsg
+				String errorMsg = GsonTool.toJson(Response.ofFail(ex.toString()));
+
+				// write response
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().println(errorMsg);
 			} catch (IOException e) {
 				logger.error(e.getMessage(), e);
 			}
 			return mv;
 		} else {
 
-			mv.addObject("exceptionMsg", errorResult.getMsg());
-			mv.setViewName("/common/common.exception");
+			mv.addObject("exceptionMsg", ex.toString());
+			mv.setViewName("common/common.errorpage");
 			return mv;
 		}
 

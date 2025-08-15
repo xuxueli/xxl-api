@@ -1,4 +1,4 @@
-package com.xxl.api.admin.controller.annotation;
+package com.xxl.api.admin.web.annotation;
 
 
 import java.lang.annotation.ElementType;

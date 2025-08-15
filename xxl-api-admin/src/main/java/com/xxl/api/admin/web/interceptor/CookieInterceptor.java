@@ -1,4 +1,4 @@
-package com.xxl.api.admin.controller.interceptor;
+package com.xxl.api.admin.web.interceptor;
 
 import com.xxl.api.admin.core.util.tool.ArrayTool;
 import org.springframework.stereotype.Component;

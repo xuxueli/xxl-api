@@ -1,6 +1,6 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.controller.annotation.PermessionLimit;
+import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.core.consistant.RequestConst;
 import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.api.admin.core.model.XxlApiDocument;

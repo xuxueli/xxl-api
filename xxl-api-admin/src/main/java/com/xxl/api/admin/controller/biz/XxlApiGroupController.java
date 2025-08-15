@@ -1,10 +1,10 @@
 package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.mapper.XxlApiGroupMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
 import com.xxl.api.admin.model.*;
+import com.xxl.tool.core.StringTool;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;

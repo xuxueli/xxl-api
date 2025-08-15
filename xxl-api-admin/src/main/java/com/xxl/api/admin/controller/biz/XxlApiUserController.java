@@ -2,12 +2,13 @@ package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.model.XxlApiBiz;
 import com.xxl.api.admin.model.XxlApiUser;
-import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiUserMapper;
+import com.xxl.api.admin.util.StringTool2;
 import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
+import com.xxl.tool.core.StringTool;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -167,10 +168,9 @@ public class XxlApiUserController {
 	@RequestMapping("/updatePermissionBiz")
 	@ResponseBody
 	@XxlSso(role = "admin")
-	public Response<String> updatePermissionBiz(int id,
-													@RequestParam(required = false) String[] permissionBiz){
+	public Response<String> updatePermissionBiz(int id, @RequestParam(required = false) String[] permissionBiz){
 
-		String permissionProjectsStr = StringTool.join(permissionBiz, ",");
+		String permissionProjectsStr = StringTool2.join(permissionBiz, ",");
 		XxlApiUser existUser = xxlApiUserDao.findById(id);
 		if (existUser == null) {
 			return Response.ofFail( "参数非法");

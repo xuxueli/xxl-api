@@ -1,11 +1,11 @@
 package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.model.XxlApiBiz;
-import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
 import com.xxl.sso.core.annotation.XxlSso;
+import com.xxl.tool.core.StringTool;
 import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

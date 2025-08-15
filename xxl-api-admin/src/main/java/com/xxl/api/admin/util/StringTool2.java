@@ -1,4 +1,4 @@
-package com.xxl.api.admin.util.tool;
+package com.xxl.api.admin.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author xuxueli 2019-04-27 17:01:11
  */
-public class StringTool {
+public class StringTool2 {
 
     public static final String EMPTY = "";
 

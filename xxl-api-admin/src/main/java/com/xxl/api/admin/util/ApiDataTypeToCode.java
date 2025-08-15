@@ -2,7 +2,7 @@ package com.xxl.api.admin.util;
 
 import com.xxl.api.admin.model.XxlApiDataType;
 import com.xxl.api.admin.model.XxlApiDataTypeField;
-import com.xxl.api.admin.util.tool.DateTool;
+import com.xxl.tool.core.DateTool;
 
 import java.util.*;
 

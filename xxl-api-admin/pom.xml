@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -34,7 +35,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- freemarker-starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,33 +54,18 @@
 			<version>${mysql-connector-j.version}</version>
 		</dependency>
 
-		<!-- httpclient -->
+		<!-- httpclient：+httpcore5、httpcore5-h2 -->
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
 			<version>${httpclient.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents.core5</groupId>
-			<artifactId>httpcore5</artifactId>
-			<version>${httpcore.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents.core5</groupId>
-			<artifactId>httpcore5-h2</artifactId>
-			<version>${httpcore.version}</version>
-		</dependency>
 
-		<!-- xxl-tool -->
+		<!-- xxl-sso：+xxl-tool、gson -->
 		<dependency>
 			<groupId>com.xuxueli</groupId>
-			<artifactId>xxl-tool</artifactId>
-			<version>${xxl-tool.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
+			<artifactId>xxl-sso-core</artifactId>
+			<version>${xxl-sso.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -99,30 +84,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<!--<configuration>
-					<fork>true</fork>
-				</configuration>-->
 			</plugin>
-
-			<!-- docker -->
-			<!--<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>${docker-maven-plugin.version}</version>
-				<configuration>
-					&lt;!&ndash; made of '[a-z0-9-_.]' &ndash;&gt;
-					<imageName>${project.artifactId}:${project.version}</imageName>
-					<dockerDirectory>${project.basedir}</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>-->
-
 		</plugins>
 	</build>
 

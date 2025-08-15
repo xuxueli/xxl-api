@@ -5,18 +5,18 @@ import com.xxl.api.admin.core.model.XxlApiUser;
 import com.xxl.api.admin.service.impl.LoginService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * 权限拦截
  * @author xuxueli 2015-12-12 18:09:04
  */
 @Component
-public class PermissionInterceptor extends HandlerInterceptorAdapter {
+public class PermissionInterceptor implements HandlerInterceptor {
 
 	@Resource
 	private LoginService loginService;
@@ -25,7 +25,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		
 		if (!(handler instanceof HandlerMethod)) {
-			return super.preHandle(request, response, handler);
+			return true;
 		}
 
 		// if need login
@@ -51,7 +51,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.setAttribute(LoginService.LOGIN_IDENTITY, loginUser);
 		}
 
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 	
 }

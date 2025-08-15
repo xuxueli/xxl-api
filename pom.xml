@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -15,28 +16,35 @@
 	</modules>
 
 	<properties>
+		<!-- env -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<maven.test.skip>true</maven.test.skip>
-		<!--<docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>-->
+		<!-- plugin -->
+		<maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+
+		<!-- base -->
+		<slf4j-api.version>2.0.17</slf4j-api.version>
+		<junit-jupiter.version>5.13.4</junit-jupiter.version>
+
+		<!-- servlet -->
+		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
 
 		<!-- spring -->
-		<spring-boot.version>2.7.18</spring-boot.version>
-		<!-- db -->
-		<mybatis-spring-boot-starter.version>2.3.2</mybatis-spring-boot-starter.version>
-		<mysql-connector-j.version>9.1.0</mysql-connector-j.version>
+		<spring-boot.version>3.5.4</spring-boot.version>
+		<!-- mybatis & db -->
+		<mybatis-spring-boot-starter.version>3.0.5</mybatis-spring-boot-starter.version>
+		<mysql-connector-j.version>9.4.0</mysql-connector-j.version>
+
+		<!-- xxl-sso (+xxl-tool、gson) -->
+		<xxl-sso.version>2.0.0</xxl-sso.version>
 
 		<!-- httpclient -->
-		<httpclient.version>5.4.1</httpclient.version>
+		<httpclient.version>5.5</httpclient.version>
 		<httpcore.version>5.3.1</httpcore.version>
-		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-
-		<!-- tool -->
-		<xxl-tool.version>1.4.2</xxl-tool.version>
-		<gson.version>2.11.0</gson.version>
 	</properties>
 
 
@@ -46,7 +54,6 @@
 			<url>https://opensource.org/licenses/GPL-3.0</url>
 		</license>
 	</licenses>
-
 	<scm>
 		<tag>master</tag>
 		<url>https://github.com/xuxueli/xxl-api.git</url>
@@ -62,5 +69,28 @@
 		</developer>
 	</developers>
 
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!-- Compiler -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${maven-compiler-plugin.version}</version>
+						<configuration>
+							<source>${maven.compiler.source}</source>
+							<target>${maven.compiler.target}</target>
+							<parameters>true</parameters>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

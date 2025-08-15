@@ -1,14 +1,13 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.util.tool.ArrayTool;
 import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.mapper.XxlApiGroupMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
 import com.xxl.api.admin.model.*;
-import com.xxl.api.admin.service.impl.LoginService;
 import com.xxl.tool.response.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.xxl.api.admin.controller.biz.XxlApiDataTypeController.hasBizPermission;
 
 /**
  * @author xuxueli 2015-12-19 16:13:16
@@ -67,20 +68,9 @@ public class XxlApiProjectController {
 		return maps;
 	}
 
-	private boolean hasBizPermission(HttpServletRequest request, int bizId){
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-		if ( loginUser.getType()==1 ||
-				ArrayTool.contains(StringTool.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
-				) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	@RequestMapping("/add")
 	@ResponseBody
-	public Response<String> add(HttpServletRequest request, XxlApiProject xxlApiProject) {
+	public Response<String> add(HttpServletRequest request, HttpServletResponse response, XxlApiProject xxlApiProject) {
 		// valid
 		if (StringTool.isBlank(xxlApiProject.getName())) {
 			return Response.ofFail( "请输入项目名称");
@@ -89,7 +79,7 @@ public class XxlApiProjectController {
 			return Response.ofFail( "请输入根地址(线上)");
 		}
 
-		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+		if (!hasBizPermission(request, response, xxlApiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -99,7 +89,7 @@ public class XxlApiProjectController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public Response<String> update(HttpServletRequest request, XxlApiProject xxlApiProject) {
+	public Response<String> update(HttpServletRequest request, HttpServletResponse response, XxlApiProject xxlApiProject) {
 		// exist
 		XxlApiProject existProkect = xxlApiProjectDao.load(xxlApiProject.getId());
 		if (existProkect == null) {
@@ -114,7 +104,7 @@ public class XxlApiProjectController {
 			return Response.ofFail( "请输入根地址(线上)");
 		}
 
-		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+		if (!hasBizPermission(request, response, xxlApiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -124,7 +114,7 @@ public class XxlApiProjectController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Response<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, HttpServletResponse response, int id) {
 
 		// exist
 		XxlApiProject existProkect = xxlApiProjectDao.load(id);
@@ -132,7 +122,7 @@ public class XxlApiProjectController {
 			return Response.ofFail( "项目ID非法");
 		}
 
-		if (!hasBizPermission(request, existProkect.getBizId())) {
+		if (!hasBizPermission(request, response, existProkect.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 

@@ -1,14 +1,15 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.constant.RequestConst;
-import com.xxl.api.admin.util.tool.ArrayTool;
 import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.*;
 import com.xxl.api.admin.model.*;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.sso.core.helper.XxlSsoHelper;
+import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.gson.GsonTool;
 import com.xxl.tool.response.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.xxl.api.admin.controller.biz.XxlApiDataTypeController.hasBizPermission;
 
 /**
  * @author xuxueli 2017-03-31 18:10:37
@@ -40,21 +43,9 @@ public class XxlApiDocumentController {
 	private IXxlApiDataTypeService xxlApiDataTypeService;
 
 
-	private boolean hasBizPermission(HttpServletRequest request, int bizId){
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-		if ( loginUser.getType()==1 ||
-				ArrayTool.contains(StringTool.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
-				) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
 	@RequestMapping("/markStar")
 	@ResponseBody
-	public Response<String> markStar(HttpServletRequest request, int id, int starLevel) {
+	public Response<String> markStar(HttpServletRequest request, HttpServletResponse response, int id, int starLevel) {
 
 		XxlApiDocument document = xxlApiDocumentDao.load(id);
 		if (document == null) {
@@ -63,7 +54,7 @@ public class XxlApiDocumentController {
 
 		// 权限
 		XxlApiProject apiProject = xxlApiProjectDao.load(document.getProjectId());
-		if (!hasBizPermission(request, apiProject.getBizId())) {
+		if (!hasBizPermission(request, response, apiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -75,7 +66,7 @@ public class XxlApiDocumentController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Response<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, HttpServletResponse response, int id) {
 
 		XxlApiDocument document = xxlApiDocumentDao.load(id);
 		if (document == null) {
@@ -84,7 +75,7 @@ public class XxlApiDocumentController {
 
 		// 权限
 		XxlApiProject apiProject = xxlApiProjectDao.load(document.getProjectId());
-		if (!hasBizPermission(request, apiProject.getBizId())) {
+		if (!hasBizPermission(request, response, apiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -111,7 +102,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/addPage")
-	public String addPage(HttpServletRequest request, Model model, int projectId, @RequestParam(required = false, defaultValue = "0") int groupId) {
+	public String addPage(HttpServletRequest request, HttpServletResponse response, Model model, int projectId, @RequestParam(required = false, defaultValue = "0") int groupId) {
 
 		// project
 		XxlApiProject project = xxlApiProjectDao.load(projectId);
@@ -123,7 +114,7 @@ public class XxlApiDocumentController {
 
 
 		// 权限
-		if (!hasBizPermission(request, project.getBizId())) {
+		if (!hasBizPermission(request, response, project.getBizId())) {
 			throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -141,7 +132,7 @@ public class XxlApiDocumentController {
 	}
 	@RequestMapping("/add")
 	@ResponseBody
-	public Response<Integer> add(HttpServletRequest request, XxlApiDocument xxlApiDocument) {
+	public Response<Integer> add(HttpServletRequest request, HttpServletResponse response, XxlApiDocument xxlApiDocument) {
 
 		XxlApiProject project = xxlApiProjectDao.load(xxlApiDocument.getProjectId());
 		if (project == null) {
@@ -149,7 +140,7 @@ public class XxlApiDocumentController {
 		}
 
 		// 权限
-		if (!hasBizPermission(request, project.getBizId())) {
+		if (!hasBizPermission(request, response, project.getBizId())) {
 			return Response.ofFail("您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -163,7 +154,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/updatePage")
-	public String updatePage(HttpServletRequest request, Model model, int id) {
+	public String updatePage(HttpServletRequest request, HttpServletResponse response, Model model, int id) {
 
 		// document
 		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
@@ -182,7 +173,7 @@ public class XxlApiDocumentController {
 
 		// 权限
 		XxlApiProject project = xxlApiProjectDao.load(xxlApiDocument.getProjectId());
-		if (!hasBizPermission(request, project.getBizId())) {
+		if (!hasBizPermission(request, response, project.getBizId())) {
 			throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -204,7 +195,7 @@ public class XxlApiDocumentController {
 	}
 	@RequestMapping("/update")
 	@ResponseBody
-	public Response<String> update(HttpServletRequest request, XxlApiDocument xxlApiDocument) {
+	public Response<String> update(HttpServletRequest request, HttpServletResponse response, XxlApiDocument xxlApiDocument) {
 
 		XxlApiDocument oldVo = xxlApiDocumentDao.load(xxlApiDocument.getId());
 		if (oldVo == null) {
@@ -213,7 +204,7 @@ public class XxlApiDocumentController {
 
 		// 权限
 		XxlApiProject project = xxlApiProjectDao.load(oldVo.getProjectId());
-		if (!hasBizPermission(request, project.getBizId())) {
+		if (!hasBizPermission(request, response, project.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -231,7 +222,7 @@ public class XxlApiDocumentController {
 	 * @return
 	 */
 	@RequestMapping("/detailPage")
-	public String detailPage(HttpServletRequest request, Model model, int id) {
+	public String detailPage(HttpServletRequest request, HttpServletResponse response, Model model, int id) {
 
 		// document
 		XxlApiDocument xxlApiDocument = xxlApiDocumentDao.load(id);
@@ -272,7 +263,7 @@ public class XxlApiDocumentController {
 		model.addAttribute("responseDatatype", responseDatatypeRet);
 
 		// 权限
-		model.addAttribute("hasBizPermission", hasBizPermission(request, project.getBizId()));
+		model.addAttribute("hasBizPermission", hasBizPermission(request, response, project.getBizId()));
 
 		return "document/document.detail";
 	}

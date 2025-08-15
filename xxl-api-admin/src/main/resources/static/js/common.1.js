@@ -71,7 +71,7 @@ $(function(){
         }, function(index){
             layer.close(index);
 
-            $.post(base_url + "/logout", function(data, status) {
+            $.post(base_url + "/auth/logout", function(data, status) {
                 if (data.code == "200") {
 
                     layer.msg( '注销成功' );
@@ -129,7 +129,7 @@ $(function(){
 
                     layer.msg( '修改密码成功，即将注销登陆' );
                     setTimeout(function(){
-                        $.post(base_url + "/logout", function(data, status) {
+                        $.post(base_url + "/auth/logout", function(data, status) {
                             if (data.code == 200) {
                                 window.location.href = base_url + "/";
                             } else {

@@ -202,19 +202,11 @@
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 <script>
     // 业务线权限
-    var superUser = <#if XXL_API_LOGIN_IDENTITY.type == 1 >true<#else>false</#if>;
-    var permissionBiz = '${XXL_API_LOGIN_IDENTITY.permissionBiz!""}';
+    var superUser = <#if xxl_sso_user.roleList?? && xxl_sso_user.roleList?seq_contains("admin") >true<#else>false</#if>;
+    var permissionBizArr = <#if xxl_sso_user.permissionList??> [<#list xxl_sso_user.permissionList as item>"${item?js_string}"<#if item_has_next>,</#if></#list>] <#else> [] </#if>;
 
-    var permissionBizArr;
-    if (permissionBiz) {
-        permissionBizArr = $(permissionBiz.split(","));
-    };
     function hasBizPermission(bizId) {
-        if ( superUser || $.inArray( bizId+'', permissionBizArr) > -1 ) {
-            return true;
-        } else {
-            return false;
-        }
+        return superUser || $.inArray( bizId+'', permissionBizArr) > -1;
     }
 </script>
 <script src="${request.contextPath}/static/js/project.list.1.js"></script>

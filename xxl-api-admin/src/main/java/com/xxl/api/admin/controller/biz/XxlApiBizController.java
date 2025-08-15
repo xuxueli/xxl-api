@@ -1,11 +1,11 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.model.XxlApiBiz;
 import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,14 +33,14 @@ public class XxlApiBizController {
     private XxlApiDataTypeMapper xxlApiDataTypeDao;
 
     @RequestMapping
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
     public String index(Model model) {
         return "biz/biz.list";
     }
 
     @RequestMapping("/pageList")
     @ResponseBody
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
     public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
                                         @RequestParam(required = false, defaultValue = "10") int length,
                                         String bizName) {
@@ -58,7 +58,7 @@ public class XxlApiBizController {
 
     @RequestMapping("/add")
     @ResponseBody
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
     public Response<String> add(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail( "业务线名称不可为空");
@@ -70,7 +70,7 @@ public class XxlApiBizController {
 
     @RequestMapping("/update")
     @ResponseBody
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
     public Response<String> update(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail("业务线名称不可为空");
@@ -82,7 +82,7 @@ public class XxlApiBizController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
     public Response<String> delete(int id) {
 
         int count = xxlApiProjectDao.pageListCount(0, 10, null, id);

@@ -1,4 +1,4 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.constant.FieldTypeEnum;
 import com.xxl.api.admin.util.ApiDataTypeToCode;
@@ -10,9 +10,11 @@ import com.xxl.api.admin.mapper.XxlApiDataTypeFieldMapper;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.model.*;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
-import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.sso.core.helper.XxlSsoHelper;
+import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.gson.GsonTool;
 import com.xxl.tool.response.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,15 +74,10 @@ public class XxlApiDataTypeController {
         return maps;
     }
 
-    private boolean hasBizPermission(HttpServletRequest request, int bizId){
-        XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-        if ( loginUser.getType()==1 ||
-                ArrayTool.contains(StringTool.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
-                ) {
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean hasBizPermission(HttpServletRequest request, HttpServletResponse response, int bizId){
+        Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
+        return XxlSsoHelper.hasRole(loginInfoResponse.getData(), "admin").isSuccess()
+                || XxlSsoHelper.hasPermission(loginInfoResponse.getData(), String.valueOf(bizId)).isSuccess();
     }
 
     @RequestMapping("/addDataTypePage")
@@ -95,7 +92,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/addDataType")
     @ResponseBody
-    public Response<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public Response<Integer> addDataType(HttpServletRequest request, HttpServletResponse response, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
@@ -112,7 +109,7 @@ public class XxlApiDataTypeController {
             return Response.ofFail( "数据类型描述不可为空");
         }
 
-        if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
+        if (!hasBizPermission(request, response, apiDataTypeDTO.getBizId())) {
             return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
         }
 
@@ -164,7 +161,7 @@ public class XxlApiDataTypeController {
     }
 
     @RequestMapping("/updateDataTypePage")
-    public String updateDataTypePage(HttpServletRequest request, Model model, int dataTypeId) {
+    public String updateDataTypePage(HttpServletRequest request, HttpServletResponse response, Model model, int dataTypeId) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
@@ -172,7 +169,7 @@ public class XxlApiDataTypeController {
         }
         model.addAttribute("apiDataType", apiDataType);
 
-        if (!hasBizPermission(request, apiDataType.getBizId())) {
+        if (!hasBizPermission(request, response, apiDataType.getBizId())) {
             throw new RuntimeException("您没有相关业务线的权限,请联系管理员开通");
         }
 
@@ -185,7 +182,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/updateDataType")
     @ResponseBody
-    public Response<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public Response<String> updateDataType(HttpServletRequest request, HttpServletResponse response, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
@@ -202,7 +199,7 @@ public class XxlApiDataTypeController {
             return Response.ofFail( "数据类型描述不可为空");
         }
 
-        if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
+        if (!hasBizPermission(request, response, apiDataTypeDTO.getBizId())) {
             return Response.ofFail("您没有相关业务线的权限,请联系管理员开通");
         }
 
@@ -253,7 +250,7 @@ public class XxlApiDataTypeController {
     }
 
     @RequestMapping("/dataTypeDetail")
-    public String dataTypeDetail(HttpServletRequest request, Model model, int dataTypeId) {
+    public String dataTypeDetail(HttpServletRequest request, HttpServletResponse response, Model model, int dataTypeId) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeService.loadDataType(dataTypeId);
         if (apiDataType == null) {
@@ -270,21 +267,21 @@ public class XxlApiDataTypeController {
         model.addAttribute("codeContent", codeContent);
 
         // 权限
-        model.addAttribute("hasBizPermission", hasBizPermission(request, apiDataType.getBizId()));
+        model.addAttribute("hasBizPermission", hasBizPermission(request, response, apiDataType.getBizId()));
 
         return "datatype/datatype.detail";
     }
 
     @RequestMapping("/deleteDataType")
     @ResponseBody
-    public Response<String> deleteDataType(HttpServletRequest request, int id) {
+    public Response<String> deleteDataType(HttpServletRequest request, HttpServletResponse response, int id) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeDao.load(id);
         if (apiDataType == null) {
             return Response.ofFail( "数据类型ID非法");
         }
 
-        if (!hasBizPermission(request, apiDataType.getBizId())) {
+        if (!hasBizPermission(request, response, apiDataType.getBizId())) {
             return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
         }
 

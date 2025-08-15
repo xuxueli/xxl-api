@@ -1,14 +1,14 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.constant.RequestConst;
 import com.xxl.api.admin.model.XxlApiDocument;
 import com.xxl.api.admin.model.XxlApiProject;
 import com.xxl.api.admin.model.XxlApiTestHistory;
 import com.xxl.api.admin.util.tool.StringTool;
-import com.xxl.api.admin.util.ThrowableUtil;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
 import com.xxl.api.admin.mapper.XxlApiTestHistoryMapper;
+import com.xxl.tool.exception.ThrowableTool;
 import com.xxl.tool.gson.GsonTool;
 import com.xxl.tool.response.Response;
 import org.apache.hc.client5.http.classic.methods.*;
@@ -254,7 +254,7 @@ public class XxlApiTestController {
 			}
 			logger.info("http statusCode error, statusCode:" + response.getCode());
 		} catch (Exception e) {
-			responseContent = "请求异常：" + ThrowableUtil.toString(e);
+			responseContent = "请求异常：" + ThrowableTool.toString(e);
 		} finally{
 			if (httpClient!=null) {
 				try {

@@ -68,7 +68,7 @@
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            欢迎 ${Request["XXL_API_LOGIN_IDENTITY"].userName}
+                            欢迎 ${xxl_sso_user.userName}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
@@ -119,7 +119,7 @@
 				<li class="header">导航</li>
 				<li class="nav-click <#if pageName == "projectList">active</#if>" ><a href="${request.contextPath}/project"><i class="fa fa-circle-o text-red"></i> <span>项目管理</span></a></li>
                 <li class="nav-click <#if pageName == "datatype">active</#if>" ><a href="${request.contextPath}/datatype"><i class="fa fa-circle-o text-red"></i> <span>数据类型管理</span></a></li>
-				<#if XXL_API_LOGIN_IDENTITY.type == 1>
+				<#if xxl_sso_user.roleList?? && xxl_sso_user.roleList?seq_contains("admin") >
                     <li class="nav-click <#if pageName == "bizList">active</#if>" ><a href="${request.contextPath}/biz"><i class="fa fa-circle-o text-red"></i> <span>业务线管理</span></a></li>
 					<li class="nav-click <#if pageName == "userList">active</#if>" ><a href="${request.contextPath}/user"><i class="fa fa-circle-o text-red"></i> <span>用户管理</span></a></li>
 				</#if>

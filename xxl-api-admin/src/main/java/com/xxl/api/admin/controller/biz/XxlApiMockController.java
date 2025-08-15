@@ -1,11 +1,11 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.constant.RequestConst;
 import com.xxl.api.admin.model.XxlApiDocument;
 import com.xxl.api.admin.model.XxlApiMock;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.mapper.XxlApiMockMapper;
+import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.tool.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +68,7 @@ public class XxlApiMockController {
 	}
 
 	@RequestMapping("/run/{uuid}")
-	@PermessionLimit(limit=false)
+	@XxlSso(login = false)
 	public void run(@PathVariable("uuid") String uuid, HttpServletRequest request, HttpServletResponse response) {
 		XxlApiMock xxlApiMock = xxlApiMockDao.loadByUuid(uuid);
 		if (xxlApiMock == null) {

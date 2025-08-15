@@ -8,8 +8,9 @@ public class XxlApiUser {
     private int id;                 // 用户ID
     private String userName;        // 账号
     private String password;        // 密码
+    private String userToken;
     private int type;               // 用户类型：0-普通用户、1-管理员
-    private String permissionBiz;  // 业务线权限，多个逗号分隔
+    private String permissionBiz;   // 业务线权限，多个逗号分隔
 
     public int getId() {
         return id;
@@ -33,6 +34,14 @@ public class XxlApiUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 
     public int getType() {

@@ -1,22 +1,14 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.web.annotation.PermessionLimit;
-import com.xxl.api.admin.model.XxlApiUser;
-import com.xxl.api.admin.util.tool.StringTool;
-import com.xxl.api.admin.service.impl.LoginService;
-import com.xxl.tool.response.Response;
+import com.xxl.sso.core.annotation.XxlSso;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
@@ -29,50 +21,10 @@ import java.util.Date;
 @Controller
 public class IndexController {
 
-	@Resource
-	private LoginService loginService;
-
 	@RequestMapping("/")
-	@PermessionLimit(limit=false)
+	@XxlSso
 	public String index(Model model, HttpServletRequest request) {
-		XxlApiUser loginUser = loginService.ifLogin(request);
-		if (loginUser == null) {
-			return "redirect:/toLogin";
-		}
 		return "redirect:/project";
-	}
-	
-	@RequestMapping("/toLogin")
-	@PermessionLimit(limit=false)
-	public String toLogin(Model model, HttpServletRequest request) {
-		XxlApiUser loginUser = loginService.ifLogin(request);
-		if (loginUser != null) {
-			return "redirect:/";
-		}
-		return "login";
-	}
-	
-	@RequestMapping(value="login", method=RequestMethod.POST)
-	@ResponseBody
-	@PermessionLimit(limit=false)
-	public Response<String> loginDo(HttpServletRequest request, HttpServletResponse response, String ifRemember, String userName, String password){
-		// param
-		boolean ifRem = false;
-		if (StringTool.isNotBlank(ifRemember) && "on".equals(ifRemember)) {
-			ifRem = true;
-		}
-
-		// do login
-		Response<String> loginRet = loginService.login(response, userName, password, ifRem);
-		return loginRet;
-	}
-	
-	@RequestMapping(value="logout", method=RequestMethod.POST)
-	@ResponseBody
-	@PermessionLimit(limit=false)
-	public Response<String> logout(HttpServletRequest request, HttpServletResponse response){
-		loginService.logout(request, response);
-		return Response.ofSuccess();
 	}
 	
 	@RequestMapping("/help")

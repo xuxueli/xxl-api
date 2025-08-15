@@ -1,13 +1,12 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.util.tool.ArrayTool;
 import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
 import com.xxl.api.admin.mapper.XxlApiGroupMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
 import com.xxl.api.admin.model.*;
-import com.xxl.api.admin.service.impl.LoginService;
 import com.xxl.tool.response.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.xxl.api.admin.controller.biz.XxlApiDataTypeController.hasBizPermission;
 
 /**
  * @author xuxueli 2017-03-31 18:10:37
@@ -34,6 +35,7 @@ public class XxlApiGroupController {
 
 	@RequestMapping
 	public String index(HttpServletRequest request,
+						HttpServletResponse response,
 						Model model,
 						int projectId,
 						@RequestParam(required = false, defaultValue = "-1")  int groupId) {
@@ -70,25 +72,14 @@ public class XxlApiGroupController {
 		model.addAttribute("documentList", documentList);
 
 		// 权限
-		model.addAttribute("hasBizPermission", hasBizPermission(request, xxlApiProject.getBizId()));
+		model.addAttribute("hasBizPermission", hasBizPermission(request, response, xxlApiProject.getBizId()));
 
 		return "group/group.list";
 	}
 
-	private boolean hasBizPermission(HttpServletRequest request, int bizId){
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-		if ( loginUser.getType()==1 ||
-				ArrayTool.contains(StringTool.split(loginUser.getPermissionBiz(), ","), String.valueOf(bizId))
-				) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	@RequestMapping("/add")
 	@ResponseBody
-	public Response<String> add(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
+	public Response<String> add(HttpServletRequest request, HttpServletResponse response, XxlApiGroup xxlApiGroup) {
 		// valid
 		if (StringTool.isBlank(xxlApiGroup.getName())) {
 			return Response.ofFail( "请输入“分组名称”");
@@ -96,7 +87,7 @@ public class XxlApiGroupController {
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(xxlApiGroup.getProjectId());
-		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+		if (!hasBizPermission(request, response, xxlApiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -106,7 +97,7 @@ public class XxlApiGroupController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public Response<String> update(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
+	public Response<String> update(HttpServletRequest request, HttpServletResponse response, XxlApiGroup xxlApiGroup) {
 		// exist
 		XxlApiGroup existGroup = xxlApiGroupDao.load(xxlApiGroup.getId());
 		if (existGroup == null) {
@@ -115,7 +106,7 @@ public class XxlApiGroupController {
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
-		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+		if (!hasBizPermission(request, response, xxlApiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
@@ -130,7 +121,7 @@ public class XxlApiGroupController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Response<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, HttpServletResponse response, int id) {
 
 		// exist
 		XxlApiGroup existGroup = xxlApiGroupDao.load(id);
@@ -140,7 +131,7 @@ public class XxlApiGroupController {
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
-		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
+		if (!hasBizPermission(request, response, xxlApiProject.getBizId())) {
 			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 

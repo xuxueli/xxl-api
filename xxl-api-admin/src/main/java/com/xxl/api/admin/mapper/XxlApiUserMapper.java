@@ -1,6 +1,7 @@
 package com.xxl.api.admin.mapper;
 
 import com.xxl.api.admin.model.XxlApiUser;
+import com.xxl.tool.response.Response;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,24 +13,27 @@ import java.util.List;
 @Mapper
 public interface XxlApiUserMapper {
 
-    public int add(XxlApiUser xxlApiUser);
+    int add(XxlApiUser xxlApiUser);
 
-    public int update(XxlApiUser xxlApiUser);
+    int update(XxlApiUser xxlApiUser);
 
-    public int delete(@Param("id") int id);
+    int delete(@Param("id") int id);
 
-    public XxlApiUser findByUserName(@Param("userName") String userName);
+    XxlApiUser findByUserName(@Param("userName") String userName);
 
-    public XxlApiUser findById(@Param("id") int id);
+    XxlApiUser findById(@Param("id") int id);
 
-    public List<XxlApiUser> loadAll();
+    List<XxlApiUser> loadAll();
 
-    public List<XxlApiUser> pageList(@Param("offset") int offset,
-                                        @Param("pagesize") int pagesize,
-                                        @Param("userName") String userName,
-                                        @Param("type") int type);
-    public int pageListCount(@Param("offset") int offset,
-                             @Param("pagesize") int pagesize,
-                             @Param("userName") String userName,
-                             @Param("type") int type);
+    List<XxlApiUser> pageList(@Param("offset") int offset,
+                              @Param("pagesize") int pagesize,
+                              @Param("userName") String userName,
+                              @Param("type") int type);
+    int pageListCount(@Param("offset") int offset,
+                      @Param("pagesize") int pagesize,
+                      @Param("userName") String userName,
+                      @Param("type") int type);
+
+    int updateToken(@Param("id") int id, @Param("userToken") String userToken);
+
 }

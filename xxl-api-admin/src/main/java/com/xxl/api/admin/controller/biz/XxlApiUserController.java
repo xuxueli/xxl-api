@@ -1,13 +1,15 @@
-package com.xxl.api.admin.controller;
+package com.xxl.api.admin.controller.biz;
 
-import com.xxl.api.admin.web.annotation.PermessionLimit;
 import com.xxl.api.admin.model.XxlApiBiz;
 import com.xxl.api.admin.model.XxlApiUser;
 import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiUserMapper;
-import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.sso.core.annotation.XxlSso;
+import com.xxl.sso.core.helper.XxlSsoHelper;
+import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.response.Response;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -35,7 +37,7 @@ public class XxlApiUserController {
 	private XxlApiBizMapper xxlApiBizDao;
 
 	@RequestMapping
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
 	public String index(Model model) {
 
 		List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
@@ -46,7 +48,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/pageList")
 	@ResponseBody
-	@PermessionLimit(superUser = true)
+	@XxlSso(role = "admin")
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
 										@RequestParam(required = false, defaultValue = "10") int length,
 										String userName, int type) {
@@ -64,7 +66,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-    @PermessionLimit(superUser = true)
+    @XxlSso(role = "admin")
 	public Response<String> add(XxlApiUser xxlApiUser) {
 		// valid
 		if (StringTool.isBlank(xxlApiUser.getUserName())) {
@@ -90,11 +92,11 @@ public class XxlApiUserController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-    @PermessionLimit(superUser = true)
-	public Response<String> update(HttpServletRequest request, XxlApiUser xxlApiUser) {
+    @XxlSso(role = "admin")
+	public Response<String> update(HttpServletRequest request, HttpServletResponse response, XxlApiUser xxlApiUser) {
 
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-		if (loginUser.getUserName().equals(xxlApiUser.getUserName())) {
+		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
+		if (loginInfoResponse.getData().getUserName().equals(xxlApiUser.getUserName())) {
 			return Response.ofFail("禁止操作当前登录账号");
 		}
 
@@ -121,8 +123,8 @@ public class XxlApiUserController {
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	@PermessionLimit(superUser = true)
-	public Response<String> delete(HttpServletRequest request, int id) {
+	@XxlSso(role = "admin")
+	public Response<String> delete(HttpServletRequest request, HttpServletResponse response, int id) {
 
 		// valid user
 		XxlApiUser delUser = xxlApiUserDao.findById(id);
@@ -130,8 +132,8 @@ public class XxlApiUserController {
 			return Response.ofFail( "拒绝删除，用户ID非法");
 		}
 
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
-		if (loginUser.getUserName().equals(delUser.getUserName())) {
+		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
+		if (loginInfoResponse.getData().getUserName().equals(delUser.getUserName())) {
 			return Response.ofFail( "禁止操作当前登录账号");
 		}
 
@@ -141,7 +143,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/updatePwd")
 	@ResponseBody
-	public Response<String> updatePwd(HttpServletRequest request, String password){
+	public Response<String> updatePwd(HttpServletRequest request, HttpServletResponse response, String password){
 
 		// new password(md5)
 		if (StringTool.isBlank(password)){
@@ -153,9 +155,9 @@ public class XxlApiUserController {
 		String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
 
 		// update pwd
-		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
+		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
 
-		XxlApiUser existUser = xxlApiUserDao.findByUserName(loginUser.getUserName());
+		XxlApiUser existUser = xxlApiUserDao.findByUserName(loginInfoResponse.getData().getUserName());
 		existUser.setPassword(md5Password);
 		xxlApiUserDao.update(existUser);
 
@@ -164,7 +166,7 @@ public class XxlApiUserController {
 
 	@RequestMapping("/updatePermissionBiz")
 	@ResponseBody
-	@PermessionLimit(superUser = true)
+	@XxlSso(role = "admin")
 	public Response<String> updatePermissionBiz(int id,
 													@RequestParam(required = false) String[] permissionBiz){
 

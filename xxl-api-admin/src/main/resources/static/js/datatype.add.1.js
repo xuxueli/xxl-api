@@ -183,7 +183,7 @@ $(function() {
                             icon: '1',
                             content: "新增成功" ,
                             end: function(layero, index){
-                                window.location.href  = base_url + '/datatype/dataTypeDetail?dataTypeId=' + data.content;
+                                window.location.href  = base_url + '/datatype/dataTypeDetail?dataTypeId=' + data.data;
                             }
                         });
 					}, 315);

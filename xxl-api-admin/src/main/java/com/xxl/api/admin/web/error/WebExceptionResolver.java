@@ -1,6 +1,5 @@
 package com.xxl.api.admin.web.error;
 
-import com.xxl.api.admin.core.model.ReturnT;
 import com.xxl.tool.gson.GsonTool;
 import com.xxl.tool.response.Response;
 import org.slf4j.Logger;

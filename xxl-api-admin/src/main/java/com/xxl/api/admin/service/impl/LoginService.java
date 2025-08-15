@@ -1,10 +1,10 @@
 package com.xxl.api.admin.service.impl;
 
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.core.util.CookieUtil;
-import com.xxl.api.admin.dao.IXxlApiUserDao;
+import com.xxl.api.admin.model.XxlApiUser;
+import com.xxl.api.admin.util.CookieUtil;
+import com.xxl.api.admin.mapper.XxlApiUserMapper;
 import com.xxl.tool.gson.GsonTool;
+import com.xxl.tool.response.Response;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.DigestUtils;
 
@@ -22,7 +22,7 @@ public class LoginService {
     public static final String LOGIN_IDENTITY = "XXL_API_LOGIN_IDENTITY";
 
     @Resource
-    private IXxlApiUserDao xxlApiUserDao;
+    private XxlApiUserMapper xxlApiUserDao;
 
     private String makeToken(XxlApiUser xxlApiUser){
         String tokenJson = GsonTool.toJson(xxlApiUser);
@@ -48,23 +48,23 @@ public class LoginService {
      * @param ifRemember
      * @return
      */
-    public ReturnT<String> login(HttpServletResponse response, String usernameParam, String passwordParam, boolean ifRemember){
+    public Response<String> login(HttpServletResponse response, String usernameParam, String passwordParam, boolean ifRemember){
 
         XxlApiUser xxlApiUser = xxlApiUserDao.findByUserName(usernameParam);
         if (xxlApiUser == null) {
-            return new ReturnT<String>(500, "账号或密码错误");
+            return Response.ofFail("账号或密码错误");
         }
 
         String passwordParamMd5 = DigestUtils.md5DigestAsHex(passwordParam.getBytes());
         if (!xxlApiUser.getPassword().equals(passwordParamMd5)) {
-            return new ReturnT<String>(500, "账号或密码错误");
+            return Response.ofFail("账号或密码错误");
         }
 
         String loginToken = makeToken(xxlApiUser);
 
         // do login
         CookieUtil.set(response, LOGIN_IDENTITY, loginToken, ifRemember);
-        return ReturnT.SUCCESS;
+        return Response.ofSuccess();
     }
 
     /**

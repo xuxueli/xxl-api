@@ -1,12 +1,13 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.model.*;
-import com.xxl.api.admin.core.util.tool.ArrayTool;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
-import com.xxl.api.admin.dao.IXxlApiGroupDao;
-import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.util.tool.ArrayTool;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
+import com.xxl.api.admin.mapper.XxlApiGroupMapper;
+import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.api.admin.model.*;
 import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,11 @@ import java.util.List;
 public class XxlApiGroupController {
 
 	@Resource
-	private IXxlApiProjectDao xxlApiProjectDao;
+	private XxlApiProjectMapper xxlApiProjectDao;
 	@Resource
-	private IXxlApiGroupDao xxlApiGroupDao;
+	private XxlApiGroupMapper xxlApiGroupDao;
 	@Resource
-	private IXxlApiDocumentDao xxlApiDocumentDao;
+	private XxlApiDocumentMapper xxlApiDocumentDao;
 
 	@RequestMapping
 	public String index(HttpServletRequest request,
@@ -87,70 +88,70 @@ public class XxlApiGroupController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
+	public Response<String> add(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
 		// valid
 		if (StringTool.isBlank(xxlApiGroup.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“分组名称”");
+			return Response.ofFail( "请输入“分组名称”");
 		}
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(xxlApiGroup.getProjectId());
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiGroupDao.add(xxlApiGroup);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
+	public Response<String> update(HttpServletRequest request, XxlApiGroup xxlApiGroup) {
 		// exist
 		XxlApiGroup existGroup = xxlApiGroupDao.load(xxlApiGroup.getId());
 		if (existGroup == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，分组ID非法");
+			return Response.ofFail( "更新失败，分组ID非法");
 		}
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		// valid
 		if (StringTool.isBlank(xxlApiGroup.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入“分组名称”");
+			return Response.ofFail( "请输入“分组名称”");
 		}
 
 		int ret = xxlApiGroupDao.update(xxlApiGroup);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, int id) {
 
 		// exist
 		XxlApiGroup existGroup = xxlApiGroupDao.load(id);
 		if (existGroup == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，分组ID非法");
+			return Response.ofFail( "更新失败，分组ID非法");
 		}
 
 		// 权限校验
 		XxlApiProject xxlApiProject = xxlApiProjectDao.load(existGroup.getProjectId());
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		// 分组下是否存在接口
 		List<XxlApiDocument> documentList = xxlApiDocumentDao.loadByGroupId(id);
 		if (documentList!=null && documentList.size()>0) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，分组下存在接口，不允许强制删除");
+			return Response.ofFail( "拒绝删除，分组下存在接口，不允许强制删除");
 		}
 
 		int ret = xxlApiGroupDao.delete(id);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 }

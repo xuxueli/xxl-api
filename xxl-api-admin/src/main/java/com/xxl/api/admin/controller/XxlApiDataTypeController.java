@@ -1,17 +1,18 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.consistant.FieldTypeEnum;
-import com.xxl.api.admin.core.model.*;
-import com.xxl.api.admin.core.util.ApiDataTypeToCode;
-import com.xxl.api.admin.core.util.tool.ArrayTool;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.dao.IXxlApiBizDao;
-import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
-import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
+import com.xxl.api.admin.constant.FieldTypeEnum;
+import com.xxl.api.admin.util.ApiDataTypeToCode;
+import com.xxl.api.admin.util.tool.ArrayTool;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.mapper.XxlApiBizMapper;
+import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
+import com.xxl.api.admin.mapper.XxlApiDataTypeFieldMapper;
+import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
+import com.xxl.api.admin.model.*;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import com.xxl.api.admin.service.impl.LoginService;
 import com.xxl.tool.gson.GsonTool;
+import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +33,13 @@ import java.util.Map;
 public class XxlApiDataTypeController {
 
     @Resource
-    private IXxlApiDataTypeDao xxlApiDataTypeDao;
+    private XxlApiDataTypeMapper xxlApiDataTypeDao;
     @Resource
-    private IXxlApiDataTypeFieldDao xxlApiDataTypeFieldDao;
+    private XxlApiDataTypeFieldMapper xxlApiDataTypeFieldDao;
     @Resource
-    private IXxlApiBizDao xxlApiBizDao;
+    private XxlApiBizMapper xxlApiBizDao;
     @Resource
-    private IXxlApiDocumentDao xxlApiDocumentDao;
+    private XxlApiDocumentMapper xxlApiDocumentDao;
     @Resource
     private IXxlApiDataTypeService xxlApiDataTypeService;
 
@@ -94,7 +95,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/addDataType")
     @ResponseBody
-    public ReturnT<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public Response<Integer> addDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
@@ -105,40 +106,40 @@ public class XxlApiDataTypeController {
 
         // valid datatype
         if (StringTool.isBlank(apiDataTypeDTO.getName())) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型名称不可为空");
+            return Response.ofFail("数据类型名称不可为空");
         }
         if (StringTool.isBlank(apiDataTypeDTO.getAbout())) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
+            return Response.ofFail( "数据类型描述不可为空");
         }
 
         if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+            return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
         }
 
         XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
         if (apiBiz == null) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "业务线ID非法");
+            return Response.ofFail("业务线ID非法");
         }
 
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");
+            return Response.ofFail( "数据类型名称不可重复，请更换");
         }
         // valid field
         if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 // valid
                 if (StringTool.isBlank(field.getFieldName())) {
-                    return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段名称不可为空");
+                    return Response.ofFail("字段名称不可为空");
                 }
 
                 XxlApiDataType filedDataType = xxlApiDataTypeService.loadDataType(field.getFieldDatatypeId());
                 if (filedDataType == null) {
-                    return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段数据类型ID非法");
+                    return Response.ofFail("字段数据类型ID非法");
                 }
 
                 if (FieldTypeEnum.match(field.getFieldType())==null) {
-                    return new ReturnT<Integer>(ReturnT.FAIL_CODE, "字段形式非法");
+                    return Response.ofFail( "字段形式非法");
                 }
             }
         }
@@ -146,7 +147,7 @@ public class XxlApiDataTypeController {
         // add datatype
         int addRet = xxlApiDataTypeDao.add(apiDataTypeDTO);
         if (addRet < 1) {
-            return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型新增失败");
+            return Response.ofFail("数据类型新增失败");
         }
         if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
@@ -155,11 +156,11 @@ public class XxlApiDataTypeController {
             // add field
             int ret = xxlApiDataTypeFieldDao.add(apiDataTypeDTO.getFieldList());
             if (ret < 1) {
-                return new ReturnT<Integer>(ReturnT.FAIL_CODE, "数据类型新增失败");
+                return Response.ofFail( "数据类型新增失败");
             }
         }
 
-        return apiDataTypeDTO.getId()>0? new ReturnT<Integer>(apiDataTypeDTO.getId()) : new ReturnT<Integer>(ReturnT.FAIL_CODE, "");
+        return apiDataTypeDTO.getId()>0? Response.ofSuccess(apiDataTypeDTO.getId()) : Response.ofFail("");
     }
 
     @RequestMapping("/updateDataTypePage")
@@ -184,7 +185,7 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/updateDataType")
     @ResponseBody
-    public ReturnT<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
+    public Response<String> updateDataType(HttpServletRequest request, XxlApiDataType apiDataTypeDTO, String fieldTypeJson) {
         // parse json field
         if (StringTool.isNotBlank(fieldTypeJson)) {
             List<XxlApiDataTypeField> fieldList = GsonTool.fromJsonList(fieldTypeJson, XxlApiDataTypeField.class);
@@ -195,40 +196,40 @@ public class XxlApiDataTypeController {
 
         // valid datatype
         if (StringTool.isBlank(apiDataTypeDTO.getName())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型名称不可为空");
+            return Response.ofFail("数据类型名称不可为空");
         }
         if (StringTool.isBlank(apiDataTypeDTO.getAbout())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型描述不可为空");
+            return Response.ofFail( "数据类型描述不可为空");
         }
 
         if (!hasBizPermission(request, apiDataTypeDTO.getBizId())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+            return Response.ofFail("您没有相关业务线的权限,请联系管理员开通");
         }
 
         XxlApiBiz apiBiz = xxlApiBizDao.load(apiDataTypeDTO.getBizId());
         if (apiBiz == null) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线ID非法");
+            return Response.ofFail( "业务线ID非法");
         }
 
         XxlApiDataType existsByName = xxlApiDataTypeDao.loadByName(apiDataTypeDTO.getName());
         if (existsByName != null && existsByName.getId()!=apiDataTypeDTO.getId()) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型名称不可重复，请更换");
+            return Response.ofFail( "数据类型名称不可重复，请更换");
         }
         // valid field
         if (apiDataTypeDTO.getFieldList()!=null && apiDataTypeDTO.getFieldList().size()>0) {
             for (XxlApiDataTypeField field: apiDataTypeDTO.getFieldList()) {
                 // valid
                 if (StringTool.isBlank(field.getFieldName())) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "字段名称不可为空");
+                    return Response.ofFail( "字段名称不可为空");
                 }
 
                 XxlApiDataType filedDataType = xxlApiDataTypeDao.load(field.getFieldDatatypeId());
                 if (filedDataType == null) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "字段数据类型ID非法");
+                    return Response.ofFail( "字段数据类型ID非法");
                 }
 
                 if (FieldTypeEnum.match(field.getFieldType())==null) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "字段形式非法");
+                    return Response.ofFail( "字段形式非法");
                 }
             }
         }
@@ -244,11 +245,11 @@ public class XxlApiDataTypeController {
                 }
                 int ret = xxlApiDataTypeFieldDao.add(apiDataTypeDTO.getFieldList());
                 if (ret < 1) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型新增失败");
+                    return Response.ofFail( "数据类型新增失败");
                 }
             }
         }
-        return ret1>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret1>0?Response.ofSuccess():Response.ofFail();
     }
 
     @RequestMapping("/dataTypeDetail")
@@ -276,33 +277,33 @@ public class XxlApiDataTypeController {
 
     @RequestMapping("/deleteDataType")
     @ResponseBody
-    public ReturnT<String> deleteDataType(HttpServletRequest request, int id) {
+    public Response<String> deleteDataType(HttpServletRequest request, int id) {
 
         XxlApiDataType apiDataType = xxlApiDataTypeDao.load(id);
         if (apiDataType == null) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "数据类型ID非法");
+            return Response.ofFail( "数据类型ID非法");
         }
 
         if (!hasBizPermission(request, apiDataType.getBizId())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+            return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
         }
 
         // 被其他数据类型引用，拒绝删除
         List<XxlApiDataTypeField> list = xxlApiDataTypeFieldDao.findByFieldDatatypeId(id);
         if (list!=null && list.size()>0) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "该数据类型被引用中，拒绝删除");
+            return Response.ofFail( "该数据类型被引用中，拒绝删除");
         }
 
         // 该数据类型被API引用，拒绝删除
         List<XxlApiDocument> apiList = xxlApiDocumentDao.findByResponseDataTypeId(id);
         if (apiList!=null && apiList.size()>0) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "该数据类型被API引用，拒绝删除");
+            return Response.ofFail( "该数据类型被API引用，拒绝删除");
         }
 
         // delete
         int  ret = xxlApiDataTypeDao.delete(id);
         xxlApiDataTypeFieldDao.deleteByParentDatatypeId(id);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret>0?Response.ofSuccess():Response.ofFail();
     }
 
 }

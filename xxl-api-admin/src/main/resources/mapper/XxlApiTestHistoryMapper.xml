@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xxl.api.admin.dao.IXxlApiTestHistoryDao">
+<mapper namespace="com.xxl.api.admin.mapper.XxlApiTestHistoryMapper">
 	
-	<resultMap id="XxlApiTestHistory" type="com.xxl.api.admin.core.model.XxlApiTestHistory" >
+	<resultMap id="XxlApiTestHistory" type="com.xxl.api.admin.model.XxlApiTestHistory" >
 		<result column="id" property="id" />
 		<result column="document_id" property="documentId" />
 		<result column="add_time" property="addTime" />
@@ -27,7 +27,7 @@
 		t.`resp_type`
 	</sql>
 
-	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiTestHistory" useGeneratedKeys="true" keyProperty="id" >
+	<insert id="add" parameterType="com.xxl.api.admin.model.XxlApiTestHistory" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_api_test_history (
 			`document_id`,
 			`add_time`,
@@ -49,7 +49,7 @@
 		);
 	</insert>
 
-	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiTestHistory" >
+	<update id="update" parameterType="com.xxl.api.admin.model.XxlApiTestHistory" >
 		UPDATE xxl_api_test_history
 		SET
 			`request_url` = #{requestUrl},

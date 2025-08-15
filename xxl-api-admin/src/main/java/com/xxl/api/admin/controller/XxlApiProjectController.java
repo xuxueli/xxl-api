@@ -1,13 +1,14 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.model.*;
-import com.xxl.api.admin.core.util.tool.ArrayTool;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.dao.IXxlApiBizDao;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
-import com.xxl.api.admin.dao.IXxlApiGroupDao;
-import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.util.tool.ArrayTool;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.mapper.XxlApiBizMapper;
+import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
+import com.xxl.api.admin.mapper.XxlApiGroupMapper;
+import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.api.admin.model.*;
 import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +29,13 @@ import java.util.Map;
 public class XxlApiProjectController {
 
 	@Resource
-	private IXxlApiProjectDao xxlApiProjectDao;
+	private XxlApiProjectMapper xxlApiProjectDao;
 	@Resource
-	private IXxlApiGroupDao xxlApiGroupDao;
+	private XxlApiGroupMapper xxlApiGroupDao;
 	@Resource
-	private IXxlApiBizDao xxlApiBizDao;
+	private XxlApiBizMapper xxlApiBizDao;
 	@Resource
-	private IXxlApiDocumentDao xxlApiDocumentDao;
+	private XxlApiDocumentMapper xxlApiDocumentDao;
 
 	@RequestMapping
 	public String index(Model model, @RequestParam(required = false, defaultValue = "0") int bizId) {
@@ -79,76 +80,76 @@ public class XxlApiProjectController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(HttpServletRequest request, XxlApiProject xxlApiProject) {
+	public Response<String> add(HttpServletRequest request, XxlApiProject xxlApiProject) {
 		// valid
 		if (StringTool.isBlank(xxlApiProject.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目名称");
+			return Response.ofFail( "请输入项目名称");
 		}
 		if (StringTool.isBlank(xxlApiProject.getBaseUrlProduct())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入根地址(线上)");
+			return Response.ofFail( "请输入根地址(线上)");
 		}
 
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiProjectDao.add(xxlApiProject);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(HttpServletRequest request, XxlApiProject xxlApiProject) {
+	public Response<String> update(HttpServletRequest request, XxlApiProject xxlApiProject) {
 		// exist
 		XxlApiProject existProkect = xxlApiProjectDao.load(xxlApiProject.getId());
 		if (existProkect == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，项目ID非法");
+			return Response.ofFail( "更新失败，项目ID非法");
 		}
 
 		// valid
 		if (StringTool.isBlank(xxlApiProject.getName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目名称");
+			return Response.ofFail( "请输入项目名称");
 		}
 		if (StringTool.isBlank(xxlApiProject.getBaseUrlProduct())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入根地址(线上)");
+			return Response.ofFail( "请输入根地址(线上)");
 		}
 
 		if (!hasBizPermission(request, xxlApiProject.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		int ret = xxlApiProjectDao.update(xxlApiProject);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, int id) {
 
 		// exist
 		XxlApiProject existProkect = xxlApiProjectDao.load(id);
 		if (existProkect == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "项目ID非法");
+			return Response.ofFail( "项目ID非法");
 		}
 
 		if (!hasBizPermission(request, existProkect.getBizId())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "您没有相关业务线的权限,请联系管理员开通");
+			return Response.ofFail( "您没有相关业务线的权限,请联系管理员开通");
 		}
 
 		// 项目下是否存在分组
 		List<XxlApiGroup> groupList = xxlApiGroupDao.loadAll(id);
 		if (groupList!=null && groupList.size()>0) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "该项目下存在分组信息，拒绝删除");
+			return Response.ofFail( "该项目下存在分组信息，拒绝删除");
 		}
 
 		// 项目下是否存在接口
 		List<XxlApiDocument> documents = xxlApiDocumentDao.loadAll(id, -1);
 		if (documents!=null && documents.size()>0) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "该项目下存在接口信息，拒绝删除");
+			return Response.ofFail( "该项目下存在接口信息，拒绝删除");
 		}
 
 		int ret = xxlApiProjectDao.delete(id);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 }

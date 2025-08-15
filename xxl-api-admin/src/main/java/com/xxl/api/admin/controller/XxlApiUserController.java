@@ -1,13 +1,13 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.web.annotation.PermessionLimit;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiBiz;
-import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.dao.IXxlApiBizDao;
-import com.xxl.api.admin.dao.IXxlApiUserDao;
+import com.xxl.api.admin.model.XxlApiBiz;
+import com.xxl.api.admin.model.XxlApiUser;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.mapper.XxlApiBizMapper;
+import com.xxl.api.admin.mapper.XxlApiUserMapper;
 import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -30,9 +30,9 @@ import java.util.Map;
 public class XxlApiUserController {
 
 	@Resource
-	private IXxlApiUserDao xxlApiUserDao;
+	private XxlApiUserMapper xxlApiUserDao;
 	@Resource
-	private IXxlApiBizDao xxlApiBizDao;
+	private XxlApiBizMapper xxlApiBizDao;
 
 	@RequestMapping
     @PermessionLimit(superUser = true)
@@ -65,19 +65,19 @@ public class XxlApiUserController {
 	@RequestMapping("/add")
 	@ResponseBody
     @PermessionLimit(superUser = true)
-	public ReturnT<String> add(XxlApiUser xxlApiUser) {
+	public Response<String> add(XxlApiUser xxlApiUser) {
 		// valid
 		if (StringTool.isBlank(xxlApiUser.getUserName())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入登录账号");
+			return Response.ofFail( "请输入登录账号");
 		}
 		if (StringTool.isBlank(xxlApiUser.getPassword())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入密码");
+			return Response.ofFail( "请输入密码");
 		}
 
 		// valid
 		XxlApiUser existUser = xxlApiUserDao.findByUserName(xxlApiUser.getUserName());
 		if (existUser != null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "“登录账号”重复，请更换");
+			return Response.ofFail( "“登录账号”重复，请更换");
 		}
 
 		// passowrd md5
@@ -85,29 +85,29 @@ public class XxlApiUserController {
 		xxlApiUser.setPassword(md5Password);
 
 		int ret = xxlApiUserDao.add(xxlApiUser);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/update")
 	@ResponseBody
     @PermessionLimit(superUser = true)
-	public ReturnT<String> update(HttpServletRequest request, XxlApiUser xxlApiUser) {
+	public Response<String> update(HttpServletRequest request, XxlApiUser xxlApiUser) {
 
 		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
 		if (loginUser.getUserName().equals(xxlApiUser.getUserName())) {
-			return new ReturnT<String>(ReturnT.FAIL.getCode(), "禁止操作当前登录账号");
+			return Response.ofFail("禁止操作当前登录账号");
 		}
 
 		// exist
 		XxlApiUser existUser = xxlApiUserDao.findByUserName(xxlApiUser.getUserName());
 		if (existUser == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "更新失败，登录账号非法");
+			return Response.ofFail( "更新失败，登录账号非法");
 		}
 
 		// update param
 		if (StringTool.isNotBlank(xxlApiUser.getPassword())) {
 			if (!(xxlApiUser.getPassword().length()>=4 && xxlApiUser.getPassword().length()<=50)) {
-				return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码长度限制为4~50");
+				return Response.ofFail( "密码长度限制为4~50");
 			}
 			// passowrd md5
 			String md5Password = DigestUtils.md5DigestAsHex(xxlApiUser.getPassword().getBytes());
@@ -116,39 +116,39 @@ public class XxlApiUserController {
 		existUser.setType(xxlApiUser.getType());
 
 		int ret = xxlApiUserDao.update(existUser);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
 	@PermessionLimit(superUser = true)
-	public ReturnT<String> delete(HttpServletRequest request, int id) {
+	public Response<String> delete(HttpServletRequest request, int id) {
 
 		// valid user
 		XxlApiUser delUser = xxlApiUserDao.findById(id);
 		if (delUser == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，用户ID非法");
+			return Response.ofFail( "拒绝删除，用户ID非法");
 		}
 
 		XxlApiUser loginUser = (XxlApiUser) request.getAttribute(LoginService.LOGIN_IDENTITY);
 		if (loginUser.getUserName().equals(delUser.getUserName())) {
-			return new ReturnT<String>(ReturnT.FAIL.getCode(), "禁止操作当前登录账号");
+			return Response.ofFail( "禁止操作当前登录账号");
 		}
 
 		int ret = xxlApiUserDao.delete(id);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/updatePwd")
 	@ResponseBody
-	public ReturnT<String> updatePwd(HttpServletRequest request, String password){
+	public Response<String> updatePwd(HttpServletRequest request, String password){
 
 		// new password(md5)
 		if (StringTool.isBlank(password)){
-			return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码不可为空");
+			return Response.ofFail( "密码不可为空");
 		}
 		if (!(password.length()>=4 && password.length()<=100)) {
-			return new ReturnT<String>(ReturnT.FAIL.getCode(), "密码长度限制为4~50");
+			return Response.ofFail( "密码长度限制为4~50");
 		}
 		String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
 
@@ -159,24 +159,24 @@ public class XxlApiUserController {
 		existUser.setPassword(md5Password);
 		xxlApiUserDao.update(existUser);
 
-		return ReturnT.SUCCESS;
+		return Response.ofSuccess();
 	}
 
 	@RequestMapping("/updatePermissionBiz")
 	@ResponseBody
 	@PermessionLimit(superUser = true)
-	public ReturnT<String> updatePermissionBiz(int id,
+	public Response<String> updatePermissionBiz(int id,
 													@RequestParam(required = false) String[] permissionBiz){
 
 		String permissionProjectsStr = StringTool.join(permissionBiz, ",");
 		XxlApiUser existUser = xxlApiUserDao.findById(id);
 		if (existUser == null) {
-			return new ReturnT<String>(ReturnT.FAIL.getCode(), "参数非法");
+			return Response.ofFail( "参数非法");
 		}
 		existUser.setPermissionBiz(permissionProjectsStr);
 		xxlApiUserDao.update(existUser);
 
-		return ReturnT.SUCCESS;
+		return Response.ofSuccess();
 	}
 
 }

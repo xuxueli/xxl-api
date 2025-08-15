@@ -1,16 +1,16 @@
 package com.xxl.api.admin.controller;
 
-import com.xxl.api.admin.core.consistant.RequestConst;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiDocument;
-import com.xxl.api.admin.core.model.XxlApiProject;
-import com.xxl.api.admin.core.model.XxlApiTestHistory;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.core.util.ThrowableUtil;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
-import com.xxl.api.admin.dao.IXxlApiProjectDao;
-import com.xxl.api.admin.dao.IXxlApiTestHistoryDao;
+import com.xxl.api.admin.constant.RequestConst;
+import com.xxl.api.admin.model.XxlApiDocument;
+import com.xxl.api.admin.model.XxlApiProject;
+import com.xxl.api.admin.model.XxlApiTestHistory;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.util.ThrowableUtil;
+import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
+import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.api.admin.mapper.XxlApiTestHistoryMapper;
 import com.xxl.tool.gson.GsonTool;
+import com.xxl.tool.response.Response;
 import org.apache.hc.client5.http.classic.methods.*;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
@@ -49,11 +49,11 @@ public class XxlApiTestController {
 	private static Logger logger = LoggerFactory.getLogger(XxlApiTestController.class);
 
 	@Resource
-	private IXxlApiDocumentDao xxlApiDocumentDao;
+	private XxlApiDocumentMapper xxlApiDocumentDao;
 	@Resource
-	private IXxlApiTestHistoryDao xxlApiTestHistoryDao;
+	private XxlApiTestHistoryMapper xxlApiTestHistoryDao;
 	@Resource
-	private IXxlApiProjectDao xxlApiProjectDao;
+	private XxlApiProjectMapper xxlApiProjectDao;
 
 	/**
 	 * 接口测试，待完善
@@ -107,23 +107,23 @@ public class XxlApiTestController {
 
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<Integer> add(XxlApiTestHistory xxlApiTestHistory) {
+	public Response<Integer> add(XxlApiTestHistory xxlApiTestHistory) {
 		int ret = xxlApiTestHistoryDao.add(xxlApiTestHistory);
-		return ret>0?new ReturnT<Integer>(xxlApiTestHistory.getId()):new ReturnT<Integer>(ReturnT.FAIL_CODE, null);
+		return ret>0?Response.ofSuccess(xxlApiTestHistory.getId()):Response.ofFail(null);
 	}
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(XxlApiTestHistory xxlApiTestHistory) {
+	public Response<String> update(XxlApiTestHistory xxlApiTestHistory) {
 		int ret = xxlApiTestHistoryDao.update(xxlApiTestHistory);
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+		return ret>0?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	public Response<String> delete(int id) {
 		int ret = xxlApiTestHistoryDao.delete(id);
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+		return ret>0?Response.ofSuccess():Response.ofFail();
 	}
 
 	/**
@@ -132,16 +132,16 @@ public class XxlApiTestController {
 	 */
 	@RequestMapping("/run")
 	@ResponseBody
-	public ReturnT<String> run(XxlApiTestHistory xxlApiTestHistory, HttpServletRequest request, HttpServletResponse response) {
+	public Response<String> run(XxlApiTestHistory xxlApiTestHistory, HttpServletRequest request, HttpServletResponse response) {
 
 		// valid
 		RequestConst.ResponseContentType contentType = RequestConst.ResponseContentType.match(xxlApiTestHistory.getRespType());
 		if (contentType == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "响应数据类型(MIME)非法");
+			return Response.ofFail( "响应数据类型(MIME)非法");
 		}
 
 		if (StringTool.isBlank(xxlApiTestHistory.getRequestUrl())) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入接口URL");
+			return Response.ofFail( "请输入接口URL");
 		}
 
 		// request headers
@@ -194,7 +194,7 @@ public class XxlApiTestController {
 		} else if (RequestConst.RequestMethodEnum.PATCH.name().equals(xxlApiTestHistory.getRequestMethod())) {
 			remoteRequest = new HttpPatch(markGetUrl(xxlApiTestHistory.getRequestUrl(), queryParamMap));
 		} else {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "请求方法非法");
+			return Response.ofFail( "请求方法非法");
 		}
 
 		// invoke 2/3
@@ -206,7 +206,7 @@ public class XxlApiTestController {
 
 		// write response
 		String responseContent = remoteCall(remoteRequest);
-		return new ReturnT<String>(responseContent);
+		return Response.ofSuccess(responseContent);
 	}
 
 	private String markGetUrl(String url, Map<String, String> queryParamMap){

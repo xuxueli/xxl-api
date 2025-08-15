@@ -1,10 +1,10 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.web.annotation.PermessionLimit;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiUser;
-import com.xxl.api.admin.core.util.tool.StringTool;
+import com.xxl.api.admin.model.XxlApiUser;
+import com.xxl.api.admin.util.tool.StringTool;
 import com.xxl.api.admin.service.impl.LoginService;
+import com.xxl.tool.response.Response;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +55,7 @@ public class IndexController {
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	@ResponseBody
 	@PermessionLimit(limit=false)
-	public ReturnT<String> loginDo(HttpServletRequest request, HttpServletResponse response, String ifRemember, String userName, String password){
+	public Response<String> loginDo(HttpServletRequest request, HttpServletResponse response, String ifRemember, String userName, String password){
 		// param
 		boolean ifRem = false;
 		if (StringTool.isNotBlank(ifRemember) && "on".equals(ifRemember)) {
@@ -63,16 +63,16 @@ public class IndexController {
 		}
 
 		// do login
-		ReturnT<String> loginRet = loginService.login(response, userName, password, ifRem);
+		Response<String> loginRet = loginService.login(response, userName, password, ifRem);
 		return loginRet;
 	}
 	
 	@RequestMapping(value="logout", method=RequestMethod.POST)
 	@ResponseBody
 	@PermessionLimit(limit=false)
-	public ReturnT<String> logout(HttpServletRequest request, HttpServletResponse response){
+	public Response<String> logout(HttpServletRequest request, HttpServletResponse response){
 		loginService.logout(request, response);
-		return ReturnT.SUCCESS;
+		return Response.ofSuccess();
 	}
 	
 	@RequestMapping("/help")

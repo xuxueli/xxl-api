@@ -1,12 +1,12 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.web.annotation.PermessionLimit;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiBiz;
-import com.xxl.api.admin.core.util.tool.StringTool;
-import com.xxl.api.admin.dao.IXxlApiBizDao;
-import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
-import com.xxl.api.admin.dao.IXxlApiProjectDao;
+import com.xxl.api.admin.model.XxlApiBiz;
+import com.xxl.api.admin.util.tool.StringTool;
+import com.xxl.api.admin.mapper.XxlApiBizMapper;
+import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
+import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +26,11 @@ import java.util.Map;
 public class XxlApiBizController {
 
     @Resource
-    private IXxlApiBizDao xxlApiBizDao;
+    private XxlApiBizMapper xxlApiBizDao;
     @Resource
-    private IXxlApiProjectDao xxlApiProjectDao;
+    private XxlApiProjectMapper xxlApiProjectDao;
     @Resource
-    private IXxlApiDataTypeDao xxlApiDataTypeDao;
+    private XxlApiDataTypeMapper xxlApiDataTypeDao;
 
     @RequestMapping
     @PermessionLimit(superUser = true)
@@ -59,49 +59,49 @@ public class XxlApiBizController {
     @RequestMapping("/add")
     @ResponseBody
     @PermessionLimit(superUser = true)
-    public ReturnT<String> add(XxlApiBiz xxlApiBiz) {
+    public Response<String> add(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
+            return Response.ofFail( "业务线名称不可为空");
         }
 
         int ret = xxlApiBizDao.add(xxlApiBiz);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret>0?Response.ofSuccess():Response.ofFail();
     }
 
     @RequestMapping("/update")
     @ResponseBody
     @PermessionLimit(superUser = true)
-    public ReturnT<String> update(XxlApiBiz xxlApiBiz) {
+    public Response<String> update(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "业务线名称不可为空");
+            return Response.ofFail("业务线名称不可为空");
         }
 
         int ret = xxlApiBizDao.update(xxlApiBiz);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret>0?Response.ofSuccess():Response.ofFail();
     }
 
     @RequestMapping("/delete")
     @ResponseBody
     @PermessionLimit(superUser = true)
-    public ReturnT<String> delete(int id) {
+    public Response<String> delete(int id) {
 
         int count = xxlApiProjectDao.pageListCount(0, 10, null, id);
         if (count > 0) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，业务线下存在项目");
+            return Response.ofFail("拒绝删除，业务线下存在项目");
         }
 
         int dtCount = xxlApiDataTypeDao.pageListCount(0, 10, id, null);
         if (dtCount > 0) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，业务线下数据类型");
+            return Response.ofFail( "拒绝删除，业务线下数据类型");
         }
 
         List<XxlApiBiz> bizList = xxlApiBizDao.loadAll();
         if (bizList.size() <= 1) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "拒绝删除，需要至少预留一个业务线");
+            return Response.ofFail("拒绝删除，需要至少预留一个业务线");
         }
 
         int ret = xxlApiBizDao.delete(id);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret>0?Response.ofSuccess():Response.ofFail();
     }
 
 }

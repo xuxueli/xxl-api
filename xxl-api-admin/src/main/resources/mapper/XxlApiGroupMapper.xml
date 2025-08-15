@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xxl.api.admin.dao.IXxlApiGroupDao">
+<mapper namespace="com.xxl.api.admin.mapper.XxlApiGroupMapper">
 	
-	<resultMap id="XxlApiGroup" type="com.xxl.api.admin.core.model.XxlApiGroup" >
+	<resultMap id="XxlApiGroup" type="com.xxl.api.admin.model.XxlApiGroup" >
 		<result column="id" property="id" />
 		<result column="project_id" property="projectId" />
 		<result column="name" property="name" />
@@ -17,7 +17,7 @@
 		t.order
 	</sql>
 
-	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiGroup" useGeneratedKeys="true" keyProperty="id" >
+	<insert id="add" parameterType="com.xxl.api.admin.model.XxlApiGroup" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_api_group (
 			`project_id`,
 			`name`,
@@ -29,7 +29,7 @@
 		);
 	</insert>
 
-	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiGroup" >
+	<update id="update" parameterType="com.xxl.api.admin.model.XxlApiGroup" >
 		UPDATE xxl_api_group
 		SET
 			`name` = #{name},

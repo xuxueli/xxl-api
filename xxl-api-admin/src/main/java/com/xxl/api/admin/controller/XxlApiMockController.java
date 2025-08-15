@@ -1,12 +1,12 @@
 package com.xxl.api.admin.controller;
 
 import com.xxl.api.admin.web.annotation.PermessionLimit;
-import com.xxl.api.admin.core.consistant.RequestConst;
-import com.xxl.api.admin.core.model.ReturnT;
-import com.xxl.api.admin.core.model.XxlApiDocument;
-import com.xxl.api.admin.core.model.XxlApiMock;
-import com.xxl.api.admin.dao.IXxlApiDocumentDao;
-import com.xxl.api.admin.dao.IXxlApiMockDao;
+import com.xxl.api.admin.constant.RequestConst;
+import com.xxl.api.admin.model.XxlApiDocument;
+import com.xxl.api.admin.model.XxlApiMock;
+import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
+import com.xxl.api.admin.mapper.XxlApiMockMapper;
+import com.xxl.tool.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,9 +29,9 @@ public class XxlApiMockController {
 	private static Logger logger = LoggerFactory.getLogger(XxlApiMockController.class);
 
 	@Resource
-	private IXxlApiMockDao xxlApiMockDao;
+	private XxlApiMockMapper xxlApiMockDao;
 	@Resource
-	private IXxlApiDocumentDao xxlApiDocumentDao;
+	private XxlApiDocumentMapper xxlApiDocumentDao;
 
 	/**
 	 * 保存Mock数据
@@ -40,31 +40,31 @@ public class XxlApiMockController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnT<String> add(XxlApiMock xxlApiMock) {
+	public Response<String> add(XxlApiMock xxlApiMock) {
 
 		XxlApiDocument document = xxlApiDocumentDao.load(xxlApiMock.getDocumentId());
 		if (document == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "保存Mock数据失败，接口ID非法");
+			return Response.ofFail( "保存Mock数据失败，接口ID非法");
 		}
 		String uuid = UUID.randomUUID().toString();
 
 		xxlApiMock.setUuid(uuid);
 		int ret = xxlApiMockDao.add(xxlApiMock);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/delete")
 	@ResponseBody
-	public ReturnT<String> delete(int id) {
+	public Response<String> delete(int id) {
 		int ret = xxlApiMockDao.delete(id);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public ReturnT<String> update(XxlApiMock xxlApiMock) {
+	public Response<String> update(XxlApiMock xxlApiMock) {
 		int ret = xxlApiMockDao.update(xxlApiMock);
-		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
+		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
 	@RequestMapping("/run/{uuid}")

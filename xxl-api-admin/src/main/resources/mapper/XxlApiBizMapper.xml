@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xxl.api.admin.dao.IXxlApiBizDao">
+<mapper namespace="com.xxl.api.admin.mapper.XxlApiBizMapper">
 	
-	<resultMap id="XxlApiBiz" type="com.xxl.api.admin.core.model.XxlApiBiz" >
+	<resultMap id="XxlApiBiz" type="com.xxl.api.admin.model.XxlApiBiz" >
 		<result column="id" property="id" />
 		<result column="biz_name" property="bizName" />
 	    <result column="order" property="order" />
@@ -15,7 +15,7 @@
 		t.order
 	</sql>
 
-	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiBiz" useGeneratedKeys="true" keyProperty="id" >
+	<insert id="add" parameterType="com.xxl.api.admin.model.XxlApiBiz" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_api_biz (
 			`biz_name`,
 			`order`
@@ -25,7 +25,7 @@
 		);
 	</insert>
 
-	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiBiz" >
+	<update id="update" parameterType="com.xxl.api.admin.model.XxlApiBiz" >
 		UPDATE xxl_api_biz
 		SET
 			`biz_name` = #{bizName},

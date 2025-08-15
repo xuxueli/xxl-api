@@ -1,6 +1,6 @@
 package com.xxl.api.admin.web.interceptor;
 
-import com.xxl.api.admin.core.util.tool.ArrayTool;
+import com.xxl.api.admin.util.tool.ArrayTool;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

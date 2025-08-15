@@ -274,7 +274,7 @@ $(function() {
                         icon: '1',
                         content: "新增成功" ,
                         end: function(layero, index){
-                            window.location.href  = base_url + '/document/detailPage?id=' + data.content;
+                            window.location.href  = base_url + '/document/detailPage?id=' + data.data;
                         }
                     });
 				} else {

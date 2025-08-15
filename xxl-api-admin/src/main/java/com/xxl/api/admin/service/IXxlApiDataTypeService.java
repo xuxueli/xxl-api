@@ -1,7 +1,7 @@
 package com.xxl.api.admin.service;
 
 
-import com.xxl.api.admin.core.model.XxlApiDataType;
+import com.xxl.api.admin.model.XxlApiDataType;
 
 /**
  * @author xuxueli

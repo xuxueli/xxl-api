@@ -141,10 +141,10 @@ $(function() {
 		$.post(base_url + "/test/run", params, function(data, status) {
 			var $respContent = $('#respContent');
 			if (data.code == "200") {
-				$($respContent).text(data.content);
+				$($respContent).text(data.data);
 
 				if ('JSON'==respType || 'JSONP'==respType) {
-					var json = eval('('+ data.content +')');
+					var json = eval('('+ data.data +')');
 					$('#respContent').JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
 				}
 			} else {
@@ -246,8 +246,8 @@ $(function() {
 
 		$.post(url, params, function(data, status) {
 			if (data.code == "200") {
-				if (testId == 0 && data.content>0) {
-					$('#save').attr('testId', data.content);
+				if (testId == 0 && data.data>0) {
+					$('#save').attr('testId', data.data);
 				}
                 layer.open({
                     icon: '1',

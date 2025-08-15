@@ -1,10 +1,10 @@
 package com.xxl.api.admin.service.impl;
 
 
-import com.xxl.api.admin.core.model.XxlApiDataType;
-import com.xxl.api.admin.core.model.XxlApiDataTypeField;
-import com.xxl.api.admin.dao.IXxlApiDataTypeDao;
-import com.xxl.api.admin.dao.IXxlApiDataTypeFieldDao;
+import com.xxl.api.admin.model.XxlApiDataType;
+import com.xxl.api.admin.model.XxlApiDataTypeField;
+import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
+import com.xxl.api.admin.mapper.XxlApiDataTypeFieldMapper;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,9 @@ public class XxlApiDataTypeServiceImpl implements IXxlApiDataTypeService {
 	private static Logger logger = LoggerFactory.getLogger(XxlApiDataTypeServiceImpl.class);
 
 	@Resource
-	private IXxlApiDataTypeDao xxlApiDataTypeDao;
+	private XxlApiDataTypeMapper xxlApiDataTypeDao;
 	@Resource
-	private IXxlApiDataTypeFieldDao xxlApiDataTypeFieldDao;
+	private XxlApiDataTypeFieldMapper xxlApiDataTypeFieldDao;
 
 	@Override
 	public XxlApiDataType loadDataType(int dataTypeId) {

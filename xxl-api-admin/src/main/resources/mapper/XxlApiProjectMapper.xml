@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xxl.api.admin.dao.IXxlApiProjectDao">
+<mapper namespace="com.xxl.api.admin.mapper.XxlApiProjectMapper">
 	
-	<resultMap id="XxlApiProject" type="com.xxl.api.admin.core.model.XxlApiProject" >
+	<resultMap id="XxlApiProject" type="com.xxl.api.admin.model.XxlApiProject" >
 		<result column="id" property="id" />
 		<result column="name" property="name" />
 	    <result column="desc" property="desc" />
@@ -23,7 +23,7 @@
 		t.biz_id
 	</sql>
 
-	<insert id="add" parameterType="com.xxl.api.admin.core.model.XxlApiProject" useGeneratedKeys="true" keyProperty="id" >
+	<insert id="add" parameterType="com.xxl.api.admin.model.XxlApiProject" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_api_project (
 			`name`,
 			`desc`,
@@ -41,7 +41,7 @@
 		);
 	</insert>
 
-	<update id="update" parameterType="com.xxl.api.admin.core.model.XxlApiProject" >
+	<update id="update" parameterType="com.xxl.api.admin.model.XxlApiProject" >
 		UPDATE xxl_api_project
 		SET
 			`name` = #{name},

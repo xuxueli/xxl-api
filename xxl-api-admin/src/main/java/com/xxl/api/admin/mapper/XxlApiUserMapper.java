@@ -34,6 +34,6 @@ public interface XxlApiUserMapper {
                       @Param("userName") String userName,
                       @Param("type") int type);
 
-    int updateToken(@Param("id") int id, @Param("userToken") String userToken);
+    int updateToken(@Param("id") int id, @Param("token") String token);
 
 }

@@ -7,7 +7,7 @@
 		<result column="id" property="id" />
 		<result column="username" property="userName" />
 	    <result column="password" property="password" />
-		<result column="user_token" property="userToken" />
+		<result column="token" property="token" />
 	    <result column="type" property="type" />
 		<result column="permission_biz" property="permissionBiz" />
 	</resultMap>
@@ -16,7 +16,7 @@
 		t.id,
 		t.username,
 		t.password,
-		t.user_token,
+		t.token,
 		t.type,
 		t.permission_biz
 	</sql>
@@ -25,13 +25,13 @@
 		INSERT INTO xxl_api_user (
 			userName,
 			password,
-			`user_token`,
+			`token`,
 			`type`,
 			permission_biz
 		) VALUES (
 			#{userName},
 			#{password},
-			#{userToken},
+			#{token},
 			#{type},
 			#{permissionBiz}
 		);
@@ -99,7 +99,7 @@
 
 	<update id="updateToken" parameterType="java.util.Map" >
 		UPDATE xxl_api_user
-		SET user_token = #{userToken}
+		SET token = #{token}
 		WHERE id = #{id}
 	</update>
 

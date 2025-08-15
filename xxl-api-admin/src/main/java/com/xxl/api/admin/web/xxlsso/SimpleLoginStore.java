@@ -68,7 +68,7 @@ public class SimpleLoginStore implements LoginStore {
         }
 
         // parse token of UserId
-        LoginInfo loginInfo = TokenHelper.parseToken(xxlBootUser.getUserToken());
+        LoginInfo loginInfo = TokenHelper.parseToken(xxlBootUser.getToken());
         if (loginInfo==null) {
             return Response.ofFail("token invalid.");
         }

@@ -57,20 +57,20 @@ public class SimpleLoginStore implements LoginStore {
     public Response<LoginInfo> get(String userId) {
 
         // load login-user
-        XxlApiUser xxlBootUser = xxlApiUserMapper.findById(Integer.parseInt(userId));
-        if (Objects.isNull(xxlBootUser)) {
+        XxlApiUser user = xxlApiUserMapper.findById(Integer.parseInt(userId));
+        if (Objects.isNull(user)) {
             return Response.ofFail("userId invalid.");
         }
 
         // find permission
-        List<String> roleList = xxlBootUser.getType()==1? List.of("admin") : null;
-        List<String> permissionList = StringTool.isNotBlank(xxlBootUser.getPermissionBiz())
-                ? Arrays.asList(StringTool.tokenizeToArray(xxlBootUser.getPermissionBiz(), ","))
+        List<String> roleList = user.getType()==1? List.of("admin") : null;
+        List<String> permissionList = StringTool.isNotBlank(user.getPermissionBiz())
+                ? Arrays.asList(StringTool.tokenizeToArray(user.getPermissionBiz(), ","))
                 :null;
 
         // build LoginInfo
-        LoginInfo loginInfo = new LoginInfo(userId, xxlBootUser.getToken());
-        loginInfo.setUserName(xxlBootUser.getUserName());
+        LoginInfo loginInfo = new LoginInfo(userId, user.getToken());
+        loginInfo.setUserName(user.getUserName());
         loginInfo.setRoleList(roleList);
         loginInfo.setPermissionList(permissionList);
 

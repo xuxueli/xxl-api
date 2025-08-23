@@ -26,7 +26,7 @@
 					<div class="col-xs-8">
 		              	<div class="checkbox icheck">
 		                	<label>
-		                  		<input type="checkbox" name="ifRemember" > Remember Me
+		                  		<input type="checkbox" name="ifRemember" > 记住密码
 		                	</label>
 						</div>
 		            </div><!-- /.col -->

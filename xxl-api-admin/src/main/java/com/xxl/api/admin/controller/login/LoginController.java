@@ -6,13 +6,13 @@ import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.core.StringTool;
+import com.xxl.tool.encrypt.SHA256Tool;
 import com.xxl.tool.id.UUIDTool;
 import com.xxl.tool.response.Response;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,8 +63,8 @@ public class LoginController {
 			return Response.ofFail("账号或密码错误");
 		}
 
-		String passwordMd5 = DigestUtils.md5DigestAsHex(password.getBytes());
-		if (!passwordMd5.equals(xxlApiUser.getPassword())) {
+		String passwordHash = SHA256Tool.sha256(password);
+		if (!passwordHash.equals(xxlApiUser.getPassword())) {
 			return Response.ofFail( "账号或密码错误" );
 		}
 

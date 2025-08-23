@@ -109,8 +109,8 @@ CREATE TABLE `xxl_api_test_history` (
 CREATE TABLE `xxl_api_user` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `username` varchar(50) NOT NULL COMMENT '账号',
-    `password` varchar(50) NOT NULL COMMENT '密码',
-    `token` varchar(200) DEFAULT NULL COMMENT '登录token',
+    `password` varchar(100) NOT NULL COMMENT '密码加密信息',
+    `token` varchar(100) DEFAULT NULL COMMENT '登录token',
     `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '用户类型：0-普通用户、1-超级管理员',
     `permission_biz` varchar(200) DEFAULT NULL COMMENT '业务线权限，多个逗号分隔',
     PRIMARY KEY (`id`)
@@ -119,8 +119,8 @@ CREATE TABLE `xxl_api_user` (
 ## —————————————————————— init data ——————————————————
 
 INSERT INTO `xxl_api_user`  (`id`, `username`, `password`, `token`, `type`, `permission_biz`)
-VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', null,'1', ''),
-       ('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', null,'0', '1');
+VALUES ('1', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', null,'1', ''),
+       ('2', 'user', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', null,'0', '1');
 
 INSERT INTO `xxl_api_datatype` (`id`, `name`, `about`, `biz_id`, `owner`)
 VALUES  ('1', 'String', '字符串类型', '1', null),

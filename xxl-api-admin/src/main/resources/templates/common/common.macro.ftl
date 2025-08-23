@@ -68,7 +68,7 @@
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="font-weight: bold;">
-                            欢迎 ${xxl_sso_user.userName}
+                            欢迎 ${xxl_sso_user.userName!}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">

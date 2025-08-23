@@ -9,11 +9,11 @@ import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.core.StringTool;
+import com.xxl.tool.encrypt.SHA256Tool;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,8 +84,8 @@ public class XxlApiUserController {
 		}
 
 		// passowrd md5
-		String md5Password = DigestUtils.md5DigestAsHex(xxlApiUser.getPassword().getBytes());
-		xxlApiUser.setPassword(md5Password);
+		String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
+		xxlApiUser.setPassword(passwordHash);
 
 		int ret = xxlApiUserDao.add(xxlApiUser);
 		return (ret>0)?Response.ofSuccess():Response.ofFail();
@@ -113,8 +113,8 @@ public class XxlApiUserController {
 				return Response.ofFail( "密码长度限制为4~50");
 			}
 			// passowrd md5
-			String md5Password = DigestUtils.md5DigestAsHex(xxlApiUser.getPassword().getBytes());
-			existUser.setPassword(md5Password);
+			String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
+			existUser.setPassword(passwordHash);
 		}
 		existUser.setType(xxlApiUser.getType());
 
@@ -153,13 +153,13 @@ public class XxlApiUserController {
 		if (!(password.length()>=4 && password.length()<=100)) {
 			return Response.ofFail( "密码长度限制为4~50");
 		}
-		String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+		String passwordHash = SHA256Tool.sha256(password);
 
 		// update pwd
 		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
 
 		XxlApiUser existUser = xxlApiUserDao.findByUserName(loginInfoResponse.getData().getUserName());
-		existUser.setPassword(md5Password);
+		existUser.setPassword(passwordHash);
 		xxlApiUserDao.update(existUser);
 
 		return Response.ofSuccess();

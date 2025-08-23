@@ -4,7 +4,6 @@ import com.xxl.api.admin.mapper.XxlApiUserMapper;
 import com.xxl.api.admin.model.XxlApiUser;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.sso.core.store.LoginStore;
-import com.xxl.sso.core.token.TokenHelper;
 import com.xxl.tool.core.StringTool;
 import com.xxl.tool.response.Response;
 import jakarta.annotation.Resource;
@@ -31,16 +30,12 @@ public class SimpleLoginStore implements LoginStore {
     @Override
     public Response<String> set(LoginInfo loginInfo) {
 
-        // build token
-        Response<String> tokenResponse = TokenHelper.generateToken(loginInfo);
-        if (!tokenResponse.isSuccess()) {
-            return Response.ofFail("generate token fail");
-        }
-        String token = tokenResponse.getData();
+        // parse token-signature
+        String token_sign = loginInfo.getSignature();
 
         // write token by UserId
-        int ret = xxlApiUserMapper.updateToken(Integer.valueOf(loginInfo.getUserId()), token);
-        return ret > 0 ? Response.ofSuccess(token) : Response.ofFail("set token fail");
+        int ret = xxlApiUserMapper.updateToken(Integer.parseInt(loginInfo.getUserId()), token_sign);
+        return ret > 0 ? Response.ofSuccess() : Response.ofFail("set token fail");
     }
 
     @Override
@@ -50,7 +45,7 @@ public class SimpleLoginStore implements LoginStore {
 
     @Override
     public Response<String> remove(String userId) {
-        // delete token by UserId
+        // delete token-signature
         int ret = xxlApiUserMapper.updateToken(Integer.valueOf(userId), "");
         return ret > 0 ? Response.ofSuccess() : Response.ofFail("remove token fail");
     }
@@ -61,16 +56,10 @@ public class SimpleLoginStore implements LoginStore {
     @Override
     public Response<LoginInfo> get(String userId) {
 
-        // load user by UserId
-        XxlApiUser xxlBootUser = xxlApiUserMapper.findById(Integer.valueOf(userId));
+        // load login-user
+        XxlApiUser xxlBootUser = xxlApiUserMapper.findById(Integer.parseInt(userId));
         if (Objects.isNull(xxlBootUser)) {
             return Response.ofFail("userId invalid.");
-        }
-
-        // parse token of UserId
-        LoginInfo loginInfo = TokenHelper.parseToken(xxlBootUser.getToken());
-        if (loginInfo==null) {
-            return Response.ofFail("token invalid.");
         }
 
         // find permission
@@ -79,7 +68,8 @@ public class SimpleLoginStore implements LoginStore {
                 ? Arrays.asList(StringTool.tokenizeToArray(xxlBootUser.getPermissionBiz(), ","))
                 :null;
 
-        // fill data of loginInfo
+        // build LoginInfo
+        LoginInfo loginInfo = new LoginInfo(userId, xxlBootUser.getToken());
         loginInfo.setUserName(xxlBootUser.getUserName());
         loginInfo.setRoleList(roleList);
         loginInfo.setPermissionList(permissionList);

@@ -83,7 +83,7 @@ public class XxlApiUserController {
 			return Response.ofFail( "“登录账号”重复，请更换");
 		}
 
-		// passowrd md5
+		// passowrd hash
 		String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
 		xxlApiUser.setPassword(passwordHash);
 
@@ -112,7 +112,7 @@ public class XxlApiUserController {
 			if (!(xxlApiUser.getPassword().length()>=4 && xxlApiUser.getPassword().length()<=50)) {
 				return Response.ofFail( "密码长度限制为4~50");
 			}
-			// passowrd md5
+			// passowrd hash
 			String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
 			existUser.setPassword(passwordHash);
 		}

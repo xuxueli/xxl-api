@@ -360,9 +360,10 @@ UPDATE xxl_api_user t SET t.password = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a
 - 2、【优化】登录态持久化逻辑调整，简化代码逻辑；
 - 3、【优化】异常页面处理逻辑优化，新增兜底落地页配置；
 - 4、【优化】登录信息页面空值处理优化，避免空值影响ftl渲染；
-- 5、【ING】支持设置RequestBody类型，raw类型参数；
-- 6、【ING】支持swagger、postman等格式接口数据导入；
-- 7、【ING】支持API分享；
+- 5、【优化】系统日志调整，支持启动时指定 -DLOG_HOME 参数自定义日志位置；同时优化日志格式提升易读性；
+- 6、【ING】支持设置RequestBody类型，raw类型参数；
+- 7、【ING】支持swagger、postman等格式接口数据导入；
+- 8、【ING】支持API分享；
 
 
 ### TODO LIST

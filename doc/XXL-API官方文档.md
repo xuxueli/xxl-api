@@ -363,6 +363,10 @@ UPDATE xxl_api_user t SET t.password = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a
 - 5、【优化】系统日志调整，支持启动时指定 -DLOG_HOME 参数自定义日志位置；同时优化日志格式提升易读性；
 
 ### v1.5.0 Release Notes[ING]
+- 1、【ING】UI框架重构升级，提升交互体验；
+- 2、【升级】升级依赖版本，如 springboot、spring 等；
+
+### v1.6.0 Release Notes[ING]
 - 1、【ING】支持设置RequestBody类型，raw类型参数；
 - 2、【ING】支持swagger、postman等格式接口数据导入；
 - 3、【ING】支持API分享；

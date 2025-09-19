@@ -347,7 +347,7 @@ Mock数据属性说明：
 - 2、【升级】升级多项依赖至较新版本，如xxl-sso、jakarta、spring等，适配JDK17；
 
 
-### v1.3.1 Release Notes[迭代中]
+### v1.4.0 Release Notes[2025-09-20]
 - 1、【安全】登录安全升级，密码加密处理算法从Md5改为Sha256；(用户表password字段需要调整长度，执行如下命令)
 ```
 // 1、用户表password字段需要调整长度，执行如下命令
@@ -361,9 +361,11 @@ UPDATE xxl_api_user t SET t.password = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a
 - 3、【优化】异常页面处理逻辑优化，新增兜底落地页配置；
 - 4、【优化】登录信息页面空值处理优化，避免空值影响ftl渲染；
 - 5、【优化】系统日志调整，支持启动时指定 -DLOG_HOME 参数自定义日志位置；同时优化日志格式提升易读性；
-- 6、【ING】支持设置RequestBody类型，raw类型参数；
-- 7、【ING】支持swagger、postman等格式接口数据导入；
-- 8、【ING】支持API分享；
+
+### v1.5.0 Release Notes[ING]
+- 1、【ING】支持设置RequestBody类型，raw类型参数；
+- 2、【ING】支持swagger、postman等格式接口数据导入；
+- 3、【ING】支持API分享；
 
 
 ### TODO LIST

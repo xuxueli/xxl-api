@@ -46,7 +46,7 @@ public class SimpleLoginStore implements LoginStore {
     @Override
     public Response<String> remove(String userId) {
         // delete token-signature
-        int ret = xxlApiUserMapper.updateToken(Integer.valueOf(userId), "");
+        int ret = xxlApiUserMapper.updateToken(Integer.parseInt(userId), "");
         return ret > 0 ? Response.ofSuccess() : Response.ofFail("remove token fail");
     }
 
@@ -65,7 +65,7 @@ public class SimpleLoginStore implements LoginStore {
         // find permission
         List<String> roleList = user.getType()==1? List.of("admin") : null;
         List<String> permissionList = StringTool.isNotBlank(user.getPermissionBiz())
-                ? Arrays.asList(StringTool.tokenizeToArray(user.getPermissionBiz(), ","))
+                ? StringTool.split(user.getPermissionBiz(), ",")
                 :null;
 
         // build LoginInfo

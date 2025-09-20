@@ -181,6 +181,7 @@
 
 <!-- 6-script start -->
 <@netCommon.commonScript />
+<#-- admin -->
 <script src="${request.contextPath}/static/biz/common/admin.tab.js"></script>
 <script src="${request.contextPath}/static/biz/common/admin.common.js"></script>
 <script>

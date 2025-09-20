@@ -206,7 +206,7 @@
 <script src="${request.contextPath}/static/adminlte/bower_components/select2/js/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
-<#-- biz common -->
+<#-- admin -->
 <script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
 <script>
     $(function() {

@@ -1,5 +1,6 @@
 package com.xxl.api.admin.controller.base;
 
+import com.xxl.api.admin.constant.Consts;
 import com.xxl.api.admin.model.dto.XxlBootResourceDTO;
 import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;
@@ -41,7 +42,7 @@ public class IndexController {
 	private List<XxlBootResourceDTO> getResourceList(HttpServletRequest request) {
 		// init menu-list
 		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr( request);
-		if (XxlSsoHelper.hasRole(loginInfoResponse.getData(), "ADMIN").isSuccess()) {
+		if (XxlSsoHelper.hasRole(loginInfoResponse.getData(), Consts.ROLE_ADMIN).isSuccess()) {
 			return Arrays.asList(
 					new XxlBootResourceDTO(1, 0, "项目管理",1, "", "/project", "fa fa-circle-o text-red", 1, 0, null),
 					new XxlBootResourceDTO(2, 0, "数据类型",1, "", "/datatype", "fa fa-circle-o text-red", 2, 0, null),

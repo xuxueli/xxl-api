@@ -233,7 +233,7 @@
 
 <!-- 3-script start -->
 <@netCommon.commonScript />
-<#-- biz common -->
+<#-- admin -->
 <script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
 <script>
     $(function() {

@@ -1,11 +1,15 @@
 package com.xxl.api.admin.controller.biz;
 
+import com.xxl.api.admin.constant.Consts;
 import com.xxl.api.admin.model.XxlApiBiz;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
 import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
 import com.xxl.api.admin.mapper.XxlApiProjectMapper;
+import com.xxl.api.admin.util.I18nUtil;
 import com.xxl.sso.core.annotation.XxlSso;
+import com.xxl.tool.core.CollectionTool;
 import com.xxl.tool.core.StringTool;
+import com.xxl.tool.response.PageModel;
 import com.xxl.tool.response.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,15 +37,15 @@ public class BizController {
     private XxlApiDataTypeMapper xxlApiDataTypeDao;
 
     @RequestMapping
-    @XxlSso(role = "admin")
+    @XxlSso(role = Consts.ROLE_ADMIN)
     public String index(Model model) {
         return "biz/biz.list";
     }
 
     @RequestMapping("/pageList")
     @ResponseBody
-    @XxlSso(role = "admin")
-    public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
+    @XxlSso(role = Consts.ROLE_ADMIN)
+    public Response<PageModel<XxlApiBiz>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
                                         @RequestParam(required = false, defaultValue = "10") int length,
                                         String bizName) {
         // page list
@@ -49,16 +53,16 @@ public class BizController {
         int list_count = xxlApiBizDao.pageListCount(start, length, bizName);
 
         // package result
-        Map<String, Object> maps = new HashMap<String, Object>();
-        maps.put("recordsTotal", list_count);		// 总记录数
-        maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
-        maps.put("data", list);  					// 分页列表
-        return maps;
+        PageModel<XxlApiBiz> pageModel = new PageModel<>();
+        pageModel.setPageData( list);
+        pageModel.setTotalCount( list_count);
+
+        return Response.ofSuccess(pageModel);
     }
 
     @RequestMapping("/add")
     @ResponseBody
-    @XxlSso(role = "admin")
+    @XxlSso(role = Consts.ROLE_ADMIN)
     public Response<String> add(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail( "业务线名称不可为空");
@@ -70,7 +74,7 @@ public class BizController {
 
     @RequestMapping("/update")
     @ResponseBody
-    @XxlSso(role = "admin")
+    @XxlSso(role = Consts.ROLE_ADMIN)
     public Response<String> update(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail("业务线名称不可为空");
@@ -82,9 +86,19 @@ public class BizController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    @XxlSso(role = "admin")
-    public Response<String> delete(int id) {
+    @XxlSso(role = Consts.ROLE_ADMIN)
+    public Response<String> delete(@RequestParam("ids[]") List<Integer> ids) {
 
+        // valid
+        if (CollectionTool.isEmpty(ids)) {
+            return Response.ofFail(I18nUtil.getString("system_param_empty"));
+        }
+        if (ids.size() != 1) {
+            return Response.ofFail("只允许删除单条数据");
+        }
+        int id = ids.get(0);
+
+        // valid
         int count = xxlApiProjectDao.pageListCount(0, 10, null, id);
         if (count > 0) {
             return Response.ofFail("拒绝删除，业务线下存在项目");

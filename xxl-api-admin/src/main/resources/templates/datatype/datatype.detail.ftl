@@ -133,7 +133,7 @@
 
 <!-- 3-script start -->
 <@netCommon.commonScript />
-<#-- admin util -->
+<#-- admin -->
 <script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
 <!-- 3-script end -->
 

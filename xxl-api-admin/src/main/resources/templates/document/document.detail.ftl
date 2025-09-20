@@ -405,7 +405,7 @@
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/marked.min.js"></script>
 <script src="${request.contextPath}/static/plugins/editor.md-1.5.0/lib/prettify.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
-<#-- biz common -->
+<#-- admin -->
 <script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
 <script>
     $(function() {

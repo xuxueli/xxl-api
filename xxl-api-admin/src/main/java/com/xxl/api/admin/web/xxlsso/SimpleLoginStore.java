@@ -1,5 +1,6 @@
 package com.xxl.api.admin.web.xxlsso;
 
+import com.xxl.api.admin.constant.Consts;
 import com.xxl.api.admin.mapper.XxlApiUserMapper;
 import com.xxl.api.admin.model.XxlApiUser;
 import com.xxl.sso.core.model.LoginInfo;
@@ -63,7 +64,7 @@ public class SimpleLoginStore implements LoginStore {
         }
 
         // find permission
-        List<String> roleList = user.getType()==1? List.of("ADMIN") : null;
+        List<String> roleList = user.getType()==1? List.of(Consts.ROLE_ADMIN) : null;
         List<String> permissionList = StringTool.isNotBlank(user.getPermissionBiz())
                 ? StringTool.split(user.getPermissionBiz(), ",")
                 :null;

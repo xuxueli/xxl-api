@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API管理平台</title>
-    <link rel="shortcut icon" href="${request.contextPath}/static/favicon.ico" type="image/x-icon" />
+    <#-- import macro -->
     <#import "../common/common.macro.ftl" as netCommon>
+
+    <!-- 1-style start -->
     <@netCommon.commonStyle />
+    <!-- 1-style end -->
+
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && cookieMap["adminlte_settings"]?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
+<body class="hold-transition" style="background-color: #ecf0f5;">
 <div class="wrapper">
-    <!-- header -->
-<@netCommon.commonHeader />
-    <!-- left -->
-<@netCommon.commonLeft "datatype" />
+    <section class="content">
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>数据类型详情</h1>
-        </section>
+        <!-- 2-content start -->
 
-        <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
 
                 <#--基础信息-->
@@ -30,7 +24,7 @@
 
                         <#if hasBizPermission>
                             <div class="box-tools pull-right">
-                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}'" >前往修改页面</button>
+                                <button class="btn btn-default btn-xs" type="button" onclick="javascript:openTab('${request.contextPath}/datatype/updateDataTypePage?dataTypeId=${apiDataType.id}', '修改数据类型', true)" >前往修改页面</button>
                             </div>
                         </#if>
                     </div>
@@ -77,7 +71,7 @@
                                 <tr>
                                     <td>${field.fieldName}</td>
                                     <td>
-                                        <a href="${request.contextPath}/datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}" target="_blank">
+                                        <a href="javascript:;" onclick="javascript:openTab('${request.contextPath}/datatype/dataTypeDetail?dataTypeId=${field.fieldDatatypeId}', '查看数据类型', false)" >
                                             ${field.fieldDatatype.name}
                                             <#if field.fieldType==1>[]</#if>
                                         </a>
@@ -132,15 +126,16 @@
 
             </form>
 
-        </section>
+        <!-- 2-content end -->
 
-    </div>
-
-    <!-- footer -->
-<@netCommon.commonFooter />
+    </section>
 </div>
 
-
+<!-- 3-script start -->
 <@netCommon.commonScript />
+<#-- admin util -->
+<script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
+<!-- 3-script end -->
+
 </body>
 </html>

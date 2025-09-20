@@ -63,7 +63,7 @@ public class SimpleLoginStore implements LoginStore {
         }
 
         // find permission
-        List<String> roleList = user.getType()==1? List.of("admin") : null;
+        List<String> roleList = user.getType()==1? List.of("ADMIN") : null;
         List<String> permissionList = StringTool.isNotBlank(user.getPermissionBiz())
                 ? StringTool.split(user.getPermissionBiz(), ",")
                 :null;

@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API管理平台</title>
-    <link rel="shortcut icon" href="${request.contextPath}/static/favicon.ico" type="image/x-icon" />
+    <#-- import macro -->
     <#import "../common/common.macro.ftl" as netCommon>
-    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/select2/select2.min.css">
-    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/_all.css">
-    <link rel="stylesheet" href="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.css">
+
+    <!-- 1-style start -->
     <@netCommon.commonStyle />
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/bower_components/select2/css/select2.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/blue.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.css">
+    <style>
+        /* select2 */
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #d2d6de;
+            border-radius: 0;
+            height: 34px;
+            padding: 6px 12px;
+        }
+    </style>
+    <!-- 1-style end -->
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && cookieMap["adminlte_settings"]?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
+<body class="hold-transition" style="background-color: #ecf0f5;">
 <div class="wrapper">
-    <!-- header -->
-<@netCommon.commonHeader />
-    <!-- left -->
-<@netCommon.commonLeft "projectList" />
+    <section class="content">
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>接口测试</h1>
-        </section>
+        <!-- 2-content start -->
 
-        <section class="content">
             <form class="form-horizontal" id="ducomentForm" >
                 <#--基础信息-->
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">基础信息</h3>
                         <div class="box-tools pull-right">
-                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:window.location.href='${request.contextPath}/document/detailPage?id=${document.id}'" >返回接口详情页</button>
+                            <button class="btn btn-default btn-xs" type="button" onclick="javascript:openTab('${request.contextPath}/document/detailPage?id=${document.id}', '查看接口信息', false)" >返回接口详情页</button>
                         </div>
                     </div>
 
@@ -192,19 +194,292 @@
 
             </form>
 
-        </section>
 
-    </div>
+        <!-- 2-content end -->
 
-    <!-- footer -->
-<@netCommon.commonFooter />
+    </section>
 </div>
 
-<@netCommon.commonScript />
 
-<script src="${request.contextPath}/static/adminlte/plugins/select2/select2.min.js"></script>
+<!-- 3-script start -->
+<@netCommon.commonScript />
+<script src="${request.contextPath}/static/adminlte/bower_components/select2/js/select2.min.js"></script>
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
-<script src="${request.contextPath}/static/js/test.index.1.js"></script>
+<#-- biz common -->
+<script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
+<script>
+    $(function() {
+
+        // base init
+        $(".select2").select2();
+        $(".select2_tag").select2({tags: true});
+
+        $('.iCheck').iCheck({
+            labelHover : false,
+            cursor : true,
+            checkboxClass : 'icheckbox_square-blue',
+            radioClass : 'iradio_square-blue',
+            increaseArea : '20%'
+        });
+
+        /**
+         * 请求头部，新增一行
+         */
+        $('#requestHeaders_add').click(function () {
+            var html = $('#requestHeaders_example').html();
+            $('#requestHeaders_parent').append(html);
+
+            $("#requestHeaders_parent .select2_tag_new").each(function () {
+                var $select2 = $(this);
+                $($select2).removeClass('select2_tag_new');
+                $($select2).addClass('select2_tag');
+                $($select2).select2({tags: true});
+            });
+        });
+        /**
+         * 请求头部，删除一行
+         */
+        $('#requestHeaders_parent').on('click', '.delete',function () {
+            $(this).parents('.requestHeaders_item').remove();
+        });
+
+        /**
+         * 请求参数，新增一行
+         */
+        $('#queryParams_add').click(function () {
+            var html = $('#queryParams_example').html();
+            $('#queryParams_parent').append(html);
+
+            $("#queryParams_parent .select2_tag_new").each(function () {
+                var $select2 = $(this);
+                $($select2).removeClass('select2_tag_new');
+                $($select2).addClass('select2_tag');
+                $($select2).select2();
+            });
+        });
+        /**
+         * 请求参数，删除一行
+         */
+        $('#queryParams_parent').on('click', '.delete',function () {
+            $(this).parents('.queryParams_item').remove();
+        });
+
+        /**
+         * projectBaseUrlUpdate
+         */
+        $('#projectBaseUrlUpdate').change(function () {
+            $('#requestUrl').val($(this).val());
+        });
+        $('#projectBaseUrlUpdate').change();
+
+        /**
+         * 运行
+         */
+        $('#run').click(function () {
+
+            // param
+            var requestMethod = $('#requestMethod').val();
+            var requestUrl = $('#requestUrl').val();
+            var respType = $('#respType_parent input[name=respType]:checked').val();
+
+            if (!requestUrl) {
+                layer.open({
+                    icon: '2',
+                    content: '请输入"接口URL"'
+                });
+                return;
+            }
+
+            // request headers
+            var requestHeaderList = new Array();
+            if ($('#requestHeaders_parent').find('.requestHeaders_item').length > 0) {
+                $('#requestHeaders_parent').find('.requestHeaders_item').each(function () {
+                    var key = $(this).find('.key').val();
+                    var value = $(this).find('.value').val();
+                    if (key) {
+                        requestHeaderList.push({
+                            'key':key,
+                            'value':value
+                        });
+                    } else {
+                        if (value) {
+                            layer.open({
+                                icon: '2',
+                                content: '请检查"请求头部"数据是否填写完整'
+                            });
+                            return;
+                        }
+                    }
+                });
+            }
+            var requestHeaders = JSON.stringify(requestHeaderList);
+
+            // query params
+            var queryParamList = new Array();
+            if ($('#queryParams_parent').find('.queryParams_item').length > 0) {
+                $('#queryParams_parent').find('.queryParams_item').each(function () {
+                    var key = $(this).find('.key').val();
+                    var value = $(this).find('.value').val();
+                    if (key) {
+                        queryParamList.push({
+                            'key':key,
+                            'value':value
+                        });
+                    } else {
+                        if (desc) {
+                            layer.open({
+                                icon: '2',
+                                content: '请检查"请求参数"数据是否填写完整'
+                            });
+                            return;
+                        }
+                    }
+                });
+            }
+            var queryParams = JSON.stringify(queryParamList);
+
+            // final params
+            var params = {
+                'requestMethod':requestMethod,
+                'requestUrl':requestUrl,
+                'requestHeaders':requestHeaders,
+                'queryParams':queryParams,
+                'respType':respType
+            }
+
+
+            $.post(base_url + "/test/run", params, function(data, status) {
+                var $respContent = $('#respContent');
+                if (data.code == "200") {
+                    $($respContent).text(data.data);
+
+                    if ('JSON'==respType || 'JSONP'==respType) {
+                        var json = eval('('+ data.data +')');
+                        $('#respContent').JSONView(json, { collapsed: false, nl2br: true, recursive_collapser: true });
+                    }
+                } else {
+                    layer.open({
+                        icon: '2',
+                        content: (data.msg||'请求失败')
+                    });
+                }
+            });
+
+        });
+
+
+        /**
+         * 保存
+         */
+        $('#save').click(function () {
+            // param
+            var requestMethod = $('#requestMethod').val();
+            var requestUrl = $('#requestUrl').val();
+            var respType = $('#respType_parent input[name=respType]:checked').val();
+
+            if (!requestUrl) {
+                layer.open({
+                    icon: '2',
+                    content: '请输入"接口URL"'
+                });
+                return;
+            }
+
+            // request headers
+            var requestHeaderList = new Array();
+            if ($('#requestHeaders_parent').find('.requestHeaders_item').length > 0) {
+                $('#requestHeaders_parent').find('.requestHeaders_item').each(function () {
+                    var key = $(this).find('.key').val();
+                    var value = $(this).find('.value').val();
+                    if (key) {
+                        requestHeaderList.push({
+                            'key':key,
+                            'value':value
+                        });
+                    } else {
+                        if (value) {
+                            layer.open({
+                                icon: '2',
+                                content: '请检查"请求头部"数据是否填写完整'
+                            });
+                            return;
+                        }
+                    }
+                });
+            }
+            var requestHeaders = JSON.stringify(requestHeaderList);
+
+            // query params
+            var queryParamList = new Array();
+            if ($('#queryParams_parent').find('.queryParams_item').length > 0) {
+                $('#queryParams_parent').find('.queryParams_item').each(function () {
+                    var key = $(this).find('.key').val();
+                    var value = $(this).find('.value').val();
+                    if (key) {
+                        queryParamList.push({
+                            'key':key,
+                            'value':value
+                        });
+                    } else {
+                        if (desc) {
+                            layer.open({
+                                icon: '2',
+                                content: '请检查"请求参数"数据是否填写完整'
+                            });
+                            return;
+                        }
+                    }
+                });
+            }
+            var queryParams = JSON.stringify(queryParamList);
+
+            // id
+            var documentId = $(this).attr('documentId');
+            var testId = $(this).attr('testId');
+
+            // final params
+            var params = {
+                'requestMethod':requestMethod,
+                'requestUrl':requestUrl,
+                'requestHeaders':requestHeaders,
+                'queryParams':queryParams,
+                'respType':respType,
+                'documentId':documentId,
+                'id':testId
+            }
+
+            // url
+            var url = base_url + "/test/add";
+            if (testId > 0) {
+                url = base_url + "/test/update";
+            }
+
+            $.post(url, params, function(data, status) {
+                if (data.code == "200") {
+                    if (testId == 0 && data.data>0) {
+                        $('#save').attr('testId', data.data);
+                    }
+                    layer.open({
+                        icon: '1',
+                        content: '保存成功'
+                    });
+                } else {
+                    layer.open({
+                        icon: '2',
+                        content: '保存失败'
+                    });
+                }
+            });
+        });
+
+
+
+
+    });
+
+</script>
+<!-- 3-script end -->
+
 </body>
 </html>

@@ -9,7 +9,7 @@
 
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && cookieMap["adminlte_settings"]?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
+<body class="hold-transition skin-blue sidebar-mini" >
 <div class="wrapper">
 	<!-- header -->
 	<@netCommon.commonHeader />

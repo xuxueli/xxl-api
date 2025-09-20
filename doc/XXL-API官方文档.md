@@ -362,9 +362,11 @@ UPDATE xxl_api_user t SET t.password = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a
 - 4、【优化】登录信息页面空值处理优化，避免空值影响ftl渲染；
 - 5、【优化】系统日志调整，支持启动时指定 -DLOG_HOME 参数自定义日志位置；同时优化日志格式提升易读性；
 
-### v1.5.0 Release Notes[ING]
-- 1、【ING】UI框架重构升级，提升交互体验；
-- 2、【升级】升级依赖版本，如 springboot、spring 等；
+### v1.5.0 Release Notes[2025-09-21]
+- 1、【重构】UI框架重构升级，提升交互体验；
+- 2、【新增】新增国际化组件，多语言支持；
+- 3、【优化】调整资源加载逻辑，移除不必要的拦截器逻辑，提升页面加载效率；
+- 4、【升级】升级依赖版本，如 springboot、spring 等；
 
 ### v1.6.0 Release Notes[ING]
 - 1、【ING】支持设置RequestBody类型，raw类型参数；

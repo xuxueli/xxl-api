@@ -5,6 +5,7 @@ import com.xxl.api.admin.model.dto.XxlBootResourceDTO;
 import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
+import com.xxl.tool.core.CollectionTool;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,23 +43,28 @@ public class IndexController {
 	private List<XxlBootResourceDTO> getResourceList(HttpServletRequest request) {
 		// init menu-list
 		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr( request);
+
+		// resource list
+		List<XxlBootResourceDTO> resourceList = CollectionTool.newArrayList(
+				new XxlBootResourceDTO(1, 0, "项目管理",1, "", "/project", "fa fa-server", 1, 0, null),
+				new XxlBootResourceDTO(2, 0, "数据类型",1, "", "/datatype", "fa fa-database", 2, 0, null),
+				/*new XxlBootResourceDTO(3, 0, "业务线管理",1, "", "/biz", "fa fa-circle-o text-red", 3, 0, null),
+				new XxlBootResourceDTO(4, 0, "用户管理",1, "", "/user", "fa fa-circle-o text-red", 4, 0,null),*/
+				new XxlBootResourceDTO(5, 0, "帮助中心",1, "", "/help", "fa fa-book", 5, 0, null)
+		);
+
+		// filter by permission
 		if (XxlSsoHelper.hasRole(loginInfoResponse.getData(), Consts.ROLE_ADMIN).isSuccess()) {
-			return Arrays.asList(
-					new XxlBootResourceDTO(1, 0, "项目管理",1, "", "/project", "fa fa-circle-o text-red", 1, 0, null),
-					new XxlBootResourceDTO(2, 0, "数据类型",1, "", "/datatype", "fa fa-circle-o text-red", 2, 0, null),
-					new XxlBootResourceDTO(3, 0, "业务线管理",1, "", "/biz", "fa fa-circle-o text-red", 3, 0, null),
-					new XxlBootResourceDTO(4, 0, "用户管理",1, "", "/user", "fa fa-circle-o text-red", 4, 0,null),
-					new XxlBootResourceDTO(5, 0, "帮助中心",1, "", "/help", "fa fa-circle-o text-red", 5, 0, null)
-			);
-		} else {
-			return Arrays.asList(
-					new XxlBootResourceDTO(1, 0, "项目管理",1, "", "/project", "fa fa-circle-o text-red", 1, 0, null),
-					new XxlBootResourceDTO(2, 0, "数据类型",1, "", "/datatype", "fa fa-circle-o text-red", 2, 0, null),
-					/*new XxlBootResourceDTO(3, 0, "业务线管理",1, "", "/biz", "fa fa-circle-o text-red", 3, 0, null),
-					new XxlBootResourceDTO(4, 0, "用户管理",1, "", "/user", "fa fa-circle-o text-red", 4, 0,null),*/
-					new XxlBootResourceDTO(5, 0, "帮助中心",1, "", "/help", "fa fa-circle-o text-red", 5, 0, null)
-			);
+			resourceList.addAll(Arrays.asList(
+				new XxlBootResourceDTO(3, 0, "业务线管理",1, "", "/biz", "fa fa-group", 3, 0, null),
+				new XxlBootResourceDTO(4, 0, "用户管理",1, "", "/user", "fa fa-user", 4, 0,null)
+			));
 		}
+
+		// order
+		resourceList.sort((o1, o2) -> o1.getOrder() - o2.getOrder());
+
+		return resourceList;
 	}
 
 	/*@RequestMapping("/dashboard")

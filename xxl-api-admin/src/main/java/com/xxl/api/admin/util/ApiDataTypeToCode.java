@@ -81,9 +81,9 @@ public class ApiDataTypeToCode {
 
         // 类注释
         sb.append("/**\r\n");
-        sb.append("*\t" + apiDataTypeDTO.getAbout()+ "\r\n");
+        sb.append("*    " + apiDataTypeDTO.getAbout()+ "\r\n");
         sb.append("*\r\n");
-        sb.append("*\tCreated by XXL-API on "+ DateTool.formatDate(new Date()) +".\r\n");
+        sb.append("*    Created by XXL-API on "+ DateTool.formatDate(new Date()) +".\r\n");
         sb.append("*/ \r\n");
 
         // 实体部分
@@ -98,7 +98,7 @@ public class ApiDataTypeToCode {
                 if (field.getFieldType() == 1) {
                     fieldTypeItem = "List<"+ fieldTypeItem +">";
                 }
-                sb.append("\tprivate " + fieldTypeItem + " " + fieldNameItem + ";\r\n");
+                sb.append("    private " + fieldTypeItem + " " + fieldNameItem + ";\r\n");
 
             }
             sb.append("\r\n");
@@ -115,12 +115,12 @@ public class ApiDataTypeToCode {
                     fieldTypeItem = "List<"+ fieldTypeItem +">";
                 }
 
-                sb.append("\tpublic void set" + fieldNameItemUpFirst + "(" + fieldTypeItem + " " + fieldNameItem + "){\r\n");
-                sb.append("\t\tthis." + fieldNameItem + "=" + fieldNameItem + ";\r\n");
-                sb.append("\t}\r\n");
-                sb.append("\tpublic " + fieldTypeItem + " get" + fieldNameItemUpFirst + "(){\r\n");
-                sb.append("\t\treturn this." + fieldNameItem + ";\r\n");
-                sb.append("\t}\r\n");
+                sb.append("    public void set" + fieldNameItemUpFirst + "(" + fieldTypeItem + " " + fieldNameItem + "){\r\n");
+                sb.append("        this." + fieldNameItem + "=" + fieldNameItem + ";\r\n");
+                sb.append("    }\r\n");
+                sb.append("    public " + fieldTypeItem + " get" + fieldNameItemUpFirst + "(){\r\n");
+                sb.append("        return this." + fieldNameItem + ";\r\n");
+                sb.append("    }\r\n");
 
             }
             sb.append("\r\n");

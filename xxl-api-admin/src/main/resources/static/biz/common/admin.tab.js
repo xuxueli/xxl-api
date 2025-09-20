@@ -76,7 +76,15 @@
                  * 全屏显示
                  */
                 $('#fullScreen').on('click', function () {
+                    let currentHash = window.location.hash;
                     $(document).toggleFullScreen();
+
+                    // reset
+                    if (currentHash) {
+                        setTimeout(function (){
+                            window.location.hash = currentHash;
+                        },50)
+                    }
                 });
 
                 /**

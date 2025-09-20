@@ -481,14 +481,14 @@
                     params.page = params.page || 1;
 
                     var itemList = [];//当数据对象不是{id:0,text:'ANTS'}这种形式的时候，可以使用类似此方法创建新的数组对象
-                    var arr = data.data;
+                    var arr = data.data.pageData;
                     for(i in arr){
                         itemList.push({id: arr[i].id, text: arr[i].name})
                     }
                     return {
-                        results: itemList,	//data.items
+                        results: itemList,
                         pagination: {
-                            more: (params.page * 30) < data.total_count
+                            more: (params.page * 30) < data.data.totalCount
                         }
                     };
                 },

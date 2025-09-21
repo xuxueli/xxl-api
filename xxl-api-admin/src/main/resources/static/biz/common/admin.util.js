@@ -1,17 +1,23 @@
+/*!
+* Admin Util for XXL-BOOT
+* ================
+*
+* 1、openTab：    打开新页面，兼容iframe和window.open
+*
+* @author       xuxueli
+* @repository   https://github.com/xuxueli/xxl-boot
+*/
 $(function(){
 
-    /**
-     * 1、openTab
-     */
 
     // ---------------------- openTab ----------------------
 
     /**
-     * 打开新页面
+     * 打开新页面，兼容iframe和window.open
      *
-     * @param tabSrc
-     * @param tabName
-     * @param isCloseCurrent: 是否关闭当前页
+     * @param tabSrc            tab访问地址
+     * @param tabName           tab展示名称
+     * @param isCloseCurrent    是否关闭当前页
      */
     window.openTab = function (tabSrc, tabName, isCloseCurrent) {
         // open tab

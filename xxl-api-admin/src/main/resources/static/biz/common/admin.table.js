@@ -1,21 +1,25 @@
+/*!
+* Admin Table for XXL-BOOT
+* ================
+*
+* 1、data_filter：
+*      searchBtn：       搜索
+*      resetBtn：        重置
+* 2、data_operation：
+*      action：
+*          - add：       新增
+*          - update：    更新
+*          - delete：    删除
+*      style：
+*          - selectOnlyOne： 单选
+*          - selectAny：     多选
+* 3、data_list
+*      mainDataTable：   表格
+*
+* @author       xuxueli
+* @repository   https://github.com/xuxueli/xxl-boot
+*/
 (function($) {
-
-    /**
-     * AdminTable核心组件：
-     * 1、data_filter：
-     *      searchBtn：搜索
-     *      resetBtn：重置
-     * 2、data_operation：
-     *      action：
-     *          - add：新增
-     *          - update：更新
-     *          - delete：删除
-     *      style：
-     *          - selectOnlyOne：单选
-     *          - selectAny：多选
-     * 3、data_list
-     *      mainDataTable：表格
-     */
 
     $.extend({
         adminTable: {

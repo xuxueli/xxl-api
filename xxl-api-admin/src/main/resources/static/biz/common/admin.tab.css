@@ -1,3 +1,4 @@
+/* admin tab start */
 html,
 body {
     height: 100% !important;
@@ -201,6 +202,7 @@ nav.page-tabs .page-tabs-content {
     border-top: solid 2px #d2d6de;
     padding: 8px 20px 12px 20px;
 }
+/* admin tab end */
 
 /* nprogress start */
 #nprogress .bar {

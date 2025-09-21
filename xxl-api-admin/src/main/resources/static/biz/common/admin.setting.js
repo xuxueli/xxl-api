@@ -1,12 +1,17 @@
+/*!
+* Admin Setting for XXL-BOOT
+* ================
+*
+* 1、logout：         退出登录
+* 2、updatePwd：      修改密码
+* 3、slideToTop：     回到顶部
+* 4、change skin：    切换皮肤
+* 5、menu/sidebar-toggle： 菜单/侧边来，展示切换
+*
+* @author       xuxueli
+* @repository   https://github.com/xuxueli/xxl-boot
+*/
 $(function(){
-
-    /**
-     * 1、logout
-     * 2、updatePwd
-     * 3、slideToTop
-     * 4、change skin
-     * 5、menu, sidebar-toggle
-     */
 
     // ---------------------- logout ----------------------
 

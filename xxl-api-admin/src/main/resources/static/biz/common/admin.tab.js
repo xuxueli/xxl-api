@@ -1,20 +1,24 @@
+/*!
+* Admin Tab for XXL-BOOT
+* ================
+*
+* 1、menu：
+*      - J_menuItem:        菜单
+* 2、tab：
+*      - J_tabLeft:         左移按扭
+*      - J_menuTabs:
+*          - J_menuTab :    菜单Tab
+*      - J_tabRight:        右移按扭
+*      - J_tabCloseOther:   关闭其他Tab
+*      - J_tabCloseAll :    关闭所有Tab
+* 3、contont
+*      - J_mainContent
+*          - J_iframe :     页面iframe
+*
+* @author       xuxueli
+* @repository   https://github.com/xuxueli/xxl-boot
+*/
 (function($) {
-
-    /**
-     * AdminTab核心组件：
-     * 1、menu：
-     *      - J_menuItem
-     * 2、tab：
-     *      - J_tabLeft
-     *      - J_menuTabs
-     *          - J_menuTab
-     *      - J_tabRight
-     *      - J_tabCloseOther
-     *      - J_tabCloseAll
-     * 3、contont
-     *      - J_mainContent
-     *          - J_iframe
-     */
 
     $.extend({
         adminTab: {

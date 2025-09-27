@@ -88,24 +88,25 @@
         // reset
         $('#data_filter .resetBtn').on('click', function(){
 
-            // resetHandler
+            // reset
             let resetHandler = options.resetHandler;
             if (typeof resetHandler === 'function') {
+                // resetHandler
                 resetHandler();
-                return;
-            }
+            } else {
+                // do reset
 
-            // do reset
-            // input
-            $('#data_filter input[type="text"]').val('');
-            // select
-            $('#data_filter select').each(function() {
-                $(this).prop('selectedIndex', 0);
-            });
-            // checkbox
-            $('#data_filter input[type="checkbox"]').prop('checked', false);
-            // radio
-            $('#data_filter input[type="radio"]').prop('checked', false);
+                // input
+                $('#data_filter input[type="text"]').val('');
+                // select
+                $('#data_filter select').each(function() {
+                    $(this).prop('selectedIndex', 0);
+                });
+                // checkbox
+                $('#data_filter input[type="checkbox"]').prop('checked', false);
+                // radio
+                $('#data_filter input[type="radio"]').prop('checked', false);
+            }
 
             // do search
             $('#data_filter .searchBtn').click();

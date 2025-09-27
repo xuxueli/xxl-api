@@ -24,13 +24,15 @@
     $.extend({
         adminTable: {
             table :null,
+            options: {},
             initTable: function(options) {
                 // parse param
                 this.table = $(options.table);
+                this.options = options;
 
                 // init filter
-                initSearch(this.table);
-                initReset();
+                initSearch(this.table, options);
+                initReset(options);
 
                 // init table
                 initAdminTable(this.table, options);
@@ -40,8 +42,8 @@
                 this.table = $(options.table);
 
                 // init filter
-                initSearch(this.table);
-                initReset();
+                initSearch(this.table, options);
+                initReset(options);
 
                 // init tree table
                 initAdminTreeTable(this.table, options);
@@ -61,18 +63,39 @@
     /**
      * init search
      */
-    function initSearch(table){
+    function initSearch(table, options){
+        // search
         $('#data_filter .searchBtn').on('click', function(){
+
+            // searchHandler
+            let searchHandler = options.searchHandler;
+            if (typeof searchHandler === 'function') {
+                searchHandler();
+                return;
+            }
+
+            // do search
             $(table).bootstrapTable('refresh');
+
         });
     }
 
     /**
      * init reset
      */
-    function initReset() {
+    function initReset(options) {
+
         // reset
         $('#data_filter .resetBtn').on('click', function(){
+
+            // resetHandler
+            let resetHandler = options.resetHandler;
+            if (typeof resetHandler === 'function') {
+                resetHandler();
+                return;
+            }
+
+            // do reset
             // input
             $('#data_filter input[type="text"]').val('');
             // select

@@ -117,6 +117,16 @@
                 if (options.responseHandler) {
                     return options.responseHandler(result);
                 }
+
+                // valid
+                if (result.code !== 200) {
+                    layer.msg(result.msg || (I18n.system_opt+I18n.system_fail));
+                    return {
+                        total: 0,
+                        rows: []
+                    }
+                }
+
                 // default
                 return {
                     "total": result.data.totalCount,

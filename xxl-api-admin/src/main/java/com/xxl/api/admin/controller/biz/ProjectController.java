@@ -56,12 +56,13 @@ public class ProjectController {
 
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public Response<PageModel<XxlApiProject>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-										@RequestParam(required = false, defaultValue = "10") int length,
-										String name, int bizId) {
+	public Response<PageModel<XxlApiProject>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+													   @RequestParam(required = false, defaultValue = "10") int pagesize,
+													   String name,
+													   int bizId) {
 		// page list
-		List<XxlApiProject> list = xxlApiProjectDao.pageList(start, length, name, bizId);
-		int list_count = xxlApiProjectDao.pageListCount(start, length, name, bizId);
+		List<XxlApiProject> list = xxlApiProjectDao.pageList(offset, pagesize, name, bizId);
+		int list_count = xxlApiProjectDao.pageListCount(offset, pagesize, name, bizId);
 
 		// package result
 		PageModel<XxlApiProject> pageModel = new PageModel<>();

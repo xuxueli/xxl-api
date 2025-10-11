@@ -54,12 +54,13 @@ public class UserController {
 	@RequestMapping("/pageList")
 	@ResponseBody
 	@XxlSso(role = Consts.ROLE_ADMIN)
-	public Response<PageModel<XxlApiUser>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-										@RequestParam(required = false, defaultValue = "10") int length,
-										String userName, int type) {
+	public Response<PageModel<XxlApiUser>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+													@RequestParam(required = false, defaultValue = "10") int pagesize,
+													String userName,
+													int type) {
 		// page list
-		List<XxlApiUser> list = xxlApiUserMapper.pageList(start, length, userName, type);
-		int list_count = xxlApiUserMapper.pageListCount(start, length, userName, type);
+		List<XxlApiUser> list = xxlApiUserMapper.pageList(offset, pagesize, userName, type);
+		int list_count = xxlApiUserMapper.pageListCount(offset, pagesize, userName, type);
 
 		// hide pwd
 		if (CollectionTool.isNotEmpty(list)) {

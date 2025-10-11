@@ -141,8 +141,8 @@
             queryParams: function (params) {
                 var obj = {};
                 obj.bizName = $('#bizName').val();
-                obj.start = params.offset;
-                obj.length = params.limit;
+                obj.offset = params.offset;
+                obj.pagesize = params.limit;
                 return obj;
             },
             columns:[

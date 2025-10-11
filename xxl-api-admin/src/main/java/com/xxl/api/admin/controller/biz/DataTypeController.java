@@ -61,12 +61,13 @@ public class DataTypeController {
 
     @RequestMapping("/pageList")
     @ResponseBody
-    public Response<PageModel<XxlApiDataType>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-                                        @RequestParam(required = false, defaultValue = "10") int length,
-                                        int bizId, String name) {
+    public Response<PageModel<XxlApiDataType>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+                                                        @RequestParam(required = false, defaultValue = "10") int pagesize,
+                                                        int bizId,
+                                                        String name) {
         // page list
-        List<XxlApiDataType> list = xxlApiDataTypeDao.pageList(start, length, bizId, name);
-        int count = xxlApiDataTypeDao.pageListCount(start, length, bizId, name);
+        List<XxlApiDataType> list = xxlApiDataTypeDao.pageList(offset, pagesize, bizId, name);
+        int count = xxlApiDataTypeDao.pageListCount(offset, pagesize, bizId, name);
 
         // package result
         PageModel<XxlApiDataType> pageModel = new PageModel<XxlApiDataType>();

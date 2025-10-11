@@ -209,8 +209,8 @@
                 var obj = {};
                 obj.userName = $('#userName').val();
                 obj.type = $('#type').val();
-                obj.start = params.offset;
-                obj.length = params.limit;
+                obj.offset = params.offset;
+                obj.pagesize = params.limit;
                 return obj;
             },
             columns:[

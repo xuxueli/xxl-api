@@ -67,6 +67,10 @@ public class BizController {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail( "业务线名称不可为空");
         }
+        // xss valid
+        if (xxlApiBiz.getBizName().contains("<")) {
+            return Response.ofFail( "业务线名称非法");
+        }
 
         int ret = xxlApiBizDao.add(xxlApiBiz);
         return ret>0?Response.ofSuccess():Response.ofFail();
@@ -78,6 +82,10 @@ public class BizController {
     public Response<String> update(XxlApiBiz xxlApiBiz) {
         if (StringTool.isBlank(xxlApiBiz.getBizName())) {
             return Response.ofFail("业务线名称不可为空");
+        }
+        // xss valid
+        if (xxlApiBiz.getBizName().contains("<")) {
+            return Response.ofFail( "业务线名称非法");
         }
 
         int ret = xxlApiBizDao.update(xxlApiBiz);

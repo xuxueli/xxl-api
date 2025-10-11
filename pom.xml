@@ -24,11 +24,11 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.test.skip>true</maven.test.skip>
 		<!-- plugin -->
-		<maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
 
 		<!-- base -->
 		<slf4j-api.version>2.0.17</slf4j-api.version>
-		<junit-jupiter.version>5.13.4</junit-jupiter.version>
+		<junit-jupiter.version>5.14.0</junit-jupiter.version>
 
 		<!-- servlet -->
 		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
@@ -40,10 +40,10 @@
 		<mysql-connector-j.version>9.4.0</mysql-connector-j.version>
 
 		<!-- xxl-sso (+xxl-tool、gson) -->
-		<xxl-sso.version>2.1.0</xxl-sso.version>
+		<xxl-sso.version>2.1.1</xxl-sso.version>
 
 		<!-- httpclient -->
-		<httpclient.version>5.5</httpclient.version>
+		<httpclient.version>5.5.1</httpclient.version>
 	</properties>
 
 

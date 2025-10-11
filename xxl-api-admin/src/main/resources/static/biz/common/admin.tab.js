@@ -110,29 +110,35 @@
     // -------------------- tab：open default --------------------
 
     /**
-     * 默认打开菜单Tab：优先尝试打开url路径TAB，兜底打开首个菜单
+     * 默认打开菜单Tab：初始化首页菜单，然后 尝试打开url路径TAB
      */
     function openDefaultTab() {
+        // load url
         let tabSrc = window.location.hash.slice(1);
-        // 初始路径，默认第一个菜单
+
+        // 1、首页菜单：初始化
+        let $firstMenuItem = $(".J_menuItem:first");
+        if ($firstMenuItem.length > 0) {
+            $firstMenuItem.click();
+        }
+
+        // 2、URL匹配到菜单，初始化
         if (tabSrc === '' || tabSrc === undefined || tabSrc === null) {
-            let $firstMenuItem = $(".J_menuItem:first");
-            if ($firstMenuItem.length > 0) {
-                $firstMenuItem.click();
+            // URL菜单路径不存在则pass
+            return;
+        }
+        setTimeout(function (){
+            var $menuItem = $('.J_menuItem').filter('a[href$="' + decodeURI(tabSrc) + '"]');
+            if ($menuItem.length > 0) {
+                // URL匹配到菜单，初始化
+                $menuItem.click();
+                return;
+            } else {
+                // 匹配失败，兜底直接打开
+                openTab(tabSrc, tabSrc);
             }
-            return;
-        }
+        }, 100)
 
-        // 匹配到菜单，打开
-        var $menuItem = $('.J_menuItem').filter('a[href$="' + decodeURI(tabSrc) + '"]');
-        if ($menuItem.length > 0) {
-            $menuItem.click();
-            return;
-        }
-
-
-        // 兜底，直接打开
-        openTab(tabSrc, tabSrc);
     }
 
     // -------------------- tab：open、close --------------------

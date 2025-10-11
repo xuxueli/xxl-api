@@ -45,12 +45,12 @@ public class BizController {
     @RequestMapping("/pageList")
     @ResponseBody
     @XxlSso(role = Consts.ROLE_ADMIN)
-    public Response<PageModel<XxlApiBiz>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-                                        @RequestParam(required = false, defaultValue = "10") int length,
-                                        String bizName) {
+    public Response<PageModel<XxlApiBiz>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+                                                   @RequestParam(required = false, defaultValue = "10") int pagesize,
+                                                   String bizName) {
         // page list
-        List<XxlApiBiz> list = xxlApiBizDao.pageList(start, length, bizName);
-        int list_count = xxlApiBizDao.pageListCount(start, length, bizName);
+        List<XxlApiBiz> list = xxlApiBizDao.pageList(offset, pagesize, bizName);
+        int list_count = xxlApiBizDao.pageListCount(offset, pagesize, bizName);
 
         // package result
         PageModel<XxlApiBiz> pageModel = new PageModel<>();

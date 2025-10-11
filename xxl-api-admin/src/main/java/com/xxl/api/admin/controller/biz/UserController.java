@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -54,12 +55,13 @@ public class UserController {
 	@RequestMapping("/pageList")
 	@ResponseBody
 	@XxlSso(role = Consts.ROLE_ADMIN)
-	public Response<PageModel<XxlApiUser>> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-										@RequestParam(required = false, defaultValue = "10") int length,
-										String userName, int type) {
+	public Response<PageModel<XxlApiUser>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+													@RequestParam(required = false, defaultValue = "10") int pagesize,
+													String userName,
+													int type) {
 		// page list
-		List<XxlApiUser> list = xxlApiUserMapper.pageList(start, length, userName, type);
-		int list_count = xxlApiUserMapper.pageListCount(start, length, userName, type);
+		List<XxlApiUser> list = xxlApiUserMapper.pageList(offset, pagesize, userName, type);
+		int list_count = xxlApiUserMapper.pageListCount(offset, pagesize, userName, type);
 
 		// hide pwd
 		if (CollectionTool.isNotEmpty(list)) {
@@ -74,7 +76,7 @@ public class UserController {
 		return Response.ofSuccess(pageModel);
 	}
 
-	@RequestMapping("/add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
     @XxlSso(role = Consts.ROLE_ADMIN)
 	public Response<String> add(XxlApiUser xxlApiUser) {
@@ -100,7 +102,7 @@ public class UserController {
 		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
-	@RequestMapping("/update")
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
     @XxlSso(role = Consts.ROLE_ADMIN)
 	public Response<String> update(HttpServletRequest request, HttpServletResponse response, XxlApiUser xxlApiUser) {
@@ -131,7 +133,7 @@ public class UserController {
 		return (ret>0)?Response.ofSuccess():Response.ofFail();
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	@ResponseBody
 	@XxlSso(role = Consts.ROLE_ADMIN)
 	public Response<String> delete(HttpServletRequest request, @RequestParam("ids[]") List<Integer> ids) {

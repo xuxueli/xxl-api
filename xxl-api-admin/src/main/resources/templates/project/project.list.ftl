@@ -242,8 +242,8 @@
                 var obj = {};
                 obj.bizId = $('#bizId').val();
                 obj.name = $('#name').val();
-                obj.start = params.offset;
-                obj.length = params.limit;
+                obj.offset = params.offset;
+                obj.pagesize = params.limit;
                 return obj;
             },
             columns:[

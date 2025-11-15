@@ -54,8 +54,8 @@ public class BizController {
 
         // package result
         PageModel<XxlApiBiz> pageModel = new PageModel<>();
-        pageModel.setPageData( list);
-        pageModel.setTotalCount( list_count);
+        pageModel.setData( list);
+        pageModel.setTotal( list_count);
 
         return Response.ofSuccess(pageModel);
     }

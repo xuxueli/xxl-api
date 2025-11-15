@@ -28,19 +28,18 @@
 
 		<!-- base -->
 		<slf4j-api.version>2.0.17</slf4j-api.version>
-		<junit-jupiter.version>5.14.0</junit-jupiter.version>
 
 		<!-- servlet -->
 		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
 
 		<!-- spring -->
-		<spring-boot.version>3.5.6</spring-boot.version>
+		<spring-boot.version>3.5.7</spring-boot.version>
 		<!-- mybatis & db -->
 		<mybatis-spring-boot-starter.version>3.0.5</mybatis-spring-boot-starter.version>
-		<mysql-connector-j.version>9.4.0</mysql-connector-j.version>
+		<mysql-connector-j.version>9.5.0</mysql-connector-j.version>
 
 		<!-- xxl-sso (+xxl-tool、gson) -->
-		<xxl-sso.version>2.1.1</xxl-sso.version>
+		<xxl-sso.version>2.2.0</xxl-sso.version>
 
 		<!-- httpclient -->
 		<httpclient.version>5.5.1</httpclient.version>

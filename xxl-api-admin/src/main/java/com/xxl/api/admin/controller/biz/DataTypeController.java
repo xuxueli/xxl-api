@@ -1,13 +1,16 @@
 package com.xxl.api.admin.controller.biz;
 
 import com.xxl.api.admin.constant.FieldTypeEnum;
-import com.xxl.api.admin.util.ApiDataTypeToCode;
 import com.xxl.api.admin.mapper.XxlApiBizMapper;
-import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
 import com.xxl.api.admin.mapper.XxlApiDataTypeFieldMapper;
+import com.xxl.api.admin.mapper.XxlApiDataTypeMapper;
 import com.xxl.api.admin.mapper.XxlApiDocumentMapper;
-import com.xxl.api.admin.model.*;
+import com.xxl.api.admin.model.XxlApiBiz;
+import com.xxl.api.admin.model.XxlApiDataType;
+import com.xxl.api.admin.model.XxlApiDataTypeField;
+import com.xxl.api.admin.model.XxlApiDocument;
 import com.xxl.api.admin.service.IXxlApiDataTypeService;
+import com.xxl.api.admin.util.ApiDataTypeToCode;
 import com.xxl.api.admin.util.I18nUtil;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
@@ -16,6 +19,8 @@ import com.xxl.tool.core.StringTool;
 import com.xxl.tool.gson.GsonTool;
 import com.xxl.tool.response.PageModel;
 import com.xxl.tool.response.Response;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xuxueli on 17/5/23.
@@ -71,8 +72,8 @@ public class DataTypeController {
 
         // package result
         PageModel<XxlApiDataType> pageModel = new PageModel<XxlApiDataType>();
-        pageModel.setPageData( list);
-        pageModel.setTotalCount( count);
+        pageModel.setData( list);
+        pageModel.setTotal( count);
 
         return Response.ofSuccess(pageModel);
     }

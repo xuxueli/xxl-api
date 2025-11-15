@@ -153,8 +153,8 @@
 
                 // default
                 return {
-                    "total": result.data.totalCount,
-                    "rows": result.data.pageData
+                    "total": result.data.total,
+                    "rows": result.data.data
                 };
             },
             columns: columns,

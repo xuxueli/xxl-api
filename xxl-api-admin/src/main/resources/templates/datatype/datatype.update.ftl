@@ -168,15 +168,15 @@
                     // 数据类型 ajax 加载
                     $($select2).select2({
                         ajax: {
-                            type:'GET',
+                            type:'POST',
                             url: base_url + "/datatype/pageList",
                             dataType: 'json',
                             delay: 250,
                             data: function (params) {
                                 return {
                                     bizId: -1,
-                                    start:0,
-                                    length:100,
+                                    offset:0,
+                                    pagesize:100,
                                     name: params.term, // search term
                                     page: params.page
                                 };
@@ -185,14 +185,14 @@
                                 params.page = params.page || 1;
 
                                 var itemList = [];//当数据对象不是{id:0,text:'ANTS'}这种形式的时候，可以使用类似此方法创建新的数组对象
-                                var arr = data.data.pageData;
+                                var arr = data.data.data;
                                 for(i in arr){
                                     itemList.push({id: arr[i].id, text: arr[i].name})
                                 }
                                 return {
                                     results: itemList,
                                     pagination: {
-                                        more: (params.page * 30) < data.data.totalCount
+                                        more: (params.page * 30) < data.data.total
                                     }
                                 };
                             },

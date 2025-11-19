@@ -18,32 +18,32 @@ $(function(){
     /**
      * logout
      */
-	$("#logoutBtn").click(function(){
-		layer.confirm( I18n.logout_confirm , {
-			icon: 3,
-			title: I18n.system_tips ,
+    $("#logoutBtn").click(function(){
+        layer.confirm( I18n.logout_confirm , {
+            icon: 3,
+            title: I18n.system_tips ,
             btn: [ I18n.system_ok, I18n.system_cancel ]
-		}, function(index){
-			layer.close(index);
+        }, function(index){
+            layer.close(index);
 
-			$.post(base_url + "/auth/logout", function(data, status) {
-				if (data.code == "200") {
+            $.post(base_url + "/auth/logout", function(data, status) {
+                if (data.code == "200") {
                     layer.msg( I18n.logout_success );
                     setTimeout(function(){
                         window.location.href = base_url + "/";
                     }, 500);
-				} else {
-					layer.open({
-						title: I18n.system_tips ,
+                } else {
+                    layer.open({
+                        title: I18n.system_tips ,
                         btn: [ I18n.system_ok ],
-						content: (data.msg || I18n.logout_fail),
-						icon: '2'
-					});
-				}
-			});
-		});
+                        content: (data.msg || I18n.logout_fail),
+                        icon: '2'
+                    });
+                }
+            });
+        });
 
-	});
+    });
 
     // ---------------------- update pwd ----------------------
 
@@ -162,50 +162,50 @@ $(function(){
     /**
      * slideToTop Html
      */
-	var slideToTop = $("<div />");
-	slideToTop.html('<i class="fa fa-chevron-up"></i>');
-	slideToTop.css({
-		position: 'fixed',
-		bottom: '20px',
-		right: '25px',
-		width: '40px',
-		height: '40px',
-		color: '#eee',
-		'font-size': '',
-		'line-height': '40px',
-		'text-align': 'center',
-		'background-color': '#222d32',
-		cursor: 'pointer',
-		'border-radius': '5px',
-		'z-index': '99999',
-		opacity: '.7',
-		'display': 'none'
-	});
-	slideToTop.on('mouseenter', function () {
-		$(this).css('opacity', '1');
-	});
-	slideToTop.on('mouseout', function () {
-		$(this).css('opacity', '.7');
-	});
-	$('.wrapper').append(slideToTop);
-	$(window).scroll(function () {
-		if ($(window).scrollTop() >= 150) {
-			if (!$(slideToTop).is(':visible')) {
-				$(slideToTop).fadeIn(500);
-			}
-		} else {
-			$(slideToTop).fadeOut(500);
-		}
-	});
+    var slideToTop = $("<div />");
+    slideToTop.html('<i class="fa fa-chevron-up"></i>');
+    slideToTop.css({
+        position: 'fixed',
+        bottom: '20px',
+        right: '25px',
+        width: '40px',
+        height: '40px',
+        color: '#eee',
+        'font-size': '',
+        'line-height': '40px',
+        'text-align': 'center',
+        'background-color': '#222d32',
+        cursor: 'pointer',
+        'border-radius': '5px',
+        'z-index': '99999',
+        opacity: '.7',
+        'display': 'none'
+    });
+    slideToTop.on('mouseenter', function () {
+        $(this).css('opacity', '1');
+    });
+    slideToTop.on('mouseout', function () {
+        $(this).css('opacity', '.7');
+    });
+    $('.wrapper').append(slideToTop);
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= 150) {
+            if (!$(slideToTop).is(':visible')) {
+                $(slideToTop).fadeIn(500);
+            }
+        } else {
+            $(slideToTop).fadeOut(500);
+        }
+    });
 
     /**
      * slideToTop click
      */
     $(slideToTop).click(function () {
-		$("html,body").animate({		// firefox ie not support body, chrome support body. but found that new version chrome not support body too.
-			scrollTop: 0
-		}, 100);
-	});
+        $("html,body").animate({		// firefox ie not support body, chrome support body. but found that new version chrome not support body too.
+            scrollTop: 0
+        }, 100);
+    });
 
     // ---------------------- change skin ----------------------
 
@@ -224,21 +224,22 @@ $(function(){
                     <div class="modal-body">
                         <!-- 主题列表 -->
                         <ul class="list-unstyled clearfix" >
+                            <!-- level 1 -->
                             <li style="float:left; width: 33.33333%; padding: 5px;">
                                 <a href="javascript:" data-skin='skin-blue' style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
-                                    <span style='display:block; width: 20%; float: left; height: 13px; background: #367fa9;'></span>
-                                    <span style='display:block; width: 80%; float: left; height: 13px; background: #367fa9;'></span>
-                                    <span style='display:block; width: 20%; float: left; height: 30px; background: #222d32;'></span>
-                                    <span style='display:block; width: 80%; float: left; height: 30px; background: #f4f5f7;'></span>
+                                    <span style="width: 20%; float: left; height: 13px; background: #367fa9"></span>
+                                    <span style="width: 80%; float: left; height: 13px;" class='bg-light-blue'></span>
+                                    <span style="width: 20%; float: left; height: 30px; background: #222d32"></span>
+                                    <span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
                                 </a>
                                 <p class="text-center">Blue</p>
                             </li>
                             <li style="float:left; width: 33.33333%; padding: 5px;">
                                 <a href="javascript:" data-skin="skin-black" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
-                                    <span style='display:block; width: 20%; float: left; height: 13px; background: #fefefe;'></span>
-                                    <span style='display:block; width: 80%; float: left; height: 13px; background: #fefefe;'></span>
-                                    <span style='display:block; width: 20%; float: left; height: 30px; background: #222;'></span>
-                                    <span style='display:block; width: 80%; float: left; height: 30px; background: #f4f5f7;'></span>
+                                    <span style="width: 20%; float: left; height: 13px; background: #fefefe"></span>
+                                    <span style="width: 80%; float: left; height: 13px; background: #fefefe"></span>
+                                    <span style="width: 20%; float: left; height: 30px; background: #222d32"></span>
+                                    <span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
                                 </a>
                                 <p class="text-center">Black</p>
                             </li>
@@ -252,6 +253,36 @@ $(function(){
                                 <p class="text-center">Purple</p>
                             </li>
                             
+                            <!-- level 2 -->
+                            <li style="float:left; width: 33.33333%; padding: 5px;">
+                                <a href="javascript:" data-skin="skin-green" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                                    <span style="width: 20%; float: left; height: 13px;" class='bg-green-active'></span>
+                                    <span style="width: 80%; float: left; height: 13px;" class='bg-green'></span>
+                                    <span style="width: 20%; float: left; height: 30px; background: #222d32"></span>
+                                    <span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
+                                </a>
+                                <p class="text-center">Green</p>
+                            </li>
+                            <li style="float:left; width: 33.33333%; padding: 5px;">
+                                <a href="javascript:" data-skin="skin-red" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                                    <span style="width: 20%; float: left; height: 13px;" class='bg-red-active'></span>
+                                    <span style="width: 80%; float: left; height: 13px;" class='bg-red'></span>
+                                    <span style="width: 20%; float: left; height: 30px; background: #222d32"></span>
+                                    <span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
+                                </a>
+                                <p class="text-center">Red</p>
+                            </li>
+                            <li style="float:left; width: 33.33333%; padding: 5px;">
+                                <a href="javascript:" data-skin="skin-yellow" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+                                    <span style="width: 20%; float: left; height: 13px;" class='bg-yellow-active'></span>
+                                    <span style="width: 80%; float: left; height: 13px;" class='bg-yellow'></span>
+                                    <span style="width: 20%; float: left; height: 30px; background: #222d32"></span>
+                                    <span style="width: 80%; float: left; height: 30px; background: #f4f5f7"></span>
+                                </a>
+                                <p class="text-center">Yellow</p>
+                            </li>
+                            
+                            <!-- level 3 -->
                             <li style="float:left; width: 33.33333%; padding: 5px;">
                                 <a href="javascript:" data-skin="skin-blue-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
                                     <span style="width: 20%; float: left; height: 13px; background: #367fa9"></span>
@@ -280,6 +311,7 @@ $(function(){
                                 <p class="text-center">Purple(Light)</p>
                             </li>
                             
+                            <!-- level 4 -->
                             <li style="float:left; width: 33.33333%; padding: 5px;">
                                 <a href="javascript:" data-skin="skin-green-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
                                     <span style="width: 20%; float: left; height: 13px;" class='bg-green-active'></span>
@@ -289,7 +321,6 @@ $(function(){
                                 </a>
                                 <p class="text-center">Green(Light)</p>
                             </li>
-                            
                             <li style="float:left; width: 33.33333%; padding: 5px;">
                                 <a href="javascript:" data-skin="skin-red-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
                                     <span style="width: 20%; float: left; height: 13px;" class='bg-red-active'></span>
@@ -336,16 +367,16 @@ $(function(){
     var skins = [
         "skin-blue",
         "skin-black",
-        "skin-red",
-        "skin-yellow",
         "skin-purple",
         "skin-green",
+        "skin-red",
+        "skin-yellow",
         "skin-blue-light",
         "skin-black-light",
-        "skin-red-light",
-        "skin-yellow-light",
         "skin-purple-light",
-        "skin-green-light"
+        "skin-green-light",
+        "skin-red-light",
+        "skin-yellow-light"
     ];
 
     /**
@@ -417,5 +448,5 @@ $(function(){
             store('admin_sidebar_status', 'close')
         }
     });
-	
+
 });

@@ -377,9 +377,10 @@ Mock数据属性说明：
 
 ### v1.7.0 Release Notes[ING]
 - 1、【升级】升级依赖版本，如 springboot、spring、mybatis、xxl-sso 等；
-- 2、【ING】支持设置RequestBody类型，raw类型参数；
-- 3、【ING】支持swagger、postman等格式接口数据导入；
-- 4、【ING】支持API分享；
+- 2、【优化】增加主题皮肤选项并优化界面交互；
+- 3、【ING】支持设置RequestBody类型，raw类型参数；
+- 4、【ING】支持swagger、postman等格式接口数据导入；
+- 5、【ING】支持API分享；
 
 
 ### TODO LIST

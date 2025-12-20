@@ -375,12 +375,15 @@ Mock数据属性说明：
 - 4、【安全】跨站请求伪造防护优化；
 - 5、【升级】升级多项依赖至较新版本；
 
-### v1.7.0 Release Notes[ING]
-- 1、【升级】升级依赖版本，如 springboot、spring、mybatis、xxl-sso 等；
-- 2、【优化】增加主题皮肤选项并优化界面交互；
-- 3、【ING】支持设置RequestBody类型，raw类型参数；
-- 4、【ING】支持swagger、postman等格式接口数据导入；
-- 5、【ING】支持API分享；
+### v1.7.0 Release Notes[2025-12-21]
+- 1、【优化】增加主题皮肤选项并优化界面交互；
+- 2、【升级】升级至SpringBoot4及Spring7；
+- 3、【升级】升级多项maven依赖至较新版本，如 springboot、mybatis、xxl-sso 等；
+
+### v1.7.1 Release Notes[ING]
+- 1、【ING】支持设置RequestBody类型，raw类型参数；
+- 2、【ING】支持swagger、postman等格式接口数据导入；
+- 3、【ING】支持API分享；
 
 
 ### TODO LIST

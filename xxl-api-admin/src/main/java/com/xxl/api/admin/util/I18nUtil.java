@@ -3,7 +3,7 @@ package com.xxl.api.admin.util;
 
 import com.xxl.tool.core.PropTool;
 import com.xxl.tool.freemarker.FtlTool;
-import com.xxl.tool.gson.GsonTool;
+import com.xxl.tool.json.GsonTool;
 import freemarker.template.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

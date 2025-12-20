@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xuxueli</groupId>
 	<artifactId>xxl-api</artifactId>
-	<version>1.7.0-SNAPSHOT</version>
+	<version>1.7.0</version>
 	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
@@ -25,21 +25,21 @@
 		<maven.test.skip>true</maven.test.skip>
 		<!-- plugin -->
 		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
-
 		<!-- base -->
 		<slf4j-api.version>2.0.17</slf4j-api.version>
+		<junit-jupiter.version>6.0.1</junit-jupiter.version>
 
 		<!-- servlet -->
 		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
 
 		<!-- spring -->
-		<spring-boot.version>3.5.7</spring-boot.version>
+		<spring-boot.version>4.0.1</spring-boot.version>
 		<!-- mybatis & db -->
-		<mybatis-spring-boot-starter.version>3.0.5</mybatis-spring-boot-starter.version>
+		<mybatis-spring-boot-starter.version>4.0.0</mybatis-spring-boot-starter.version>
 		<mysql-connector-j.version>9.5.0</mysql-connector-j.version>
 
 		<!-- xxl-sso (+xxl-tool、gson) -->
-		<xxl-sso.version>2.2.0</xxl-sso.version>
+		<xxl-sso.version>2.3.1</xxl-sso.version>
 
 		<!-- httpclient -->
 		<httpclient.version>5.5.1</httpclient.version>

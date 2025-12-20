@@ -12,7 +12,7 @@ import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.core.CollectionTool;
 import com.xxl.tool.core.StringTool;
-import com.xxl.tool.encrypt.SHA256Tool;
+import com.xxl.tool.crypto.Sha256Tool;
 import com.xxl.tool.response.PageModel;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletResponse;
@@ -95,7 +95,7 @@ public class UserController {
 		}
 
 		// passowrd hash
-		String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
+		String passwordHash = Sha256Tool.sha256(xxlApiUser.getPassword());
 		xxlApiUser.setPassword(passwordHash);
 
 		int ret = xxlApiUserMapper.add(xxlApiUser);
@@ -124,7 +124,7 @@ public class UserController {
 				return Response.ofFail( "密码长度限制为4~20");
 			}
 			// passowrd hash
-			String passwordHash = SHA256Tool.sha256(xxlApiUser.getPassword());
+			String passwordHash = Sha256Tool.sha256(xxlApiUser.getPassword());
 			existUser.setPassword(passwordHash);
 		}
 		existUser.setType(xxlApiUser.getType());

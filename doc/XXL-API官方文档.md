@@ -90,19 +90,28 @@ API管理中心支持集群部署，提升系统可用性。
 - 下载镜像
 
 ```
-// Docker地址：https://hub.docker.com/r/xuxueli/xxl-api-admin/     (建议指定版本号)
-docker pull xuxueli/xxl-api-admin
+/**
+* Docker地址：https://hub.docker.com/r/xuxueli/xxl-api-admin/     
+* 建议指定版本号拉取镜像；
+*/ 
+docker pull xuxueli/xxl-api-admin:{指定版本}
 ```
 
 - 创建容器并运行
 
 ```
 /**
-* 如需自定义 mysql 等配置，可通过 "-e PARAMS" 指定，参数格式 PARAMS="--key=value  --key2=value2" ；
-* 配置项参考文件：/xxl-api/xxl-api-admin/src/main/resources/application.properties
-* 如需自定义 JVM内存参数 等配置，可通过 "-e JAVA_OPTS" 指定，参数格式 JAVA_OPTS="-Xmx512m" ；
+* 如需自定义 “项目配置文件” 中配置项，比如 mysql 配置，可通过 "-e PARAMS" 指定，参数格式: -e PARAMS="--key=value --key2=value2"；
+* （配置项参考文件：/xxl-api/xxl-api-admin/src/main/resources/application.properties）
+* 如需自定义 “JVM内存参数”，可通过 "-e JAVA_OPTS" 指定，参数格式: -e JAVA_OPTS="-Xmx512m"
+* 如需自定义 “日志文件目录”，可通过 "-e LOG_HOME" 指定，参数格式: -e LOG_HOME=/data/applogs
 */
-docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_api?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai" -p 8080:8080 -v /tmp:/data/applogs --name xxl-api-admin  -d xuxueli/xxl-api-admin:{指定版本}
+docker run -d \
+-e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_api?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai" \
+-p 8080:8080 \
+-v /tmp:/data/applogs \
+--name xxl-api-admin \
+xuxueli/xxl-api-admin:{指定版本}
 ```
 
 
@@ -377,8 +386,9 @@ Mock数据属性说明：
 
 ### v1.7.0 Release Notes[2025-12-21]
 - 1、【优化】增加主题皮肤选项并优化界面交互；
-- 2、【升级】升级至SpringBoot4及Spring7；
-- 3、【升级】升级多项maven依赖至较新版本，如 springboot、mybatis、xxl-sso 等；
+- 2、【优化】Dockerfile调整，支持自定义JVM参数、应用参数以及日志路径等；
+- 3、【升级】升级至SpringBoot4及Spring7；
+- 4、【升级】升级多项maven依赖至较新版本，如 springboot、mybatis、xxl-sso 等；
 
 ### v1.7.1 Release Notes[ING]
 - 1、【ING】支持设置RequestBody类型，raw类型参数；

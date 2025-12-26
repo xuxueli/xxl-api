@@ -391,9 +391,10 @@ Mock数据属性说明：
 - 4、【升级】升级多项maven依赖至较新版本，如 springboot、mybatis、xxl-sso 等；
 
 ### v1.7.1 Release Notes[ING]
-- 1、【ING】支持设置RequestBody类型，raw类型参数；
-- 2、【ING】支持swagger、postman等格式接口数据导入；
-- 3、【ING】支持API分享；
+- 1、【优化】表格交互优化：优化分页显示配置；禁用分页循环；多选行操作优化/默认单选；
+- 2、【ING】支持设置RequestBody类型，raw类型参数；
+- 3、【ING】支持swagger、postman等格式接口数据导入；
+- 4、【ING】支持API分享；
 
 
 ### TODO LIST

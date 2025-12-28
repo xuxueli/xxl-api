@@ -39,7 +39,7 @@
 		<mysql-connector-j.version>9.5.0</mysql-connector-j.version>
 
 		<!-- xxl-sso (+xxl-tool、gson) -->
-		<xxl-sso.version>2.3.1</xxl-sso.version>
+		<xxl-sso.version>2.3.2</xxl-sso.version>
 
 		<!-- httpclient -->
 		<httpclient.version>5.5.1</httpclient.version>

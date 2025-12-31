@@ -392,10 +392,11 @@ Mock数据属性说明：
 
 ### v1.7.1 Release Notes[ING]
 - 1、【优化】表格交互优化：优化分页显示配置；禁用分页循环；多选行操作优化/默认单选；
-- 2、【ING】支持设置RequestBody类型，支持form、body、raw等类型；
-- 3、【ING】支持swagger、postman等格式数据导入；
-- 4、【ING】支持API分享；支持设置用户、公网等权限；
-- 5、【ING】公共API收录：部署默认安装，同Apihub；
+- 2、【优化】重构项目依赖管理，将依赖版本统一到父级pom；
+- 3、【ING】支持设置RequestBody类型，支持form、body、raw等类型；
+- 4、【ING】支持swagger、postman等格式数据导入；
+- 5、【ING】支持API分享；支持设置用户、公网等权限；
+- 6、【ING】公共API收录：部署默认安装，同Apihub；
 
 
 ### TODO LIST

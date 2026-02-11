@@ -14,9 +14,7 @@
 <div class="wrapper" >
 
     <!-- 2-header start -->
-
     <header class="main-header">
-
         <!-- header logo -->
         <a href="${request.contextPath}/" class="logo">
             <span class="logo-mini"><b>XXL</b></span>
@@ -25,12 +23,11 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <!--header left -->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">切换导航</span>
+                <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-
             <!--header right -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -75,7 +72,7 @@
             <#macro renderMenu resourceList >
                 <#list resourceList as resource>
                     <#if resource.type ==0>
-                        <#-- catalog -->
+                    <#-- catalog -->
                         <li class="treeview" style="height: auto;"  >
                             <a href="javascript:void(0);">
                                 <i class="fa ${resource.icon}"></i>
@@ -91,17 +88,7 @@
                             </ul>
                         </li>
                     <#elseif resource.type ==1>
-                        <#-- mainMenu -->
-                        <#--<#if !(mainMenu?exists) >
-                            <#assign mainMenu = resource />
-                        <#elseif resource.order lt mainMenu.order >
-                            <#assign mainMenu = resource />
-                        </#if>-->
-                        <#if resource.url == "/project" >
-                            <#assign mainMenu = resource />
-                        </#if>
-
-                        <#-- menu -->
+                    <#-- menu -->
                         <li class="nav-click">
                             <#-- url -->
                             <#assign resourceUrl = request.contextPath + resource.url />
@@ -132,10 +119,8 @@
             <!-- Tab -->
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
-                    <#-- mainPage -->
-                    <#if mainMenu?exists >
-                        <a href="javascript:;" class="active J_menuTab noactive" data-id="${request.contextPath}${mainMenu.url}">${mainMenu.name}</a>
-                    </#if>
+                    <#-- Tab content -->
+                    <#-- <a href="javascript:;" class="active J_menuTab" data-id="' + tabSrc + '" title="'+ tabName +'" >' + tabNameShow + ' <i class="fa fa-times-circle"></i></a> -->
                 </div>
             </nav>
 
@@ -157,8 +142,8 @@
         </div>
         <!-- Iframe Content -->
         <div class="J_mainContent" id="content-main" >
-            <!-- Iframe -->
-            <iframe class="J_iframe" width="100%" height="100%" src="${request.contextPath}${mainMenu.url}" frameborder="0" data-id="${request.contextPath}${mainMenu.url}" seamless></iframe>
+            <!-- Iframe content -->
+            <#-- <iframe class="J_iframe" width="100%" height="100%" src="' + tabSrc + '" frameborder="0" data-id="' + tabSrc + '" seamless></iframe> -->
         </div>
 
     </div>

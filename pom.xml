@@ -42,7 +42,7 @@
 		<xxl-sso.version>2.3.2</xxl-sso.version>
 
 		<!-- httpclient -->
-		<httpclient.version>5.6</httpclient.version>
+		<httpclient.version>5.6.1</httpclient.version>
 	</properties>
 
 	<dependencyManagement>

@@ -104,5 +104,5 @@ docker run -p 8080:8080 -e PARAMS="--server.port=8080" xxl-api-admin
 - 禁止使用英文编写注释、文档或提示信息，除非处理国际化消息文件本身。
 
 <!-- SPECKIT START -->
-关于所用技术、项目结构、Shell 命令及其他重要信息的额外上下文，请阅读当前计划
+关于所用技术、项目结构、Shell 命令及其他重要信息的额外上下文，请阅读当前计划：`specs/001-project-structure-refactor/plan.md`
 <!-- SPECKIT END -->

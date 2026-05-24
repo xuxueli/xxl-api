@@ -1,5 +1,12 @@
+# for backend
 *.iml
 /.idea
 */target
 .DS_Store
 .gitattributes
+
+# for ai
+.opencode
+.omo
+.claude
+.specify

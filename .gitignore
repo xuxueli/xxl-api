@@ -2,8 +2,15 @@
 *.iml
 /.idea
 */target
+.classpath
+.project
 .DS_Store
 .gitattributes
+
+# for fontend
+node_modules/
+dist/
+package-lock.json
 
 # for ai
 .opencode
@@ -11,4 +18,3 @@
 .claude
 .specify
 specs
-

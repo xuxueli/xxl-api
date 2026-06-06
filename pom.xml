@@ -24,25 +24,25 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.test.skip>true</maven.test.skip>
 		<!-- plugin -->
-		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
 		<!-- base -->
-		<slf4j-api.version>2.0.17</slf4j-api.version>
-		<junit-jupiter.version>6.0.1</junit-jupiter.version>
+		<slf4j-api.version>2.0.18</slf4j-api.version>
+		<junit-jupiter.version>6.1.0</junit-jupiter.version>
 
 		<!-- servlet -->
 		<jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
 
 		<!-- spring -->
-		<spring-boot.version>4.0.1</spring-boot.version>
+		<spring-boot.version>4.0.6</spring-boot.version>
 		<!-- mybatis & db -->
 		<mybatis-spring-boot-starter.version>4.0.1</mybatis-spring-boot-starter.version>
-		<mysql-connector-j.version>9.5.0</mysql-connector-j.version>
+		<mysql-connector-j.version>9.7.0</mysql-connector-j.version>
 
 		<!-- xxl-sso (+xxl-tool、gson) -->
-		<xxl-sso.version>2.3.2</xxl-sso.version>
+		<xxl-sso.version>2.4.0</xxl-sso.version>
 
 		<!-- httpclient -->
-		<httpclient.version>5.6</httpclient.version>
+		<httpclient.version>5.6.1</httpclient.version>
 	</properties>
 
 	<dependencyManagement>

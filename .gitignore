@@ -1,7 +1,7 @@
 # for backend
 *.iml
 /.idea
-*/target
+**/target/
 .classpath
 .project
 .DS_Store

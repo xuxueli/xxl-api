@@ -6,7 +6,7 @@
 
     <!-- 1-style start -->
     <@netCommon.commonStyle />
-    <link rel="stylesheet" href="${request.contextPath}/static/biz/common/admin.tab.css">
+    <link rel="stylesheet" href="${request.contextPath}/static/framework/admin.tab.css">
     <!-- 1-style end -->
 
 </head>
@@ -167,8 +167,8 @@
 <!-- 6-script start -->
 <@netCommon.commonScript />
 <#-- admin -->
-<script src="${request.contextPath}/static/biz/common/admin.tab.js"></script>
-<script src="${request.contextPath}/static/biz/common/admin.setting.js"></script>
+<script src="${request.contextPath}/static/framework/admin.tab.js"></script>
+<script src="${request.contextPath}/static/framework/admin.setting.js"></script>
 <script>
     $(function () {
         // init admin tab

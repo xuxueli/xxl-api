@@ -16,7 +16,7 @@
 	<!-- 2-biz start -->
 	<div class="login-box">
 		<div class="login-logo">
-			<a><b>XXL</b>API</a>
+			<a><b>XXL-API</b></a>
 		</div>
 		<form id="loginForm" method="post" >
 			<div class="login-box-body">

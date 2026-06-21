@@ -134,7 +134,7 @@
 <!-- 3-script start -->
 <@netCommon.commonScript />
 <#-- admin -->
-<script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
+<script src="${request.contextPath}/static/framework/admin.util.js"></script>
 <!-- 3-script end -->
 
 </body>

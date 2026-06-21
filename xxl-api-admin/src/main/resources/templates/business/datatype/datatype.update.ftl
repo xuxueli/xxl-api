@@ -150,7 +150,7 @@
 <@netCommon.commonScript />
 <script src="${request.contextPath}/static/adminlte/bower_components/select2/js/select2.min.js"></script>
 <#-- admin -->
-<script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
+<script src="${request.contextPath}/static/framework/admin.util.js"></script>
 <script>
     $(function() {
 

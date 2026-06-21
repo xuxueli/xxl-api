@@ -207,7 +207,7 @@
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/plugins/jsontree/jquery.jsonview.js"></script>
 <#-- admin -->
-<script src="${request.contextPath}/static/biz/common/admin.util.js"></script>
+<script src="${request.contextPath}/static/framework/admin.util.js"></script>
 <script>
     $(function() {
 

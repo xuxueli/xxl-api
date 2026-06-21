@@ -128,7 +128,7 @@
 <script src="${request.contextPath}/static/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="${request.contextPath}/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <#-- admin -->
-<script src="${request.contextPath}/static/biz/common/admin.table.js"></script>
+<script src="${request.contextPath}/static/framework/admin.table.js"></script>
 <script>
     $(function() {
 

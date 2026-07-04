@@ -69,9 +69,9 @@ $(function(){
                                 <label for="lastname" class="col-sm-2 control-label">` + I18n.change_pwd_field_newpwd +` <font color="red">*</font></label>
                                 <div class="col-sm-9"><input type="text" class="form-control" name="password" placeholder="` + I18n.system_please_input + I18n.change_pwd_field_newpwd + `" maxlength="20" ></div>
                             </div>
-                            <hr>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-6">
+                            
+                            <div class="form-group" style="text-align:center;border-top: 1px solid #e4e4e4;" >
+                                <div style="margin-top: 10px;" >
                                     <button type="submit" class="btn btn-primary"  >` + I18n.system_save +`</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">` + I18n.system_cancel +`</button>
                                 </div>
